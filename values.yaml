@@ -1,0 +1,97 @@
+default:
+  env:
+  envOverrides: []
+  replicas: 1
+  schedulingRules:
+    nodeSelector: {}
+    affinity: {}
+    tolerations: []
+  securityContext: {}
+
+serviceAccount:
+  # Specifies whether a service account should be created
+  create: false
+  # Annotations to add to the service account
+  annotations: {}
+  # The name of the service account to use.
+  # If not set and create is true, a name is generated using the fullname template
+  name: ""
+
+opentelemetry-operator:
+  enabled: true
+  fullnameOverride: opentelemetry-operator
+  admissionWebhooks:
+    certManager:
+      enabled: false
+    autoGenerateCert:
+      enabled: true
+  manager:
+    collectorImage:
+      repository: otel/opentelemetry-collector-k8s
+      tag: 0.101.0
+    leaderElection:
+      enabled: false
+    env:
+      ENABLE_WEBHOOKS: "true"
+  kubeRBACProxy:
+    enabled: false
+prometheus:
+  enabled: true
+  alertmanager:
+    enabled: false
+  configmapReload:
+    prometheus:
+      enabled: false
+  kube-state-metrics:
+    enabled: false
+  prometheus-node-exporter:
+    enabled: false
+  prometheus-pushgateway:
+    enabled: false
+  server:
+    fullnameOverride: prometheus
+    retention: 3d
+    extraFlags:
+      - "enable-feature=exemplar-storage"
+      - "enable-feature=otlp-write-receiver"
+      - "enable-feature=promql-experimental-functions"
+    global:
+      scrape_interval: 10s
+      scrape_timeout: 5s
+      evaluation_interval: 30s
+    persistentVolume:
+      enabled: false
+      storageClass: "-"
+      volumeName: prometheus-pv
+      size: 5Gi
+    service:
+      servicePort: 9090
+    resources:
+      limits:
+        memory: 300Mi
+metrics-server:
+  enabled: false
+mdai-api:
+  enabled: false
+mdai-console:
+  enabled: true
+  fullnameOverride: mdai-console
+  service:
+    decisiveApiUrl: http://mdai-api.mdai.svc.cluster.local:8081/query
+    prometheusUrl: http://prometheus-server.mdai.svc.cluster.local:9090
+    datalyzerNamespace: mdai
+    collectorNamespace: mdai
+    decisiveEngineNamespace: mdai
+datalyzer:
+  enabled: true
+mdai-operator:
+  enabled: true
+  fullnameOverride: mydecisive-engine-operator
+  webhooks:
+    certManager:
+      enabled: false
+    autoGenerateCert:
+      enabled: true
+      certValidDays: 3650
+  cleanup: true
+  datalyzerNamespace: mdai
