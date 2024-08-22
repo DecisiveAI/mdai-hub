@@ -26,7 +26,7 @@ dependencies:
     repository: https://decisiveai.github.io/mdai-helm-charts
     condition: mdai-console.enabled
   - name: datalyzer
-    version: 0.0.3
+    version: 0.0.5
     repository: https://decisiveai.github.io/mdai-helm-charts
     condition: datalyzer.enabled
   - name: mydecisive-engine-operator

@@ -16,9 +16,9 @@ dependencies:
   version: 0.2.4
 - name: datalyzer
   repository: https://decisiveai.github.io/mdai-helm-charts
-  version: 0.0.3
+  version: 0.0.5
 - name: mydecisive-engine-operator
   repository: https://decisiveai.github.io/mdai-helm-charts
   version: 0.0.8
-digest: sha256:bf98794602ea06395c9985f73b9c6de932f77dce077d423822e58b5026e9c7f4
-generated: "2024-08-20T12:10:22.867425-07:00"
+digest: sha256:93acb2b39d242034ec58843af3ac7387c490f9784ba192f4848e56585ee3e6ef
+generated: "2024-08-21T08:34:51.069253-07:00"
