@@ -78,7 +78,7 @@ mdai-console:
   fullnameOverride: mdai-console
   service:
     decisiveApiUrl: http://mdai-api.mdai.svc.cluster.local:8081/query
-    prometheusUrl: http://prometheus-server.mdai.svc.cluster.local:9090
+    prometheusUrl: http://prometheus.mdai.svc.cluster.local:9090
     datalyzerNamespace: mdai
     collectorNamespace: mdai
     decisiveEngineNamespace: mdai
