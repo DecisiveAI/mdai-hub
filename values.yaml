@@ -61,9 +61,6 @@ prometheus:
       evaluation_interval: 30s
     persistentVolume:
       enabled: false
-      storageClass: "-"
-      volumeName: prometheus-pv
-      size: 5Gi
     service:
       servicePort: 9090
     resources:
