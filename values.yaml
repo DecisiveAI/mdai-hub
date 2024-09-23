@@ -64,7 +64,8 @@ prometheus:
     service:
       servicePort: 9090
     resources:
-      limits:
+      requests:
+        cpu: 0.5
         memory: 300Mi
 metrics-server:
   enabled: false
