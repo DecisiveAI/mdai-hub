@@ -61,13 +61,11 @@ prometheus:
       evaluation_interval: 30s
     persistentVolume:
       enabled: false
-      storageClass: "-"
-      volumeName: prometheus-pv
-      size: 5Gi
     service:
       servicePort: 9090
     resources:
-      limits:
+      requests:
+        cpu: 0.5
         memory: 300Mi
 metrics-server:
   enabled: false
@@ -78,7 +76,7 @@ mdai-console:
   fullnameOverride: mdai-console
   service:
     decisiveApiUrl: http://mdai-api.mdai.svc.cluster.local:8081/query
-    prometheusUrl: http://prometheus-server.mdai.svc.cluster.local:9090
+    prometheusUrl: http://prometheus.mdai.svc.cluster.local:9090
     datalyzerNamespace: mdai
     collectorNamespace: mdai
     decisiveEngineNamespace: mdai
