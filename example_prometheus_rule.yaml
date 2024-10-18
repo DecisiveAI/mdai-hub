@@ -1,0 +1,33 @@
+apiVersion: monitoring.coreos.com/v1
+kind: PrometheusRule
+metadata:
+  annotations:
+    meta.helm.sh/release-name: kube-prometheus-stack
+    meta.helm.sh/release-namespace: default
+  labels:
+    app: kube-prometheus-stack
+    app.kubernetes.io/instance: kube-prometheus-stack
+    app.kubernetes.io/part-of: kube-prometheus-stack
+    release: mdai-cluster
+  name: kube-prometheus-stack-mdai
+  namespace: default
+spec:
+  groups:
+  - name: mdai
+    rules:
+    - alert: service1
+      annotations:
+        action: toggleFilter
+        filter_name: dropLogsBelowWarnFilter  
+      expr: increase(mdai_log_bytes_sent_total{service_name="service1"}[24h]) > 2*1024*1024*1024
+      for: 10m
+      labels:
+        severity: critical
+    - alert: service2
+      annotations:
+        action: manageFilter
+        filter_name: dropServiceSpecificLogsBelowWarn
+      expr: increase(mdai_log_bytes_sent_total{service_name="service2"}[24h]) > 2*1024*1024*1024
+      for: 15m
+      labels:
+        severity: warning
