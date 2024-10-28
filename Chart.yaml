@@ -7,7 +7,7 @@ appVersion: 0.0.4
 dependencies:
   - name: opentelemetry-operator
     version: 0.43.1
-    repository: https://decisiveai.github.io/mdai-helm-charts
+    repository: https://github.com/open-telemetry
     condition: opentelemetry-operator.enabled
   - name: kube-prometheus-stack
     version: 65.3.1
@@ -31,6 +31,6 @@ dependencies:
     condition: datalyzer.enabled
   - name: mydecisive-engine-operator
     alias: mdai-operator
-    version: 0.0.12
+    version: 0.0.13
     repository: https://decisiveai.github.io/mdai-helm-charts
     condition: mdai-operator.enabled
