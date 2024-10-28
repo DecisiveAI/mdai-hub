@@ -8,8 +8,6 @@ metadata:
     app: kube-prometheus-stack
     app.kubernetes.io/instance: kube-prometheus-stack
     app.kubernetes.io/part-of: kube-prometheus-stack
-    # should be equal Helm release name
-    release: mdai
   name: kube-prometheus-stack-mdai
   namespace: default
 spec:
