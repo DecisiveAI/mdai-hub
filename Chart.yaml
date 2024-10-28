@@ -6,7 +6,7 @@ description: MDAI Cluster helm chart
 appVersion: 0.0.4
 dependencies:
   - name: opentelemetry-operator
-    version: 0.43.1
+    version: 0.71.2
     repository: https://github.com/open-telemetry
     condition: opentelemetry-operator.enabled
   - name: kube-prometheus-stack
