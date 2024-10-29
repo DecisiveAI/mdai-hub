@@ -1,7 +1,7 @@
 dependencies:
 - name: opentelemetry-operator
-  repository: https://decisiveai.github.io/mdai-helm-charts
-  version: 0.43.1
+  repository: https://open-telemetry.github.io/opentelemetry-helm-charts
+  version: 0.71.2
 - name: kube-prometheus-stack
   repository: https://prometheus-community.github.io/helm-charts
   version: 65.3.1
@@ -19,6 +19,6 @@ dependencies:
   version: 0.0.6
 - name: mydecisive-engine-operator
   repository: https://decisiveai.github.io/mdai-helm-charts
-  version: 0.0.12
-digest: sha256:aea18a307c6b4a1e7406814cdc8a573d26943ea73eb2c6b2fb295bacaa49b06f
-generated: "2024-10-18T14:04:28.99036-04:00"
+  version: 0.0.13
+digest: sha256:d3b7ce1b4953babf9353083fdf74a2e926aa78d2bc660847c786f9a61635b949
+generated: "2024-10-29T14:49:16.818601-04:00"

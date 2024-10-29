@@ -53,7 +53,7 @@ datalyzer:
   enabled: true
 mdai-operator:
   enabled: true
-  fullnameOverride: mydecisive-engine-operator
+  fullnameOverride: mdai-operator
   webhooks:
     certManager:
       enabled: false
