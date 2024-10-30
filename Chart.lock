@@ -19,6 +19,6 @@ dependencies:
   version: 0.0.6
 - name: mydecisive-engine-operator
   repository: https://decisiveai.github.io/mdai-helm-charts
-  version: 0.0.13
-digest: sha256:d3b7ce1b4953babf9353083fdf74a2e926aa78d2bc660847c786f9a61635b949
-generated: "2024-10-29T14:49:16.818601-04:00"
+  version: 0.0.14
+digest: sha256:e4adf245b939ba8dfb4548effee8938557e7915492db1ecef7ace7fe9d5e5ca5
+generated: "2024-10-30T09:22:29.506792-07:00"
