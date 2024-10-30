@@ -28,78 +28,13 @@ opentelemetry-operator:
   manager:
     collectorImage:
       repository: otel/opentelemetry-collector-k8s
-      tag: 0.108.0
+      tag: 0.112.0
     leaderElection:
       enabled: false
     env:
       ENABLE_WEBHOOKS: "true"
   kubeRBACProxy:
     enabled: false
-prometheus:
-  enabled: true
-  alertmanager:
-    enabled: false
-  configmapReload:
-    prometheus:
-      enabled: false
-  kube-state-metrics:
-    enabled: false
-  prometheus-node-exporter:
-    enabled: false
-  prometheus-pushgateway:
-    enabled: false
-  server:
-    fullnameOverride: prometheus
-    retention: 3d
-    extraFlags:
-      - "enable-feature=exemplar-storage"
-      - "enable-feature=otlp-write-receiver"
-      - "enable-feature=promql-experimental-functions"
-    global:
-      scrape_interval: 10s
-      scrape_timeout: 5s
-      evaluation_interval: 30s
-    persistentVolume:
-      enabled: false
-      storageClass: "-"
-      volumeName: prometheus-pv
-      size: 5Gi
-    service:
-      servicePort: 9090
-    resources:
-      limits:
-        memory: 300Mi
-  serverFiles:
-    prometheus.yml:
-      scrape_configs:
-        - job_name: otel-collector
-          honor_labels: true
-          tls_config:
-            insecure_skip_verify: true
-          kubernetes_sd_configs:
-            - role: pod
-          relabel_configs:
-            - source_labels: [__meta_kubernetes_pod_label_app_kubernetes_io_component, __meta_kubernetes_pod_annotation_prometheus_io_scrape]
-              separator: ;
-              regex: opentelemetry-collector;true
-              action: keep
-            - source_labels: [__address__]
-              regex: '.*:(431[78]|14250)'
-              action: drop
-        - job_name: datalyzer-scrape
-          honor_labels: true
-          tls_config:
-            insecure_skip_verify: true
-          kubernetes_sd_configs:
-            - role: pod
-          relabel_configs:
-            - source_labels: [__meta_kubernetes_pod_label_app_kubernetes_io_component, __meta_kubernetes_pod_annotation_prometheus_io_scrape]
-              separator: ;
-              regex: datalyzer;true
-              action: keep
-            - source_labels: [__address__]
-              regex: '.*:(431[78]|14250)'
-              action: drop
 
 metrics-server:
   enabled: false
@@ -118,7 +53,7 @@ datalyzer:
   enabled: true
 mdai-operator:
   enabled: true
-  fullnameOverride: mydecisive-engine-operator
+  fullnameOverride: mdai-operator
   webhooks:
     certManager:
       enabled: false
