@@ -1,0 +1,90 @@
+apiVersion: mydecisive.ai/v1
+kind: MyDecisiveEngine
+metadata:
+  labels:
+    app.kubernetes.io/name: mydecisiveengine
+    app.kubernetes.io/instance: mydecisiveengine-sample
+    app.kubernetes.io/part-of: mydecisive-engine-operator
+    app.kubernetes.io/created-by: mydecisive-engine-operator
+  name: mydecisiveengine-sample
+spec:
+  telemetryModule:
+    attributes:
+      name: "telemetry"
+      version: "0.0.1"
+    collectors:
+      -
+        name: "gateway"
+        enabled: true
+        measureVolumes: true
+        spec:
+          ports:
+            - name: promexporter
+              port: 9464
+              protocol: TCP
+            - name: metrics
+              port: 8888
+              protocol: TCP
+            - name: metrics-1
+              port: 4317
+            - name: fluentforward
+              port: 8006
+              protocol: TCP
+          env:
+          - name: MY_POD_IP
+            valueFrom:
+              fieldRef:
+                apiVersion: v1
+                fieldPath: status.podIP
+          config:
+            receivers:
+              fluentforward:
+                endpoint: '${env:MY_POD_IP}:8006'
+              otlp:
+                protocols:
+                  grpc:
+                    endpoint: '${env:MY_POD_IP}:4317'
+                  http:
+                    endpoint: '${env:MY_POD_IP}:4318'
+                    # Since this collector needs to receive data from the web, enable cors for all origins
+                    # `allowed_origins` can be refined for your deployment domain
+                    cors:
+                      allowed_origins:
+                      - "http://*"
+                      - "https://*"
+
+            extensions:
+              # The health_check extension is mandatory for this chart.
+              # Without the health_check extension the collector will fail the readiness and liveliness probes.
+              # The health_check extension can be modified, but should never be removed.
+              health_check:
+                endpoint: "${env:MY_POD_IP}:13133"
+
+            processors:
+              memory_limiter:
+                check_interval: 23s
+                limit_percentage: 75
+                spike_limit_percentage: 15
+
+              batch:
+                send_batch_size: 10000
+                timeout: 13s
+              
+              groupbyattrs:
+                keys:
+                  - service.name
+
+            exporters:
+              debug: {}
+
+            service:
+              telemetry:
+                metrics:
+                  address: ":8888"
+              extensions:
+              - health_check
+              pipelines:
+                logs/customer_pipeline:
+                  receivers: [otlp, fluentforward]
+                  processors: [memory_limiter, batch, groupbyattrs]
+                  exporters: [debug]

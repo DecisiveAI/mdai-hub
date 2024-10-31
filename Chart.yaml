@@ -18,8 +18,8 @@ dependencies:
     repository: https://kubernetes-sigs.github.io/metrics-server
     condition: metrics-server.enabled
   - name: mdai-api
-    version: 0.0.4
-    repository: https://decisiveai.github.io/mdai-helm-charts
+    version: 0.0.5
+    repository: file:///Users/robin/code/mdai-api/deployment
     condition: mdai-api.enabled
   - name: mdai-console
     version: 0.2.4
