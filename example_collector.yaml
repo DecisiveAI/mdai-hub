@@ -80,7 +80,7 @@ spec:
                 error_mode: ignore
                 logs:
                   log_record:
-                    - 'IsMatch(body, "\b(WARNING|ERROR)\b")'
+                    - 'log_level == INFO'
 
             exporters:
               debug: {}
