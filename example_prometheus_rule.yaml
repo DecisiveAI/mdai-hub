@@ -18,6 +18,6 @@ spec:
       annotations:
         action: toggleFilter
         filter_name: dropLogsBelowWarnFilter  
-      expr: increase(mdai_log_bytes_sent_total{service_name!=""}[6m]) > 5*1024*1024
+      expr: increase(mdai_log_bytes_received_total{service_name!=""}[6m]) > 5*1024*1024
       labels:
         severity: critical

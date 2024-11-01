@@ -14,6 +14,20 @@ see `values.yaml` for other options.
 
 # TESTING
 
+## Add helm repos
+
+    helm repo add minio https://charts.min.io/
+    helm repo add fluent https://fluent.github.io/helm-charts
+    helm repo update
+
+## Install minio
+
+    helm install minio minio/minio --values values_minio.yaml
+
+### install of MDAI without cert-manager
+
+    helm upgrade --install --create-namespace --namespace mdai --cleanup-on-fail --dependency-update --wait-for-jobs -f values.yaml -f values_prometheus.yaml mdai .
+
 ## Install prometheus rules
 
     kubectl apply -f ./example_prometheus_rule.yaml
@@ -31,5 +45,4 @@ see `values.yaml` for other options.
 
 ## Install fluentd
 
-    helm repo add fluent https://fluent.github.io/helm-charts && helm repo update
     helm install fluentd fluent/fluentd --values values_fluentd.yaml

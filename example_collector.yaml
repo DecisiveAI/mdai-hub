@@ -34,6 +34,10 @@ spec:
               fieldRef:
                 apiVersion: v1
                 fieldPath: status.podIP
+          - name: AWS_ACCESS_KEY_ID
+            value: writer-svcacct
+          - name: AWS_SECRET_ACCESS_KEY
+            value: writer123
           config:
             receivers:
               fluentforward:
@@ -72,8 +76,22 @@ spec:
                 keys:
                   - service.name
 
+              filter/severity:
+                error_mode: ignore
+                logs:
+                  log_record:
+                    - 'IsMatch(body, "\b(WARNING|ERROR)\b")'
+
             exporters:
               debug: {}
+              awss3:
+                marshaler: otlp_json
+                s3uploader:
+                  endpoint: http://minio.default.svc.cluster.local:9000
+                  file_prefix: loggy-mclogfile_
+                  s3_bucket: 'logs'
+                  s3_force_path_style: true
+                  s3_partition: hour
 
             service:
               telemetry:
@@ -86,3 +104,8 @@ spec:
                   receivers: [otlp, fluentforward]
                   processors: [memory_limiter, batch, groupbyattrs]
                   exporters: [debug]
+
+                logs/long_term_storage:
+                  receivers: [otlp, fluentforward]
+                  processors: [filter/severity, memory_limiter, batch, groupbyattrs]
+                  exporters: [awss3]
