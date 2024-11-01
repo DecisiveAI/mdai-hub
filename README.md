@@ -22,6 +22,10 @@ This sets up a cluster with the MDAI stack + Fluentd + Minio. It:
   - service9999 will be really noisy
   - More can be spun up using the example_log_generator manifests
 
+## Setup
+
+🚧⚠️ **Change the mdai-api dependency repo path to the appropriate path for your system** ⚠️🚧
+
 ## Make cluster
 
     kind create cluster --name cheggtober
