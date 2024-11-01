@@ -14,6 +14,10 @@ see `values.yaml` for other options.
 
 # TESTING
 
+## Make cluster
+
+    kind create cluster --name cheggtober
+
 ## Add helm repos
 
     helm repo add minio https://charts.min.io/
@@ -27,10 +31,6 @@ see `values.yaml` for other options.
 ### install of MDAI without cert-manager
 
     helm upgrade --install --create-namespace --namespace mdai --cleanup-on-fail --dependency-update --wait-for-jobs -f values.yaml -f values_prometheus.yaml mdai .
-
-## Install prometheus rules
-
-    kubectl apply -f ./example_prometheus_rule.yaml
 
 ## Install a log generator
 

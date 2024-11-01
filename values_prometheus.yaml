@@ -333,6 +333,7 @@ kube-prometheus-stack:
         - target_matchers:
             - 'alertname = InfoInhibitor'
       route:
+        group_by: ["alertname", "severity"]
         group_wait: 30s
         group_interval: 5m
         repeat_interval: 12h
@@ -345,7 +346,7 @@ kube-prometheus-stack:
       - name: 'null'   
       - name: 'event-handler'
         webhook_configs:
-          - url: 'http://event-handler:12345'  
+          - url: 'http://mdai-api.mdai.svc.cluster.local:8081/alerts'  
             send_resolved: true
       templates:
       - '/etc/alertmanager/config/*.tmpl'
