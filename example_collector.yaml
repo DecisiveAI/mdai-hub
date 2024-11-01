@@ -80,7 +80,7 @@ spec:
                 error_mode: ignore
                 logs:
                   log_record:
-                    - 'log_level == INFO'
+                    - 'attributes["log_level"] == "INFO"'
 
             exporters:
               debug: {}
