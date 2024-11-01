@@ -14,6 +14,14 @@ see `values.yaml` for other options.
 
 # TESTING
 
+This sets up a cluster with the MDAI stack + Fluentd + Minio. It:
+
+- Stores all ERROR/WARNING logs in minio
+- Filters any service's INFO logs that sends more than 5MB in the last 6 minutes
+- Spins up some little log generators that will appear to send logs for 1001 services
+  - service9999 will be really noisy
+  - More can be spun up using the example_log_generator manifests
+
 ## Make cluster
 
     kind create cluster --name cheggtober
@@ -32,7 +40,7 @@ see `values.yaml` for other options.
 
     helm upgrade --install --create-namespace --namespace mdai --cleanup-on-fail --dependency-update --wait-for-jobs -f values.yaml -f values_prometheus.yaml mdai .
 
-## Install a log generator
+## Install a couple of log generators
 
     kubectl apply -f ./example_log_generator.yaml
     kubectl apply -f ./example_log_generator_noisy_service.yaml
