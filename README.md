@@ -14,9 +14,14 @@ see `values.yaml` for other options.
 
 # TESTING
 
+## Install prometheus rules
+
+    kubectl apply -f ./example_prometheus_rule.yaml
+
 ## Install a log generator
 
     kubectl apply -f ./example_log_generator.yaml
+    kubectl apply -f ./example_log_generator_noisy_service.yaml
 
 ## Init a collector
 
