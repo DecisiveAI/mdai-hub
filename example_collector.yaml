@@ -25,8 +25,6 @@ spec:
             - name: metrics
               port: 8888
               protocol: TCP
-            - name: metrics-1
-              port: 4317
             - name: fluentforward
               port: 8006
               protocol: TCP

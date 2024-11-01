@@ -7,9 +7,15 @@ fileConfigs:
       pos_file /var/log/fluentd/fluentd-containers.log.pos
       tag kubernetes.*
       <parse>
-        @type none
-        # expression /^(?<time>[^ ]+T[^ ]+Z?) - (?<log_level>[^ ]+) - (?<message>.*)$/
-        # time_format %Y-%m-%dT%H:%M:%S%z
+        @type multi_format
+        <pattern>
+          format regexp
+          expression (?<timestamp>\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}[+-]\d{2}:\d{2}) - (?<service.name>service\d+) - (?<log_level>INFO|ERROR|WARNING) - (?<message>.+)
+          time_format %Y-%m-%dT%H:%M:%S%z
+        </pattern>
+        <pattern>
+          format none
+        </pattern>
       </parse>
     </source>
 
@@ -25,19 +31,20 @@ fileConfigs:
       <filter kubernetes.**>
         @type grep
         <include>
-          key kubernetes.pod_name
-          pattern loggy-mclogface
+          key service.name
+          pattern /^$/
         </include>
       </filter>
 
-      <filter kubernetes.**>
-        @type record_transformer
-        <record>
-          service.name ${record["kubernetes"]["pod_name"]}
-          severity ${record["log"].scan(/(ERROR|WARNING|INFO)/).first || "INFO"}
-          severity_number ${record["log"].scan(/ERROR|WARNING|INFO/).first == 'ERROR' ? 9 : ${record["log"].scan(/WARNING/).first ? 5 : 1}}
-        </record>
-      </filter>
+      # <filter kubernetes.**>
+      #   @type record_transformer
+      #   # enable_ruby
+      #   <record>
+      #     service.name ${service}
+      #     # severity ${record["log"].scan(/(ERROR|WARNING|INFO)/).first || "INFO"}
+      #     # severity_number ${record["log"].scan(/ERROR|WARNING|INFO/).first == 'ERROR' ? 9 : ${record["log"].scan(/WARNING/).first ? 5 : 1}}
+      #   </record>
+      # </filter>
 
       <match kubernetes.**>
         @type forward

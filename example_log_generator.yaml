@@ -33,6 +33,8 @@ spec:
               value: "1"
             - name: LOG_MAX_COUNT
               value: "25"
+            - name: SERVICE_COUNT
+              value: "1000"
           command:
             - /bin/sh
             - -c
@@ -43,7 +45,9 @@ spec:
                 INTERVAL=$(( (RANDOM % (${LOG_MAX_INTERVAL} - ${LOG_MIN_INTERVAL} + 1)) + ${LOG_MIN_INTERVAL} ))
                 for i in $(seq 1 $COUNT); do
                   LOG_LEVEL=$(echo $LEVELS | awk -v idx=$((RANDOM % 3 + 1)) '{print $idx}')
-                  echo "$(date -u +"%Y-%m-%dT%H:%M:%SZ") - ${LOG_LEVEL} - ${LOG_MESSAGE}"
+                  RANDOM_NUMBER=$((RANDOM % ${SERVICE_COUNT}))
+                  SERVICE_NAME="service${RANDOM_NUMBER}"
+                  echo "$(date -Iseconds) - ${SERVICE_NAME} - ${LOG_LEVEL} - ${LOG_MESSAGE}"
                 done
                 sleep $INTERVAL
               done
