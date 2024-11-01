@@ -17,6 +17,24 @@ spec:
         name: "gateway"
         enabled: true
         measureVolumes: true
+        telemetryFiltering:
+          filters:
+            - name: mute-noisy-services
+              enabled: true
+              description: filter noisy services
+              managedFilter:
+                pipelines:
+                  - logs/customer_pipeline
+                filterProcessorConfig:
+                  logs:
+                    log_record:
+                      - 'IsMatch(resource.attributes["service.name"], "<<SERVICE_LIST>>") and attributes["log_level"] == "INFO"'
+                alertingRules:
+                  - name: short_term
+                    alert_query: 'increase(mdai_log_bytes_received_total[6m]) > 5*1024*1024'
+                    for: 1m
+                    severity: warning
+                    action: manageFilter
         spec:
           ports:
             - name: promexporter
