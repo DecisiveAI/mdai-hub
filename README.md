@@ -24,7 +24,8 @@ This sets up a cluster with the MDAI stack + Fluentd + Minio. It:
 
 ## Setup
 
-🚧⚠️ **Change the mdai-api dependency repo path to the appropriate path for your system** ⚠️🚧
+🚧⚠️ **Change the mdai-api and mydecisive-engine-operator dependency repo path to the appropriate path for your system** ⚠️🚧
+🚧⚠️ Check out `rlaw/cheggtober` branch of this repo and `mydecisive-engine-operator` ⚠️🚧
 
 ## Make cluster
 

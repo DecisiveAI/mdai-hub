@@ -19,6 +19,7 @@ dependencies:
     condition: metrics-server.enabled
   - name: mdai-api
     version: 0.0.5
+    # repository: https://decisiveai.github.io/mdai-helm-charts
     repository: file:///Users/robinlaw/code/mdai-api/deployment
     condition: mdai-api.enabled
   - name: mdai-console
@@ -31,6 +32,7 @@ dependencies:
     condition: datalyzer.enabled
   - name: mydecisive-engine-operator
     alias: mdai-operator
-    version: 0.0.14
-    repository: https://decisiveai.github.io/mdai-helm-charts
+    version: 0.0.15
+    # repository: https://decisiveai.github.io/mdai-helm-charts
+    repository: file:///Users/robinlaw/code/mydecisive-engine-operator/deployment
     condition: mdai-operator.enabled
