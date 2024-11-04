@@ -19,7 +19,7 @@ spec:
         measureVolumes: true
         telemetryFiltering:
           filters:
-            - name: noisy-service-threshold
+            - name: mute-noisy-services
               enabled: true
               description: filter noisy services
               managedFilter:

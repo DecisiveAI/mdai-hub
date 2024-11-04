@@ -25,7 +25,7 @@ This sets up a cluster with the MDAI stack + Fluentd + Minio. It:
 ## Setup
 
 🚧⚠️ **Change the mdai-api and mydecisive-engine-operator dependency repo path to the appropriate path for your system** ⚠️🚧
-🚧⚠️ Check out `rlaw/cheggtober` branch of this repo and `mydecisive-engine-operator` ⚠️🚧
+🚧⚠️ Check out `0.5-rc` branch of this repo and `mydecisive-engine-operator` ⚠️🚧
 
 ## Make cluster
 
@@ -45,16 +45,15 @@ This sets up a cluster with the MDAI stack + Fluentd + Minio. It:
 
     helm upgrade --install --create-namespace --namespace mdai --cleanup-on-fail --dependency-update --wait-for-jobs -f values.yaml -f values_prometheus.yaml mdai .
 
-## Install a couple of log generators
-
-    kubectl apply -f ./example_log_generator.yaml
-    kubectl apply -f ./example_log_generator_noisy_service.yaml
-
 ## Init a collector
 
 > Note: must be in `mdai` namespace with the datalyzer
 
     kubectl apply -f ./example_collector.yaml --namespace mdai
+
+## Install a couple of log generators
+
+    kubectl apply -f ./example_log_generator.yaml && kubectl apply -f ./example_log_generator_noisy_service.yaml
 
 ## Install fluentd
 
