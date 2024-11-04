@@ -42,7 +42,7 @@ mdai-api:
   enabled: yes
   fullnameOverride: mdai-api
 mdai-console:
-  enabled: true
+  enabled: false
   fullnameOverride: mdai-console
   service:
     decisiveApiUrl: http://mdai-api.mdai.svc.cluster.local:8081/query

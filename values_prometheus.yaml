@@ -333,7 +333,7 @@ kube-prometheus-stack:
         - target_matchers:
             - 'alertname = InfoInhibitor'
       route:
-        group_by: ["alertname", "severity", "service_name"]
+        group_by: ["alertname", "service_name"]
         group_wait: 30s
         group_interval: 5m
         repeat_interval: 12h
