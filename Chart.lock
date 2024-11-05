@@ -9,16 +9,13 @@ dependencies:
   repository: https://kubernetes-sigs.github.io/metrics-server
   version: 3.12.1
 - name: mdai-api
-  repository: file:///Users/robinlaw/code/mdai-api/deployment
-  version: 0.0.5
-- name: mdai-console
   repository: https://decisiveai.github.io/mdai-helm-charts
-  version: 0.2.4
+  version: 0.0.5
 - name: datalyzer
   repository: https://decisiveai.github.io/mdai-helm-charts
   version: 0.0.6
 - name: mydecisive-engine-operator
-  repository: file:///Users/robinlaw/code/mydecisive-engine-operator/deployment
-  version: 0.0.15
-digest: sha256:e062b52d9a89c218c8470f5df4a355e51fe7a0d90829bfc5a72618da7f94be01
-generated: "2024-11-01T18:27:36.04446-05:00"
+  repository: https://decisiveai.github.io/mdai-helm-charts
+  version: 0.0.16
+digest: sha256:5b6dc4d58f48d2ae2899119b2babf59979eceed2fd5fdef230c3ad5f0af17735
+generated: "2024-11-05T14:19:28.705989-07:00"
