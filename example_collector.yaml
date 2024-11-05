@@ -21,7 +21,7 @@ spec:
         telemetryFiltering:
           filters:
             - name: mute-noisy-services
-              enabled: true
+              enabled: false
               description: filter noisy services
               managedFilter:
                 pipelines:
@@ -102,6 +102,8 @@ spec:
                     - 'attributes["log_level"] == "INFO"'
 
             exporters:
+              otlphttp:
+                endpoint: "${env:MY_POD_IP}:1234"
               debug: {}
               awss3:
                 marshaler: otlp_json
@@ -122,7 +124,7 @@ spec:
                 logs/customer_pipeline:
                   receivers: [otlp, fluentforward]
                   processors: [memory_limiter, batch, groupbyattrs]
-                  exporters: [debug]
+                  exporters: [debug, otlphttp]
 
                 logs/long_term_storage:
                   receivers: [otlp, fluentforward]
