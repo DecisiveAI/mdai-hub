@@ -1,35 +1,50 @@
-# TESTING
+# MDAI Helm chart
 
-This sets up a cluster with the MDAI stack + Fluentd + Minio. It:
+This is the official Helm chart for [MyDecisive.ai](https://www.mydecisive.ai/), an open-core solution for monitoring and managing OpenTelemetry pipelines on Kubernetes. 
 
-- Stores all ERROR/WARNING logs in minio
-- Filters any service's INFO logs that sends more than 5MB in the last 6 minutes
-- Spins up some little log generators that will appear to send logs for 1001 services
-  - service9999 will be really noisy
-  - More can be spun up using the example_log_generator manifests
+## Install MDAI
 
-## Make cluster
+### Without cert-manager
 
-    kind create cluster --name cheggtober
+To install via Helm, run the following command.
 
-## Install minio
+```sh
+    helm upgrade --install --create-namespace --namespace mdai --cleanup-on-fail --dependency-update --wait-for-jobs -f values.yaml -f values_prometheus.yaml mdai .
+```
 
-    helm upgrade --install --repo https://charts.min.io minio minio -f values_minio.yaml
+Alternatively, add the Helm repository first and scan for updates
 
-### install of MDAI without cert-manager
+```sh
+helm repo add mdai https://decisiveai.github.io/mdai-helm-charts
+helm repo update
+```
 
-    helm dependency update && helm upgrade --install --create-namespace --namespace mdai --cleanup-on-fail --wait-for-jobs -f values.yaml -f values_prometheus.yaml mdai .
+### With cert-manager
 
-## Init a collector
+```sh
+helm upgrade --install --create-namespace --namespace mdai --cleanup-on-fail --dependency-update --wait-for-jobs --set mdai-operator.webhooks.certManager.enabled=true --set mdai-operator.webhooks.autoGenerateCert.enabled=false -f values.yaml -f values_prometheus.yaml mdai .
+```
 
-> Note: must be in `mdai` namespace with the datalyzer
+### Without cleanup on uninstall
 
-    kubectl apply -f ./example_collector.yaml --namespace mdai
+```sh
+helm upgrade --install --create-namespace --namespace mdai --cleanup-on-fail --dependency-update --wait-for-jobs --set cleanup=false -f values.yaml -f values_prometheus.yaml mdai .
+```
 
-## Install a couple of log generators
+see `values.yaml` for other options.
 
-    kubectl apply -f ./example_log_generator.yaml -f ./example_log_generator_noisy_service.yaml
+## Use Cases
 
-## Install fluentd
+* [Compliance and Dynamic Filtering](./USAGE/COMPLIANCE_FILTERING.md)
 
-    helm upgrade --install --repo https://fluent.github.io/helm-charts fluent fluentd -f values_fluentd.yaml
+*Stay tuned! More coming soon!*
+
+## Learn more
+
+* Visit our [solutions page](https://www.mydecisive.ai/solutions) for more details MyDecisive's approach to composable observability. 
+* Head to our [docs](https://docs.mydecisive.ai/) to learn more about MyDecisive's tech.
+
+## Info and Support 
+
+* Contact [support@mydecisive.ai](mailto:support@mydecisive.ai) for assistance or to talk to with a member of our support team
+* Contact [info@mydecisive.ai](mailto:info@mydecisive.ai) if you're interested in learning more about our solutions
