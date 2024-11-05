@@ -34,7 +34,7 @@ spec:
             - name: LOG_MAX_COUNT
               value: "5000"
             - name: NOISY_SERVICE_NAME # must be service + a number
-              value: "service9999"
+              value: "service1234"
           command:
             - /bin/sh
             - -c
