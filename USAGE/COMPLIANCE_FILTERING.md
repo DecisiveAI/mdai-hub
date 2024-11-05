@@ -84,7 +84,7 @@ You should be able to view the log output to validate the generation of logs.
 
 <video controls src="../media/logs_normal.mp4"></video>
 
-**Generator 2** - a noisy and excessive log generator of logs for a particular service (`service9999` unless changed)
+**Generator 2** - a noisy and excessive log generator of logs for a particular service (`service1234` unless changed)
 
 ```sh
 kubectl apply -f ./example_log_generator_noisy_service.yaml
@@ -93,6 +93,16 @@ kubectl apply -f ./example_log_generator_noisy_service.yaml
 You should be able to view the log output to validate the generation of logs.
 
 <video controls src="../media/logs_noisy.mp4"></video>
+
+**Generator 3** - a noisy and excessive log generator of logs for a particular service (`service4321` unless changed)
+
+```sh
+kubectl apply -f ./example_log_generator_xtra_noisy_service.yaml
+```
+
+You should be able to view the log output to validate the generation of logs.
+
+<video controls src=""></video>
 
 
 ## Create and use OTel collector for forwarding logs
