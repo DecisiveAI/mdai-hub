@@ -1,17 +1,3 @@
-### install of MDAI without cert-manager
-
-    helm upgrade --install --create-namespace --namespace mdai --cleanup-on-fail --dependency-update --wait-for-jobs -f values.yaml -f values_prometheus.yaml mdai .
-
-### install of MDAI with cert-manager
-
-    helm upgrade --install --create-namespace --namespace mdai --cleanup-on-fail --dependency-update --wait-for-jobs --set mdai-operator.webhooks.certManager.enabled=true --set mdai-operator.webhooks.autoGenerateCert.enabled=false -f values.yaml -f values_prometheus.yaml mdai .
-
-### install of MDAI without cleanup on uninstall
-
-    helm upgrade --install --create-namespace --namespace mdai --cleanup-on-fail --dependency-update --wait-for-jobs --set cleanup=false -f values.yaml -f values_prometheus.yaml mdai .
-
-see `values.yaml` for other options.
-
 # TESTING
 
 This sets up a cluster with the MDAI stack + Fluentd + Minio. It:
@@ -22,28 +8,17 @@ This sets up a cluster with the MDAI stack + Fluentd + Minio. It:
   - service9999 will be really noisy
   - More can be spun up using the example_log_generator manifests
 
-## Setup
-
-🚧⚠️ **Change the mdai-api and mydecisive-engine-operator dependency repo path to the appropriate path for your system** ⚠️🚧
-🚧⚠️ Check out `0.5-rc` branch of this repo and `mydecisive-engine-operator` ⚠️🚧
-
 ## Make cluster
 
     kind create cluster --name cheggtober
 
-## Add helm repos
-
-    helm repo add minio https://charts.min.io/
-    helm repo add fluent https://fluent.github.io/helm-charts
-    helm repo update
-
 ## Install minio
 
-    helm install minio minio/minio --values values_minio.yaml
+    helm upgrade --install --repo https://charts.min.io minio minio -f values_minio.yaml
 
 ### install of MDAI without cert-manager
 
-    helm upgrade --install --create-namespace --namespace mdai --cleanup-on-fail --dependency-update --wait-for-jobs -f values.yaml -f values_prometheus.yaml mdai .
+    helm dependency update && helm upgrade --install --create-namespace --namespace mdai --cleanup-on-fail --wait-for-jobs -f values.yaml -f values_prometheus.yaml mdai .
 
 ## Init a collector
 
@@ -53,8 +28,8 @@ This sets up a cluster with the MDAI stack + Fluentd + Minio. It:
 
 ## Install a couple of log generators
 
-    kubectl apply -f ./example_log_generator.yaml && kubectl apply -f ./example_log_generator_noisy_service.yaml
+    kubectl apply -f ./example_log_generator.yaml -f ./example_log_generator_noisy_service.yaml
 
 ## Install fluentd
 
-    helm install fluentd fluent/fluentd --values values_fluentd.yaml
+    helm upgrade --install --repo https://fluent.github.io/helm-charts fluent fluentd -f values_fluentd.yaml
