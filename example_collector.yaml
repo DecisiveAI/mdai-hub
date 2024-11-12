@@ -1,6 +1,7 @@
 apiVersion: mydecisive.ai/v1
 kind: MyDecisiveEngine
 metadata:
+  namespace: mdai
   labels:
     app.kubernetes.io/name: mydecisiveengine
     app.kubernetes.io/instance: mydecisiveengine-sample
