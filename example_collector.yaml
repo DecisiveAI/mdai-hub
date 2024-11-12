@@ -111,8 +111,6 @@ spec:
                     - 'attributes["log_level"] == "INFO"'
 
             exporters:
-              otlphttp:
-                endpoint: "http://localhost:4318"
               debug: {}
               awss3:
                 marshaler: otlp_json
