@@ -16,7 +16,8 @@ spec:
       -
         name: "gateway"
         enabled: true
-        measureVolumes: true
+        measureVolumes:
+          enabled: true
         telemetryFiltering:
           filters:
             - name: mute-noisy-services
