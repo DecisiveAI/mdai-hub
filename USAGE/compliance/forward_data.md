@@ -3,7 +3,7 @@
 We will now use fluentD to send all logs from the mock data generators to the OTel collector. This will connect all the steps together at you'll finally be able to see telemetry flowing through your telemetry pipelines.
 
 ```sh
-helm install fluentd fluent/fluentd --values values_fluentd.yaml
+helm upgrade --install --repo https://fluent.github.io/helm-charts fluent fluentd -f values_fluentd.yaml
 ```
 
 ### Validate fluentD operations
