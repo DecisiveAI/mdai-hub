@@ -56,13 +56,31 @@ increase(
 )
 ```
 
-We've created a few quick links that wi
+#### Quick Links
 
+These are preloaded links with panels populated from the above queries
 
-#### Link 1 - [All queries](http://localhost:9090/graph?g0.expr=increase(%0A%20%20sum%20by%20(service_name)%20(%0A%20%20%20%20mdai_log_bytes_sent_total%0A%20%20)%5B6m%3A%5D%0A)&g0.tab=0&g0.display_mode=lines&g0.show_exemplars=0&g0.range_input=15m&g1.expr=increase(%0A%20%20sum%20by%20(service_name)%20(%0A%20%20%20%20mdai_log_bytes_sent_total%7Bservice_name!~%22service1234%7Cservice4321%22%7D%0A%20%20)%5B6m%3A%5D%0A)&g1.tab=0&g1.display_mode=lines&g1.show_exemplars=0&g1.range_input=15m&g2.expr=increase(%0A%20%20sum%20by%20(service_name)%20(%0A%20%20%20%20mdai_log_bytes_sent_total%7Bservice_name%3D~%22service1234%7Cservice4321%22%7D%0A%20%20)%5B6m%3A%5D%0A)&g2.tab=0&g2.display_mode=lines&g2.show_exemplars=0&g2.range_input=15m)
+##### Link 1 - [All queries](http://localhost:9090/graph?g0.expr=increase(%0A%20%20sum%20by%20(service_name)%20(%0A%20%20%20%20mdai_log_bytes_sent_total%0A%20%20)%5B6m%3A%5D%0A)&g0.tab=0&g0.display_mode=lines&g0.show_exemplars=0&g0.range_input=15m&g1.expr=increase(%0A%20%20sum%20by%20(service_name)%20(%0A%20%20%20%20mdai_log_bytes_sent_total%7Bservice_name!~%22service1234%7Cservice4321%22%7D%0A%20%20)%5B6m%3A%5D%0A)&g1.tab=0&g1.display_mode=lines&g1.show_exemplars=0&g1.range_input=15m&g2.expr=increase(%0A%20%20sum%20by%20(service_name)%20(%0A%20%20%20%20mdai_log_bytes_sent_total%7Bservice_name%3D~%22service1234%7Cservice4321%22%7D%0A%20%20)%5B6m%3A%5D%0A)&g2.tab=0&g2.display_mode=lines&g2.show_exemplars=0&g2.range_input=15m)
 
 This link has the following panels
 * Panel 1 - Metrics for all services together
 * Panel 2 - Metrics for all non-noisy services
 * Panel 3 - Metrics for noisy service (`service1234`) and extra noisy service (`service4321`)
+ 
+<br />
 
+**More coming soon...**
+
+Check back for more dashboards soon.
+
+### Data is now flowing end-to-end
+
+You can now see data flowing through your telemtery pipelines. 
+
+*...but wait... is there too much!?*
+
+We've planted a minor issue in the generators where they are emitting more data than you would potentially want. Let's reduce their data flow!
+
+---- 
+
+Next up: [Enabling Managed Filters ➡](./managed_filters.md)
