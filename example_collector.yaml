@@ -37,6 +37,13 @@ spec:
                     severity: warning
                     action: manageFilter
         spec:
+          resources:
+            limits:
+              cpu: "1"
+              memory: 512M
+            requests:
+              cpu: "1"
+              memory: 512M
           ports:
             - name: promexporter
               port: 9464
@@ -53,6 +60,8 @@ spec:
               fieldRef:
                 apiVersion: v1
                 fieldPath: status.podIP
+          - name: GOMAXPROCS
+            value: "1"
           - name: AWS_ACCESS_KEY_ID
             value: writer-svcacct
           - name: AWS_SECRET_ACCESS_KEY
