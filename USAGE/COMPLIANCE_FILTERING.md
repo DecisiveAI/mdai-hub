@@ -102,7 +102,7 @@ kubectl apply -f ./example_log_generator_xtra_noisy_service.yaml
 
 You should be able to view the log output to validate the generation of logs.
 
-<video controls src=""></video>
+<video controls src="../media/log_xtra_noisy.mp4"></video>
 
 
 ## Create and use OTel collector for forwarding logs
