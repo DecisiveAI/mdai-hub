@@ -22,11 +22,11 @@ dependencies:
     repository: https://decisiveai.github.io/mdai-helm-charts
     condition: mdai-api.enabled
   - name: datalyzer
-    version: 0.0.6
+    version: 0.0.8
     repository: https://decisiveai.github.io/mdai-helm-charts
     condition: datalyzer.enabled
   - name: mydecisive-engine-operator
     alias: mdai-operator
-    version: 0.0.16
+    version: 0.0.17
     repository: https://decisiveai.github.io/mdai-helm-charts
     condition: mdai-operator.enabled
