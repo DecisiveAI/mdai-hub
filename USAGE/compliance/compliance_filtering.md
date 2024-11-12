@@ -6,7 +6,6 @@ This sets up a cluster with the following technologies:
 - Fluentd
 - MinIO
 
-
 ## What does this use case provide?
 
 An end-to-end mocked example for collecting log data from services/infrastructure, stream processing and forwarding of that log data to either a compliance store or an `otlp-http` endpoint.
@@ -34,23 +33,11 @@ An end-to-end mocked example for collecting log data from services/infrastructur
 ```sh
 kind create cluster --name mdai
 ```
-## Add helm repos
-
-```sh
-# add MinIO
-helm repo add minio https://charts.min.io/
-
-# add Fluent
-helm repo add fluent https://fluent.github.io/helm-charts
-
-# update helm repo
-helm repo update
-```
 
 ## Install min.io
 
 ```sh
-helm install minio minio/minio --values values_minio.yaml
+helm upgrade --install --repo https://charts.min.io minio minio -f values_minio.yaml
 ```
 
 ### Install MDAI without cert-manager 

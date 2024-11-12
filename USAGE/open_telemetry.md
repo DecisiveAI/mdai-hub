@@ -8,5 +8,5 @@ We use OTel's [contrib](https://github.com/open-telemetry/opentelemetry-collecto
 > Note: The pod name `gateway-collector-####` can be found using autocomplete
 
 ```sh
-kubectl -n mdai get configmaps gateway-collector-##### -o yaml
+kubectl -n mdai get configmaps --selector app.kubernetes.io/name=gateway-collector -o yaml
 ```

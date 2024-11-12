@@ -12,7 +12,7 @@ Ensure your collector pod is up and running.
 > Note:  you can likely autocomplete with your terminal to get your collector's pod name
 
 ```sh
-kubectl -o wide -n mdai get pod gateway-collector-######-#####
+kubectl -o wide -n mdai get pods --selector app.kubernetes.io/name=gateway-collector
 ```
 
 ## Collector ready for use!

@@ -6,3 +6,8 @@ benchmarks.md
 README.md
 usage/*
 media/*
+mdai-cluster-*.tgz
+example_collector.yaml
+example_log_generator.yaml
+example_log_generator_noisy_service.yaml
+example_prometheus_rule.yaml
