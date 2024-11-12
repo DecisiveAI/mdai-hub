@@ -124,7 +124,7 @@ spec:
                 logs/customer_pipeline:
                   receivers: [otlp, fluentforward]
                   processors: [memory_limiter, batch, groupbyattrs]
-                  exporters: [debug, otlphttp]
+                  exporters: [debug]
 
                 logs/long_term_storage:
                   receivers: [otlp, fluentforward]
