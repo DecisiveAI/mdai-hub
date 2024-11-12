@@ -32,7 +32,7 @@ An end-to-end mocked example for collecting log data from services/infrastructur
 *Note: you will need kind and docker installed to run the following step*
 
 ```sh
-kind create cluster --name mdai--0.5-rc
+kind create cluster --name mdai
 ```
 ## Add helm repos
 
@@ -72,50 +72,13 @@ kubectl get pods -A
 The output should look something like...
 ![get pods](../media/get_pods.png)
 
-## Create and initialize log generators
 
-**Generator 1** - a normal and consistent log generator for random number generated service names `service####`.
+## Congrats
 
-```sh
-kubectl apply -f ./example_log_generator.yaml
-```
-
-You should be able to view the log output to validate the generation of logs.
-
-<video controls src="../media/logs_normal.mp4"></video>
-
-**Generator 2** - a noisy and excessive log generator of logs for a particular service (`service1234` unless changed)
-
-```sh
-kubectl apply -f ./example_log_generator_noisy_service.yaml
-```
-
-You should be able to view the log output to validate the generation of logs.
-
-<video controls src="../media/logs_noisy.mp4"></video>
-
-**Generator 3** - a noisy and excessive log generator of logs for a particular service (`service4321` unless changed)
-
-```sh
-kubectl apply -f ./example_log_generator_xtra_noisy_service.yaml
-```
-
-You should be able to view the log output to validate the generation of logs.
-
-<video controls src="../media/log_xtra_noisy.mp4"></video>
+You've now installed the `mdai` infrastructure and are ready to generate data to send to your new telemetry pipelines.
 
 
-## Create and use OTel collector for forwarding logs
+----
 
-> Note: must be in `mdai` namespace with the datalyzer
 
-```sh
-# add a collector definition 
-kubectl apply -f ./example_collector.yaml --namespace mdai
-```
-
-## Install fluentd
-
-```sh
-helm install fluentd fluent/fluentd --values values_fluentd.yaml
-```
+Next step: [Generating data](generate_data.md)

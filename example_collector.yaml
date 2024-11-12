@@ -103,7 +103,7 @@ spec:
 
             exporters:
               otlphttp:
-                endpoint: "${env:MY_POD_IP}:1234"
+                endpoint: "http://localhost:4318"
               debug: {}
               awss3:
                 marshaler: otlp_json
