@@ -578,7 +578,7 @@ kube-prometheus-stack:
     serviceMonitor:
       ## If true, a ServiceMonitor will be created for the AlertManager service.
       ##
-      selfMonitor: false
+      selfMonitor: true
 
       ## Scrape interval. If not set, the Prometheus default scrape interval is used.
       ##
