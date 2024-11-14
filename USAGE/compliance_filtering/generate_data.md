@@ -1,6 +1,8 @@
 ## Create and initialize log generators
 
-You will install three different mock data generators to see data flowing through your pipelines. 
+You will spin up three different mock data generators to see data flowing through your pipelines. 
+
+*** _**Please run all the generators to ensure you have data that will demonstrate functionality at the end of this use case.**_ ***
 
 ### Generator 1
 
@@ -12,7 +14,7 @@ kubectl apply -f ./example_log_generator.yaml
 
 You should be able to view the log output to validate the generation of logs.
 
-<video controls src="../media/logs_normal.mp4"></video>
+<video controls src="../../media/logs_normal.mp4"></video>
 
 ### Generator 2
 
@@ -24,7 +26,7 @@ kubectl apply -f ./example_log_generator_noisy_service.yaml
 
 You should be able to view the log output to validate the generation of logs.
 
-<video controls src="../media/logs_noisy.mp4"></video>
+<video controls src="../../media/logs_noisy.mp4"></video>
 
 ### Generator 3
 
@@ -36,8 +38,29 @@ kubectl apply -f ./example_log_generator_xtra_noisy_service.yaml
 
 You should be able to view the log output to validate the generation of logs.
 
-<video controls src="../media/log_xtra_noisy.mp4"></video>
+<video controls src="../../media/log_xtra_noisy.mp4"></video>
 
+
+### Validating generators 
+
+### Using k9s
+
+You can use k9s (our preferred method) to view logs 
+
+1. From your terminal, use the `k9s` command to launch k9s
+2. Given you're in the correct cluster and namespace, select the pod using the arrow keys, and hit `l`. You should see log output.
+
+### Using kubectl
+
+If you'd prefer to use `kubectl`, for viewing logs, you can run the following command:
+
+```sh
+# list all pods 
+kubectl get pods
+
+# view logs for a given pod
+kubectl logs <pod_name>
+```
 
 ## Data generated!
 

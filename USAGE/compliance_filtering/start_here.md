@@ -10,6 +10,12 @@ This sets up a cluster with the following technologies:
 
 An end-to-end mocked example for collecting log data from services/infrastructure, stream processing and forwarding of that log data to either a compliance store or an `otlp-http` endpoint.
 
+### Telemetry Pipelines
+
+Two log pipelines will be create for the transmission from fluentD to MinIO via OTel data collection.
+1. Compliance pipeline (see section)
+2. Dynamic Filtering (see below)
+
 ### Log data generation and forwarding
 
 - Spins up small batches of log generators that will appear to send logs for 1001 services
@@ -17,14 +23,29 @@ An end-to-end mocked example for collecting log data from services/infrastructur
   - More can be spun up using the `example_log_generator` manifests
 
 ### Compliance
+
 - All data collected will be filtered down to ERROR/WARNING logs and stored in MinIO.
   - MinIO can be accessed for verification of logs at rest
 
 ### Dynamic Filtering
-- Filters any service's INFO logs that sends more than 5MB in the last 6 minutes
+
+- Filters any service's `INFO` logs that sends more than 5MB in the last 6 minutes
 
 
 ## Setup
+
+### Install dependencies
+
+#### Must have
+
+* docker
+* kind
+* Helm
+* k8s
+
+#### Optional
+
+* k9s 
 
 ### Create a new cluster via kind
 
