@@ -46,7 +46,7 @@ dashboards:
           "editable": true,
           "fiscalYearStartMonth": 0,
           "graphTooltip": 0,
-          "id": 2,
+          "id": 1,
           "links": [],
           "panels": [
             {
@@ -117,7 +117,7 @@ dashboards:
               },
               "gridPos": {
                 "h": 9,
-                "w": 10,
+                "w": 7,
                 "x": 0,
                 "y": 0
               },
@@ -223,8 +223,8 @@ dashboards:
               },
               "gridPos": {
                 "h": 9,
-                "w": 10,
-                "x": 10,
+                "w": 7,
+                "x": 7,
                 "y": 0
               },
               "id": 8,
@@ -293,8 +293,8 @@ dashboards:
               },
               "gridPos": {
                 "h": 9,
-                "w": 4,
-                "x": 20,
+                "w": 10,
+                "x": 14,
                 "y": 0
               },
               "id": 2,
@@ -970,11 +970,14 @@ dashboards:
             "list": []
           },
           "time": {
-            "from": "now-1h",
+            "from": "now-1m",
             "to": "now"
           },
+          "refresh": "5s",
           "timepicker": {
             "refresh_intervals": [
+              "5s",
+              "30s",
               "1m",
               "5m",
               "15m",
@@ -987,6 +990,6 @@ dashboards:
           "timezone": "browser",
           "title": "MDAI Data Management",
           "uid": "de3xf8bc3h6v4b",
-          "version": 6,
+          "version": 1,
           "weekStart": ""
         }
