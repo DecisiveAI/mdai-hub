@@ -2,6 +2,31 @@
 
 We are using Prometheus to aggregate metrics that provide summaries of your data based on the data type and service identifiers.
 
+## Grafana
+
+### Install Grafana + dashboard
+
+```sh
+helm upgrade --install --repo https://grafana.github.io/helm-charts grafana grafana -f values_grafana.yaml
+```
+
+### Get Grafana password and port forward
+
+```sh
+kubectl get secret --namespace default grafana -o jsonpath="{.data.admin-password}" | base64 --decode ; echo
+```
+
+```sh
+export POD_NAME=$(kubectl get pods --namespace default -l "app.kubernetes.io/name=grafana,app.kubernetes.io/instance=grafana" -o jsonpath="{.items[0].metadata.name}")
+     kubectl --namespace default port-forward $POD_NAME 3000
+```
+
+### View Grafana dashboard
+
+[MDAI Data Monitoring Dashboard](http://localhost:3003/d/de3xf8bc3h6v4b/mdai-data-management?from=now-5m&to=now&timezone=browser&showCategory=Tooltip)
+
+## Prometheus
+
 ### Port-forward Prometheus service
 
 We will use the Prometheus expression browser to run queries. 
