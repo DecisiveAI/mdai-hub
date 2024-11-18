@@ -51,21 +51,21 @@ Two log pipelines will be create for the transmission from fluentD to MinIO via 
 
 *Note: you will need kind and docker installed to run the following step*
 
-```sh
+```bash
 kind create cluster --name mdai
 ```
 
 ## Install min.io
 
-```sh
+```bash
 helm upgrade --install --repo https://charts.min.io minio minio -f values_minio.yaml
 ```
 
 ### Install MDAI without cert-manager 
 
-*If you have already done this from our [Installation steps](../README.md#without-cert-manager) feel free to skip to the next step.*
+*If you have already done this from our [Installation steps](../../README.md#without-cert-manager) feel free to skip to the next step.*
 
-```sh
+```bash
 helm upgrade --install --create-namespace --namespace mdai --cleanup-on-fail --dependency-update --wait-for-jobs -f values.yaml -f values_prometheus.yaml mdai .
 ```
 
@@ -73,12 +73,12 @@ helm upgrade --install --create-namespace --namespace mdai --cleanup-on-fail --d
 
 You can verify that your pods are all up and running with the following command
 
-```sh
+```bash
 kubectl get pods -A
 ```
 
 The output should look something like...
-![get pods](../media/get_pods.png)
+![get pods](../../media/get_pods.png)
 
 
 ## Congrats

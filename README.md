@@ -8,26 +8,26 @@ This is the official Helm chart for [MyDecisive.ai](https://www.mydecisive.ai/),
 
 To install via Helm, run the following command.
 
-```sh
+```bash
 helm upgrade --install --create-namespace --namespace mdai --cleanup-on-fail --dependency-update --wait-for-jobs -f values.yaml -f values_prometheus.yaml mdai .
 ```
 
 Alternatively, add the Helm repository first and scan for updates
 
-```sh
+```bash
 helm repo add mdai https://decisiveai.github.io/mdai-helm-charts
 helm repo update
 ```
 
 ### With cert-manager
 
-```sh
+```bash
 helm upgrade --install --create-namespace --namespace mdai --cleanup-on-fail --dependency-update --wait-for-jobs --set mdai-operator.webhooks.certManager.enabled=true --set mdai-operator.webhooks.autoGenerateCert.enabled=false -f values.yaml -f values_prometheus.yaml mdai .
 ```
 
 ### Without cleanup on uninstall
 
-```sh
+```bash
 helm upgrade --install --create-namespace --namespace mdai --cleanup-on-fail --dependency-update --wait-for-jobs --set cleanup=false -f values.yaml -f values_prometheus.yaml mdai .
 ```
 

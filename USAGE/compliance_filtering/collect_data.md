@@ -2,16 +2,14 @@
 
 > Note: must be in `mdai` namespace with the datalyzer
 
-```sh
+```bash
 # add a collector definition 
 kubectl apply -f ./example_collector.yaml --namespace mdai
 ```
 
+>Note: If you were unable to successfully run this command, see our troubleshooting guide, [collector issues](./troubleshooting.md#collector-issues).
 
-
-> Note:  you can likely autocomplete with your terminal to get your collector's pod name
-
-```sh
+```bash
 kubectl -o wide -n mdai get pods --selector app.kubernetes.io/name=gateway-collector
 ```
 
@@ -19,7 +17,7 @@ kubectl -o wide -n mdai get pods --selector app.kubernetes.io/name=gateway-colle
 
 You can review your collector config by running the following command: 
 
-```sh
+```bash
 kubectl -n mdai get configmaps --selector app.kubernetes.io/name=gateway-collector -o yaml
 ```
 
