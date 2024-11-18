@@ -23,7 +23,7 @@ export POD_NAME=$(kubectl get pods --namespace default -l "app.kubernetes.io/nam
 
 ### View Grafana dashboard
 
-[MDAI Data Monitoring Dashboard](http://localhost:3003/d/de3xf8bc3h6v4b/mdai-data-management?from=now-5m&to=now&timezone=browser&showCategory=Tooltip)
+[MDAI Data Monitoring Dashboard](http://localhost:3000/d/de3xf8bc3h6v4b/mdai-data-management?from=now-5m&to=now&timezone=browser&showCategory=Tooltip)
 
 ## Prometheus
 
