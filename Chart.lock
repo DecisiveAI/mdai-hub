@@ -18,4 +18,4 @@ dependencies:
   repository: https://decisiveai.github.io/mdai-helm-charts
   version: 0.0.17
 digest: sha256:e70f51c74cab5652bc5384974abf87ebef7fca2e8cb1b27efd78888a856106f5
-generated: "2024-11-12T10:55:38.396557-07:00"
+generated: "2024-11-14T09:05:54.225421-07:00"
