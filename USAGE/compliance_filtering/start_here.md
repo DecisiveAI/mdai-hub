@@ -63,7 +63,7 @@ helm upgrade --install --repo https://charts.min.io minio minio -f values_minio.
 
 ### Install MDAI without cert-manager 
 
-*If you have already done this from our [Installation steps](../../README.md#without-cert-manager) feel free to skip to the next step.*
+<i>If you have already done this from our <a href="../../README.md#without-cert-manager" target="_blank">Installation steps</a> feel free to skip to the next step.</i>
 
 ```bash
 helm upgrade --install --create-namespace --namespace mdai --cleanup-on-fail --dependency-update --wait-for-jobs -f values.yaml -f values_prometheus.yaml mdai .
@@ -78,6 +78,7 @@ kubectl get pods -A
 ```
 
 The output should look something like...
+
 ![get pods](../../media/get_pods.png)
 
 
