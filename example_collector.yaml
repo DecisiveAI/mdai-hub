@@ -22,7 +22,7 @@ spec:
         telemetryFiltering:
           filters:
             - name: mute-noisy-services
-              enabled: false
+              enabled: true
               description: filter noisy services
               managedFilter:
                 pipelines:

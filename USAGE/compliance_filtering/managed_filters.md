@@ -31,6 +31,8 @@ telemetryFiltering:
             action: manageFilter
 ```
 
+### Enable your managed filter
+
 Let's enable the filter in [example_collector.yaml](../../example_collector.yaml) by changing `enabled: false` to `enabled: true` (approximately ln. 21).
 
 

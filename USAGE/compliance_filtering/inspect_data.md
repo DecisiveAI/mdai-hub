@@ -1,6 +1,47 @@
 # Inspecting your data pipelines
 
-We are using Prometheus to aggregate metrics that provide summaries of your data based on the data type and service identifiers.
+We are using Prometheus to aggregate metrics that provide summaries of your data based on the data type and service identifiers. 
+
+
+## Choose your adventure...
+
+You can view this data in Grafana, or directly in Prometheus.
+1. [Grafana](#grafana) (*recommended***)
+2. [Prometheus](#prometheus)
+
+
+## Grafana
+
+### Install Grafana + dashboard
+
+```sh
+helm upgrade --install --repo https://grafana.github.io/helm-charts grafana grafana -f values_grafana.yaml
+```
+
+### Get Grafana password and port forward
+
+Retrieve the password for your gra
+```sh
+kubectl get secret --namespace default grafana -o jsonpath="{.data.admin-password}" | base64 --decode ; echo
+```
+*Copy the password for later use!*
+
+```sh
+export POD_NAME=$(kubectl get pods --namespace default -l "app.kubernetes.io/name=grafana,app.kubernetes.io/instance=grafana" -o jsonpath="{.items[0].metadata.name}")
+     kubectl --namespace default port-forward $POD_NAME 3000
+```
+
+### Grafana dashboard
+
+View summaries of you metric using the [MDAI Data Monitoring Dashboard](http://localhost:3000/d/de3xf8bc3h6v4b/mdai-data-management?from=now-5m&to=now&timezone=browser&showCategory=Tooltip) in Grafana. You will need that password you generated earlier
+
+----
+
+Skip ahead! [E2E data flowing](#data-is-now-flowing-end-to-end)
+
+----
+
+## Prometheus
 
 ## Port-forward Prometheus service
 
