@@ -274,6 +274,7 @@ dashboards:
                     "mode": "thresholds"
                   },
                   "mappings": [],
+                  "min": 0,
                   "thresholds": {
                     "mode": "absolute",
                     "steps": [
@@ -330,24 +331,11 @@ dashboards:
                     "uid": "PBFA97CFB590B2093"
                   },
                   "editorMode": "code",
-                  "expr": "increase(\n  sum by (data_type) (\n    label_replace(\n      {__name__=~\"mdai_(log|metric|span)_bytes_received_total\"},\n      \"data_type\",\n      \"$1\",\n      \"__name__\",\n      \"mdai_(log|metric|span)_bytes_received_total\"\n    )\n  )[1h:]\n)",
+                  "expr": "increase(\n  sum by (typeDirection) (\n    label_replace(\n      {__name__=~\"mdai_(log|metric|span)_bytes_(sent|received)_total\"},\n      \"typeDirection\",\n      \"$2 $1 volume\",\n      \"__name__\",\n      \"mdai_(log|metric|span)_bytes_(sent|received)_total\"\n    )\n  )[1h:]\n)",
                   "instant": false,
                   "legendFormat": "__auto",
                   "range": true,
-                  "refId": "Ingress"
-                },
-                {
-                  "datasource": {
-                    "type": "prometheus",
-                    "uid": "PBFA97CFB590B2093"
-                  },
-                  "editorMode": "code",
-                  "expr": "increase(\n  sum by (data_type) (\n    label_replace(\n      {__name__=~\"mdai_(log|metric|span)_bytes_sent_total\"},\n      \"data_type\",\n      \"$1\",\n      \"__name__\",\n      \"mdai_(log|metric|span)_bytes_sent_total\"\n    )\n  )[1h:]\n)",
-                  "hide": false,
-                  "instant": false,
-                  "legendFormat": "__auto",
-                  "range": true,
-                  "refId": "Egress"
+                  "refId": "Total Data per type and direction"
                 }
               ],
               "title": "Total Volume per Telemetry Type (last hour)",
@@ -382,8 +370,76 @@ dashboards:
               },
               "gridPos": {
                 "h": 8,
-                "w": 4,
+                "w": 3,
                 "x": 0,
+                "y": 9
+              },
+              "id": 10,
+              "options": {
+                "colorMode": "value",
+                "graphMode": "area",
+                "justifyMode": "center",
+                "orientation": "auto",
+                "percentChangeColorMode": "standard",
+                "reduceOptions": {
+                  "calcs": [
+                    "lastNotNull"
+                  ],
+                  "fields": "",
+                  "values": false
+                },
+                "showPercentChange": false,
+                "textMode": "auto",
+                "wideLayout": true
+              },
+              "pluginVersion": "11.3.0",
+              "targets": [
+                {
+                  "disableTextWrap": false,
+                  "editorMode": "builder",
+                  "expr": "group by(alertname) (ALERTS)",
+                  "fullMetaSearch": false,
+                  "includeNullMetadata": true,
+                  "legendFormat": "__auto",
+                  "range": true,
+                  "refId": "A",
+                  "useBackend": false
+                }
+              ],
+              "title": "Configured Data Filtering Alerts",
+              "type": "stat"
+            },
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "PBFA97CFB590B2093"
+              },
+              "fieldConfig": {
+                "defaults": {
+                  "color": {
+                    "mode": "thresholds"
+                  },
+                  "mappings": [],
+                  "thresholds": {
+                    "mode": "absolute",
+                    "steps": [
+                      {
+                        "color": "green",
+                        "value": null
+                      },
+                      {
+                        "color": "red",
+                        "value": 80
+                      }
+                    ]
+                  }
+                },
+                "overrides": []
+              },
+              "gridPos": {
+                "h": 8,
+                "w": 5,
+                "x": 3,
                 "y": 9
               },
               "id": 3,
@@ -409,7 +465,7 @@ dashboards:
                 {
                   "disableTextWrap": false,
                   "editorMode": "builder",
-                  "expr": "sum by(alertname) (ALERTS{alertstate=\"firing\"})",
+                  "expr": "group(ALERTS{alertstate=\"firing\"})",
                   "fullMetaSearch": false,
                   "includeNullMetadata": true,
                   "legendFormat": "__auto",
@@ -456,8 +512,8 @@ dashboards:
               },
               "gridPos": {
                 "h": 8,
-                "w": 20,
-                "x": 4,
+                "w": 16,
+                "x": 8,
                 "y": 9
               },
               "id": 4,
@@ -964,6 +1020,7 @@ dashboards:
             }
           ],
           "preload": false,
+          "refresh": "5s",
           "schemaVersion": 40,
           "tags": [],
           "templating": {
@@ -973,7 +1030,6 @@ dashboards:
             "from": "now-1m",
             "to": "now"
           },
-          "refresh": "5s",
           "timepicker": {
             "refresh_intervals": [
               "5s",
