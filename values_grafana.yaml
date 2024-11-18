@@ -46,7 +46,7 @@ dashboards:
           "editable": true,
           "fiscalYearStartMonth": 0,
           "graphTooltip": 0,
-          "id": 2,
+          "id": 1,
           "links": [],
           "panels": [
             {
@@ -117,7 +117,7 @@ dashboards:
               },
               "gridPos": {
                 "h": 9,
-                "w": 10,
+                "w": 7,
                 "x": 0,
                 "y": 0
               },
@@ -223,8 +223,8 @@ dashboards:
               },
               "gridPos": {
                 "h": 9,
-                "w": 10,
-                "x": 10,
+                "w": 7,
+                "x": 7,
                 "y": 0
               },
               "id": 8,
@@ -274,6 +274,7 @@ dashboards:
                     "mode": "thresholds"
                   },
                   "mappings": [],
+                  "min": 0,
                   "thresholds": {
                     "mode": "absolute",
                     "steps": [
@@ -293,8 +294,8 @@ dashboards:
               },
               "gridPos": {
                 "h": 9,
-                "w": 4,
-                "x": 20,
+                "w": 10,
+                "x": 14,
                 "y": 0
               },
               "id": 2,
@@ -330,24 +331,11 @@ dashboards:
                     "uid": "PBFA97CFB590B2093"
                   },
                   "editorMode": "code",
-                  "expr": "increase(\n  sum by (data_type) (\n    label_replace(\n      {__name__=~\"mdai_(log|metric|span)_bytes_received_total\"},\n      \"data_type\",\n      \"$1\",\n      \"__name__\",\n      \"mdai_(log|metric|span)_bytes_received_total\"\n    )\n  )[1h:]\n)",
+                  "expr": "increase(\n  sum by (typeDirection) (\n    label_replace(\n      {__name__=~\"mdai_(log|metric|span)_bytes_(sent|received)_total\"},\n      \"typeDirection\",\n      \"$2 $1 volume\",\n      \"__name__\",\n      \"mdai_(log|metric|span)_bytes_(sent|received)_total\"\n    )\n  )[1h:]\n)",
                   "instant": false,
                   "legendFormat": "__auto",
                   "range": true,
-                  "refId": "Ingress"
-                },
-                {
-                  "datasource": {
-                    "type": "prometheus",
-                    "uid": "PBFA97CFB590B2093"
-                  },
-                  "editorMode": "code",
-                  "expr": "increase(\n  sum by (data_type) (\n    label_replace(\n      {__name__=~\"mdai_(log|metric|span)_bytes_sent_total\"},\n      \"data_type\",\n      \"$1\",\n      \"__name__\",\n      \"mdai_(log|metric|span)_bytes_sent_total\"\n    )\n  )[1h:]\n)",
-                  "hide": false,
-                  "instant": false,
-                  "legendFormat": "__auto",
-                  "range": true,
-                  "refId": "Egress"
+                  "refId": "Total Data per type and direction"
                 }
               ],
               "title": "Total Volume per Telemetry Type (last hour)",
@@ -382,8 +370,76 @@ dashboards:
               },
               "gridPos": {
                 "h": 8,
-                "w": 4,
+                "w": 3,
                 "x": 0,
+                "y": 9
+              },
+              "id": 10,
+              "options": {
+                "colorMode": "value",
+                "graphMode": "area",
+                "justifyMode": "center",
+                "orientation": "auto",
+                "percentChangeColorMode": "standard",
+                "reduceOptions": {
+                  "calcs": [
+                    "lastNotNull"
+                  ],
+                  "fields": "",
+                  "values": false
+                },
+                "showPercentChange": false,
+                "textMode": "auto",
+                "wideLayout": true
+              },
+              "pluginVersion": "11.3.0",
+              "targets": [
+                {
+                  "disableTextWrap": false,
+                  "editorMode": "builder",
+                  "expr": "group by(alertname) (ALERTS)",
+                  "fullMetaSearch": false,
+                  "includeNullMetadata": true,
+                  "legendFormat": "__auto",
+                  "range": true,
+                  "refId": "A",
+                  "useBackend": false
+                }
+              ],
+              "title": "Configured Data Filtering Alerts",
+              "type": "stat"
+            },
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "PBFA97CFB590B2093"
+              },
+              "fieldConfig": {
+                "defaults": {
+                  "color": {
+                    "mode": "thresholds"
+                  },
+                  "mappings": [],
+                  "thresholds": {
+                    "mode": "absolute",
+                    "steps": [
+                      {
+                        "color": "green",
+                        "value": null
+                      },
+                      {
+                        "color": "red",
+                        "value": 80
+                      }
+                    ]
+                  }
+                },
+                "overrides": []
+              },
+              "gridPos": {
+                "h": 8,
+                "w": 5,
+                "x": 3,
                 "y": 9
               },
               "id": 3,
@@ -409,7 +465,7 @@ dashboards:
                 {
                   "disableTextWrap": false,
                   "editorMode": "builder",
-                  "expr": "sum by(alertname) (ALERTS{alertstate=\"firing\"})",
+                  "expr": "group(ALERTS{alertstate=\"firing\"})",
                   "fullMetaSearch": false,
                   "includeNullMetadata": true,
                   "legendFormat": "__auto",
@@ -456,8 +512,8 @@ dashboards:
               },
               "gridPos": {
                 "h": 8,
-                "w": 20,
-                "x": 4,
+                "w": 16,
+                "x": 8,
                 "y": 9
               },
               "id": 4,
@@ -964,17 +1020,20 @@ dashboards:
             }
           ],
           "preload": false,
+          "refresh": "5s",
           "schemaVersion": 40,
           "tags": [],
           "templating": {
             "list": []
           },
           "time": {
-            "from": "now-1h",
+            "from": "now-1m",
             "to": "now"
           },
           "timepicker": {
             "refresh_intervals": [
+              "5s",
+              "30s",
               "1m",
               "5m",
               "15m",
@@ -987,6 +1046,6 @@ dashboards:
           "timezone": "browser",
           "title": "MDAI Data Management",
           "uid": "de3xf8bc3h6v4b",
-          "version": 6,
+          "version": 1,
           "weekStart": ""
         }
