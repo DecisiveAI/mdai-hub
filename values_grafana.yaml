@@ -55,7 +55,7 @@ dashboards:
                 "type": "prometheus",
                 "uid": "PBFA97CFB590B2093"
               },
-              "description": "Bytes received/sent per service",
+              "description": "",
               "fieldConfig": {
                 "defaults": {
                   "color": {
@@ -116,7 +116,7 @@ dashboards:
                 "overrides": []
               },
               "gridPos": {
-                "h": 9,
+                "h": 15,
                 "w": 7,
                 "x": 0,
                 "y": 0
@@ -145,14 +145,25 @@ dashboards:
                     "uid": "PBFA97CFB590B2093"
                   },
                   "editorMode": "code",
-                  "expr": "increase(\n  sum by (service_name, data_type) (\n    label_replace(\n      {__name__=~\"mdai_(log|metric|span)_bytes_received_total\"},\n      \"data_type\",\n      \"$1\",\n      \"__name__\",\n      \"mdai_(log|metric|span)_bytes_received_total\"\n    )\n  )[5m:]\n)",
+                  "expr": "label_join(\n    topk(10, increase(\n      sum by (service_name, data_type) (\n        label_replace(\n          {__name__=~\"mdai_(log|metric|span)_bytes_received_total\"},\n          \"data_type\",\n          \"$1\",\n          \"__name__\",\n          \"mdai_(log|metric|span)_bytes_received_total\"\n        )\n      )[5m:])\n), \"service_data_type\", \" - \", \"service_name\", \"data_type\")",
                   "instant": false,
                   "legendFormat": "__auto",
                   "range": true,
                   "refId": "Total Ingress"
                 }
               ],
-              "title": "Total Ingress Volume by service",
+              "title": "Top 10 Ingress Services by Telemetry Volume",
+              "transformations": [
+                {
+                  "id": "labelsToFields",
+                  "options": {
+                    "keepLabels": [
+                      "service_data_type"
+                    ],
+                    "valueLabel": "service_data_type"
+                  }
+                }
+              ],
               "type": "timeseries"
             },
             {
@@ -161,7 +172,7 @@ dashboards:
                 "type": "prometheus",
                 "uid": "PBFA97CFB590B2093"
               },
-              "description": "Bytes received/sent per service",
+              "description": "",
               "fieldConfig": {
                 "defaults": {
                   "color": {
@@ -222,7 +233,7 @@ dashboards:
                 "overrides": []
               },
               "gridPos": {
-                "h": 9,
+                "h": 15,
                 "w": 7,
                 "x": 7,
                 "y": 0
@@ -251,7 +262,7 @@ dashboards:
                     "uid": "PBFA97CFB590B2093"
                   },
                   "editorMode": "code",
-                  "expr": "increase(\n  sum by (service_name, data_type) (\n    label_replace(\n      {__name__=~\"mdai_(log|metric|span)_bytes_sent_total\"},\n      \"data_type\",\n      \"$1\",\n      \"__name__\",\n      \"mdai_(log|metric|span)_bytes_sent_total\"\n    )\n  )[5m:]\n)",
+                  "expr": "label_join(\n    topk(10, increase(\n      sum by (service_name, data_type) (\n        label_replace(\n          {__name__=~\"mdai_(log|metric|span)_bytes_sent_total\"},\n          \"data_type\",\n          \"$1\",\n          \"__name__\",\n          \"mdai_(log|metric|span)_bytes_sent_total\"\n        )\n      )[5m:])\n), \"service_data_type\", \" - \", \"service_name\", \"data_type\")",
                   "hide": false,
                   "instant": false,
                   "legendFormat": "__auto",
@@ -259,7 +270,18 @@ dashboards:
                   "refId": "Total Egress"
                 }
               ],
-              "title": "Total Egress Volume by service",
+              "title": "Top 10 Egress Services by Telemetry Volume",
+              "transformations": [
+                {
+                  "id": "labelsToFields",
+                  "options": {
+                    "keepLabels": [
+                      "service_data_type"
+                    ],
+                    "valueLabel": "service_data_type"
+                  }
+                }
+              ],
               "type": "timeseries"
             },
             {
@@ -293,7 +315,7 @@ dashboards:
                 "overrides": []
               },
               "gridPos": {
-                "h": 9,
+                "h": 15,
                 "w": 10,
                 "x": 14,
                 "y": 0
@@ -369,10 +391,10 @@ dashboards:
                 "overrides": []
               },
               "gridPos": {
-                "h": 8,
+                "h": 9,
                 "w": 3,
                 "x": 0,
-                "y": 9
+                "y": 15
               },
               "id": 10,
               "options": {
@@ -437,10 +459,10 @@ dashboards:
                 "overrides": []
               },
               "gridPos": {
-                "h": 8,
-                "w": 5,
+                "h": 9,
+                "w": 3,
                 "x": 3,
-                "y": 9
+                "y": 15
               },
               "id": 3,
               "options": {
@@ -511,10 +533,10 @@ dashboards:
                 "overrides": []
               },
               "gridPos": {
-                "h": 8,
-                "w": 16,
-                "x": 8,
-                "y": 9
+                "h": 9,
+                "w": 6,
+                "x": 6,
+                "y": 15
               },
               "id": 4,
               "options": {
@@ -586,6 +608,123 @@ dashboards:
                 "type": "prometheus",
                 "uid": "PBFA97CFB590B2093"
               },
+              "description": "",
+              "fieldConfig": {
+                "defaults": {
+                  "color": {
+                    "mode": "palette-classic"
+                  },
+                  "custom": {
+                    "axisBorderShow": false,
+                    "axisCenteredZero": false,
+                    "axisColorMode": "series",
+                    "axisLabel": "",
+                    "axisPlacement": "auto",
+                    "barAlignment": 0,
+                    "barWidthFactor": 0.6,
+                    "drawStyle": "line",
+                    "fillOpacity": 0,
+                    "gradientMode": "hue",
+                    "hideFrom": {
+                      "legend": false,
+                      "tooltip": false,
+                      "viz": false
+                    },
+                    "insertNulls": false,
+                    "lineInterpolation": "smooth",
+                    "lineStyle": {
+                      "fill": "solid"
+                    },
+                    "lineWidth": 1,
+                    "pointSize": 5,
+                    "scaleDistribution": {
+                      "type": "linear"
+                    },
+                    "showPoints": "auto",
+                    "spanNulls": false,
+                    "stacking": {
+                      "group": "A",
+                      "mode": "none"
+                    },
+                    "thresholdsStyle": {
+                      "mode": "off"
+                    }
+                  },
+                  "mappings": [],
+                  "thresholds": {
+                    "mode": "absolute",
+                    "steps": [
+                      {
+                        "color": "green",
+                        "value": null
+                      },
+                      {
+                        "color": "red",
+                        "value": 80
+                      }
+                    ]
+                  },
+                  "unit": "percentunit"
+                },
+                "overrides": []
+              },
+              "gridPos": {
+                "h": 9,
+                "w": 12,
+                "x": 12,
+                "y": 15
+              },
+              "id": 9,
+              "options": {
+                "legend": {
+                  "calcs": [],
+                  "displayMode": "list",
+                  "placement": "bottom",
+                  "showLegend": true
+                },
+                "timezone": [
+                  "browser"
+                ],
+                "tooltip": {
+                  "mode": "single",
+                  "sort": "none"
+                }
+              },
+              "pluginVersion": "11.3.0",
+              "targets": [
+                {
+                  "datasource": {
+                    "type": "prometheus",
+                    "uid": "PBFA97CFB590B2093"
+                  },
+                  "editorMode": "code",
+                  "expr": "label_join(\nincrease(\n  sum by (service_name, data_type) (\n    label_replace(\n      {__name__=~\"mdai_(log|metric|span)_bytes_sent_total\"},\n      \"data_type\",\n      \"$1\",\n      \"__name__\",\n      \"mdai_(log|metric|span)_bytes_sent_total\") and ignoring(alertname, alertstate, time, __name__, instance, job, severity, data_type) ALERTS{alertstate=\"firing\"}\n  )[5m:]\n) / increase(\n  sum by (service_name, data_type) (\n    label_replace(\n      {__name__=~\"mdai_(log|metric|span)_bytes_received_total\"},\n      \"data_type\",\n      \"$1\",\n      \"__name__\",\n      \"mdai_(log|metric|span)_bytes_received_total\") and ignoring(alertname, alertstate, time, __name__, instance, job, severity, data_type) ALERTS{alertstate=\"firing\"}\n  )[5m:]\n), \"service_data_type\", \" - \", \"service_name\", \"data_type\")",
+                  "instant": false,
+                  "legendFormat": "__auto",
+                  "range": true,
+                  "refId": "Total Ingress"
+                }
+              ],
+              "title": "Egress/Ingress Bytes Percent for filtered services",
+              "transformations": [
+                {
+                  "id": "labelsToFields",
+                  "options": {
+                    "keepLabels": [
+                      "service_data_type"
+                    ],
+                    "valueLabel": "service_data_type"
+                  }
+                }
+              ],
+              "type": "timeseries"
+            },
+            {
+              "datasource": {
+                "default": true,
+                "type": "prometheus",
+                "uid": "PBFA97CFB590B2093"
+              },
               "description": "Bytes received/sent per service",
               "fieldConfig": {
                 "defaults": {
@@ -650,7 +789,7 @@ dashboards:
                 "h": 9,
                 "w": 12,
                 "x": 0,
-                "y": 17
+                "y": 24
               },
               "id": 6,
               "options": {
@@ -756,7 +895,7 @@ dashboards:
                 "h": 9,
                 "w": 12,
                 "x": 12,
-                "y": 17
+                "y": 24
               },
               "id": 5,
               "options": {
@@ -863,7 +1002,7 @@ dashboards:
                 "h": 8,
                 "w": 24,
                 "x": 0,
-                "y": 26
+                "y": 33
               },
               "id": 7,
               "options": {
@@ -910,112 +1049,6 @@ dashboards:
                 }
               ],
               "title": "Log Volume Filtered Services",
-              "type": "timeseries"
-            },
-            {
-              "datasource": {
-                "default": true,
-                "type": "prometheus",
-                "uid": "PBFA97CFB590B2093"
-              },
-              "description": "",
-              "fieldConfig": {
-                "defaults": {
-                  "color": {
-                    "mode": "palette-classic"
-                  },
-                  "custom": {
-                    "axisBorderShow": false,
-                    "axisCenteredZero": false,
-                    "axisColorMode": "series",
-                    "axisLabel": "",
-                    "axisPlacement": "auto",
-                    "barAlignment": 0,
-                    "barWidthFactor": 0.6,
-                    "drawStyle": "line",
-                    "fillOpacity": 0,
-                    "gradientMode": "hue",
-                    "hideFrom": {
-                      "legend": false,
-                      "tooltip": false,
-                      "viz": false
-                    },
-                    "insertNulls": false,
-                    "lineInterpolation": "smooth",
-                    "lineStyle": {
-                      "fill": "solid"
-                    },
-                    "lineWidth": 1,
-                    "pointSize": 5,
-                    "scaleDistribution": {
-                      "type": "linear"
-                    },
-                    "showPoints": "auto",
-                    "spanNulls": false,
-                    "stacking": {
-                      "group": "A",
-                      "mode": "none"
-                    },
-                    "thresholdsStyle": {
-                      "mode": "off"
-                    }
-                  },
-                  "mappings": [],
-                  "thresholds": {
-                    "mode": "absolute",
-                    "steps": [
-                      {
-                        "color": "green",
-                        "value": null
-                      },
-                      {
-                        "color": "red",
-                        "value": 80
-                      }
-                    ]
-                  },
-                  "unit": "percentunit"
-                },
-                "overrides": []
-              },
-              "gridPos": {
-                "h": 8,
-                "w": 24,
-                "x": 0,
-                "y": 34
-              },
-              "id": 9,
-              "options": {
-                "legend": {
-                  "calcs": [],
-                  "displayMode": "list",
-                  "placement": "bottom",
-                  "showLegend": true
-                },
-                "timezone": [
-                  "browser"
-                ],
-                "tooltip": {
-                  "mode": "single",
-                  "sort": "none"
-                }
-              },
-              "pluginVersion": "11.3.0",
-              "targets": [
-                {
-                  "datasource": {
-                    "type": "prometheus",
-                    "uid": "PBFA97CFB590B2093"
-                  },
-                  "editorMode": "code",
-                  "expr": "increase(\n  sum by (service_name) (\n    mdai_log_bytes_sent_total and ignoring(alertname, alertstate, time, __name__, instance, job, severity) ALERTS{alertstate=\"firing\"}\n  )[5m:]\n) / increase(\n  sum by (service_name) (\n    mdai_log_bytes_received_total and ignoring(alertname, alertstate, time, __name__, instance, job, severity) ALERTS{alertstate=\"firing\"}\n  )[5m:]\n)",
-                  "instant": false,
-                  "legendFormat": "__auto",
-                  "range": true,
-                  "refId": "Total Ingress"
-                }
-              ],
-              "title": "Egress/Ingress Bytes Percent for filtered services",
               "type": "timeseries"
             }
           ],
