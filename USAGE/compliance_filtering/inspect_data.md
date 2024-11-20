@@ -13,21 +13,9 @@ You can view this data in Grafana, or directly in Prometheus.
 
 To see Grafana dashboards for filtering data, first port forward your grafana instance
 
-Get the pods in the `mdai` namespace:
-
 ```sh
-kubectl get pods -n mdai
+kubectl -n mdai port-forward svc/mdai-grafana 3000:80
 ```
-
-Port forward the Grafana pod:
-
-Retrieve the password for your gra
-
-```sh
-kubectl -n mdai port-forward mdai-grafana-0000000000-00000 3000:3000
-```
-
-_Copy the password for later use!_
 
 > Use the username `admin`. The login password for your Grafana instance is defined in `values_grafana.yaml`
 
