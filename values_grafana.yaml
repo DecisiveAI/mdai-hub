@@ -1,4 +1,5 @@
-grafana:
+kube-prometheus-stack:
+  grafana:
     enabled: true
     adminPassword: mdai
 
