@@ -14,7 +14,7 @@ helm upgrade --install --create-namespace --namespace mdai --cleanup-on-fail --d
 
 Alternatively, add the Helm repository first and scan for updates
 
-```sh
+```bash
 helm repo add mdai https://decisiveai.github.io/mdai-helm-charts
 helm repo update
 ```

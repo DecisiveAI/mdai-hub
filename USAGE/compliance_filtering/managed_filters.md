@@ -36,7 +36,7 @@ Let's enable the filter in [example_collector.yaml](../../example_collector.yaml
 
 ### Update the config in your collector
 
-```sh
+```bash
 kubectl apply -f ./example_collector.yaml --namespace mdai
 ```
 
@@ -44,7 +44,7 @@ kubectl apply -f ./example_collector.yaml --namespace mdai
 
 You can validate that your collector config changed by running the following command
 
-```sh
+```bash
 kubectl -n mdai get configmaps --selector app.kubernetes.io/name=gateway-collector -o yaml
 ```
 

@@ -1,30 +1,30 @@
-## Create and use OTel collector for forwarding logs
+# Start collecting data
 
 > Note: must be in `mdai` namespace with the datalyzer
 
-```sh
+## Create the collector 
+
+```bash
 # add a collector definition 
 kubectl apply -f ./example_collector.yaml --namespace mdai
 ```
 
+>Note: If you were unable to successfully run this command, see our troubleshooting guide, [collector issues](./troubleshooting.md#collector-issues).
 
 
-> Note:  you can likely autocomplete with your terminal to get your collector's pod name
+## Ensure your collector pod is up and running. 
 
-```sh
+```bash
 kubectl -o wide -n mdai get pods --selector app.kubernetes.io/name=gateway-collector
 ```
 
-### Ensure your collector pod is up and running. 
+## Review your configmap
 
 You can review your collector config by running the following command: 
 
-```sh
+```bash
 kubectl -n mdai get configmaps --selector app.kubernetes.io/name=gateway-collector -o yaml
 ```
-
-The output should contain the same `yaml` block that is displayed in the `example_collector.yaml`.
-
 
 ## Collector ready for use!
 
