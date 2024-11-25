@@ -10,15 +10,12 @@ dependencies:
   version: 3.12.1
 - name: mdai-api
   repository: https://decisiveai.github.io/mdai-helm-charts
-  version: 0.0.4
-- name: mdai-console
-  repository: https://decisiveai.github.io/mdai-helm-charts
-  version: 0.2.4
+  version: 0.0.5
 - name: datalyzer
   repository: https://decisiveai.github.io/mdai-helm-charts
-  version: 0.0.6
+  version: 0.0.8
 - name: mydecisive-engine-operator
   repository: https://decisiveai.github.io/mdai-helm-charts
-  version: 0.0.14
-digest: sha256:e4adf245b939ba8dfb4548effee8938557e7915492db1ecef7ace7fe9d5e5ca5
-generated: "2024-10-30T09:22:29.506792-07:00"
+  version: 0.0.17
+digest: sha256:e70f51c74cab5652bc5384974abf87ebef7fca2e8cb1b27efd78888a856106f5
+generated: "2024-11-14T09:05:54.225421-07:00"
