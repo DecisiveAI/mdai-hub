@@ -138,6 +138,7 @@ kube-prometheus-stack:
             path: /var/lib/grafana/dashboards/default
     dashboards:
       default:
+        # TODO: Extract to file
         mdai-dashboard:
           json: |
             {
@@ -953,6 +954,7 @@ kube-prometheus-stack:
               "version": 1,
               "weekStart": ""
             }
+        # TODO: Extract to file
         otel-collector:
           json: |
             {
@@ -6382,6 +6384,7 @@ kube-prometheus-stack:
               "version": 82,
               "weekStart": ""
             }
+        # TODO: Extract to file, template pod names
         mdai-resource-use:
           json: |
             {
