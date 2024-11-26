@@ -1,9 +1,7 @@
 # Use Case: Compliance and Dynamic Filtering
 
 ## The tech stack
-
-This sets up a cluster with the following technologies:
-
+This sets up a cluster with the following technologies: 
 - MDAI infra
 - Fluentd
 - MinIO
@@ -15,7 +13,6 @@ An end-to-end mocked example for collecting log data from services/infrastructur
 ### Telemetry Pipelines
 
 Two log pipelines will be create for the transmission from fluentD to MinIO via OTel data collection.
-
 1. Compliance pipeline (see section)
 2. Dynamic Filtering (see below)
 
@@ -34,24 +31,25 @@ Two log pipelines will be create for the transmission from fluentD to MinIO via 
 
 - Filters any service's `INFO` logs that sends more than 5MB in the last 6 minutes
 
+
 ## Setup
 
 ### Install dependencies
 
 #### Must have
 
-- docker
-- kind
-- Helm
-- k8s
+* docker
+* kind
+* Helm
+* k8s
 
 #### Optional
 
-- k9s
+* k9s 
 
 ### Create a new cluster via kind
 
-_Note: you will need kind and docker installed to run the following step_
+*Note: you will need kind and docker installed to run the following step*
 
 ```bash
 kind create cluster --name mdai
@@ -63,15 +61,15 @@ kind create cluster --name mdai
 helm upgrade --install --repo https://charts.min.io minio minio -f values_minio.yaml
 ```
 
-### Install MDAI without cert-manager
+### Install MDAI without cert-manager 
 
 <i>If you have already done this from our <a href="../../README.md#without-cert-manager" target="_blank">Installation steps</a> feel free to skip to the next step.</i>
 
-```sh
-helm upgrade --install --create-namespace --namespace mdai --cleanup-on-fail --dependency-update --wait-for-jobs -f values.yaml -f values_prometheus.yaml -f values_grafana.yaml mdai .
+```bash
+helm upgrade --install --create-namespace --namespace mdai --cleanup-on-fail --dependency-update --wait-for-jobs -f values.yaml -f values_prometheus.yaml mdai .
 ```
 
-### Validate
+### Validate 
 
 You can verify that your pods are all up and running with the following command
 
@@ -83,10 +81,13 @@ The output should look something like...
 
 ![get pods](../../media/get_pods.png)
 
+
 ## Congrats
 
 You've now installed the `mdai` infrastructure and are ready to generate data to send to your new telemetry pipelines.
 
----
+
+----
+
 
 Next step: [Generating data](generate_data.md)
