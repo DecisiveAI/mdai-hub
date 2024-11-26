@@ -6,7 +6,7 @@ kube-prometheus-stack:
         rules:
         - expr: |
             sum by (cluster, namespace, pod, container) (
-              irate(container_cpu_usage_seconds_total{job="kubernetes-nodes-cadvisor", image!=""}[5m])
+              irate(container_cpu_usage_seconds_total{job="kubelet", image!=""}[5m])
             ) * on (cluster, namespace, pod) group_left(node) topk by (cluster, namespace, pod) (
               1, max by(cluster, namespace, pod, node) (kube_pod_info{node!=""})
             )
@@ -14,7 +14,7 @@ kube-prometheus-stack:
       - name: "k8s.rules.container_memory_working_set_bytes"
         rules:
         - expr: |
-            container_memory_working_set_bytes{job="kubernetes-nodes-cadvisor", image!=""}
+            container_memory_working_set_bytes{job="kubelet", image!=""}
             * on (cluster, namespace, pod) group_left(node) topk by(cluster, namespace, pod) (1,
               max by(cluster, namespace, pod, node) (kube_pod_info{node!=""})
             )
@@ -22,7 +22,7 @@ kube-prometheus-stack:
       - name: "k8s.rules.container_memory_rss"
         rules:
         - expr: |
-            container_memory_rss{job="kubernetes-nodes-cadvisor", image!=""}
+            container_memory_rss{job="kubelet", image!=""}
             * on (cluster, namespace, pod) group_left(node) topk by(cluster, namespace, pod) (1,
               max by(cluster, namespace, pod, node) (kube_pod_info{node!=""})
             )
@@ -30,7 +30,7 @@ kube-prometheus-stack:
       - name: "k8s.rules.container_memory_cache"
         rules:
         - expr: |
-            container_memory_cache{job="kubernetes-nodes-cadvisor", image!=""}
+            container_memory_cache{job="kubelet", image!=""}
             * on (cluster, namespace, pod) group_left(node) topk by(cluster, namespace, pod) (1,
               max by(cluster, namespace, pod, node) (kube_pod_info{node!=""})
             )
@@ -38,7 +38,7 @@ kube-prometheus-stack:
       - name: "k8s.rules.container_memory_swap"
         rules:
         - expr: |
-            container_memory_swap{job="kubernetes-nodes-cadvisor", image!=""}
+            container_memory_swap{job="kubelet", image!=""}
             * on (cluster, namespace, pod) group_left(node) topk by(cluster, namespace, pod) (1,
               max by(cluster, namespace, pod, node) (kube_pod_info{node!=""})
             )
@@ -46,7 +46,7 @@ kube-prometheus-stack:
       - name: "k8s.rules.container_memory_requests"
         rules:
         - expr: |
-            kube_pod_container_resource_requests{resource="memory",job="kubernetes-nodes-cadvisor"}  * on (namespace, pod)
+            kube_pod_container_resource_requests{resource="memory",job="kubelet"}  * on (namespace, pod)
             group_left() max by (namespace, pod) (
               (kube_pod_status_phase{phase=~"Pending|Running"} == 1)
             )
@@ -55,7 +55,7 @@ kube-prometheus-stack:
             sum by (namespace) (
                 sum by (namespace, pod) (
                     max by (namespace, pod, container) (
-                      kube_pod_container_resource_requests{resource="memory",job="kubernetes-nodes-cadvisor"}
+                      kube_pod_container_resource_requests{resource="memory",job="kubelet"}
                     ) * on(namespace, pod) group_left() max by (namespace, pod) (
                       kube_pod_status_phase{phase=~"Pending|Running"} == 1
                     )
@@ -65,7 +65,7 @@ kube-prometheus-stack:
       - name: "k8s.rules.container_cpu_requests"
         rules:
         - expr: |
-            kube_pod_container_resource_requests{resource="cpu",job="kubernetes-nodes-cadvisor"}  * on (namespace, pod)
+            kube_pod_container_resource_requests{resource="cpu",job="kubelet"}  * on (namespace, pod)
             group_left() max by (namespace, pod) (
               (kube_pod_status_phase{phase=~"Pending|Running"} == 1)
             )
@@ -74,7 +74,7 @@ kube-prometheus-stack:
             sum by (namespace) (
                 sum by (namespace, pod) (
                     max by (namespace, pod, container) (
-                      kube_pod_container_resource_requests{resource="cpu",job="kubernetes-nodes-cadvisor"}
+                      kube_pod_container_resource_requests{resource="cpu",job="kubelet"}
                     ) * on(namespace, pod) group_left() max by (namespace, pod) (
                       kube_pod_status_phase{phase=~"Pending|Running"} == 1
                     )
@@ -84,7 +84,7 @@ kube-prometheus-stack:
       - name: "k8s.rules.container_memory_limits"
         rules:
         - expr: |
-            kube_pod_container_resource_limits{resource="memory",job="kubernetes-nodes-cadvisor"}  * on (namespace, pod)
+            kube_pod_container_resource_limits{resource="memory",job="kubelet"}  * on (namespace, pod)
             group_left() max by (namespace, pod) (
               (kube_pod_status_phase{phase=~"Pending|Running"} == 1)
             )
@@ -93,7 +93,7 @@ kube-prometheus-stack:
             sum by (namespace) (
                 sum by (namespace, pod) (
                     max by (namespace, pod, container) (
-                      kube_pod_container_resource_limits{resource="memory",job="kubernetes-nodes-cadvisor"}
+                      kube_pod_container_resource_limits{resource="memory",job="kubelet"}
                     ) * on(namespace, pod) group_left() max by (namespace, pod) (
                       kube_pod_status_phase{phase=~"Pending|Running"} == 1
                     )
@@ -103,7 +103,7 @@ kube-prometheus-stack:
       - name: "k8s.rules.container_cpu_limits"
         rules:
         - expr: |
-            kube_pod_container_resource_limits{resource="cpu",job="kubernetes-nodes-cadvisor"}  * on (namespace, pod)
+            kube_pod_container_resource_limits{resource="cpu",job="kubelet"}  * on (namespace, pod)
             group_left() max by (namespace, pod) (
             (kube_pod_status_phase{phase=~"Pending|Running"} == 1)
             )
@@ -112,7 +112,7 @@ kube-prometheus-stack:
             sum by (namespace) (
                 sum by (namespace, pod) (
                     max by (namespace, pod, container) (
-                      kube_pod_container_resource_limits{resource="cpu",job="kubernetes-nodes-cadvisor"}
+                      kube_pod_container_resource_limits{resource="cpu",job="kubelet"}
                     ) * on(namespace, pod) group_left() max by (namespace, pod) (
                       kube_pod_status_phase{phase=~"Pending|Running"} == 1
                     )
@@ -159,8 +159,7 @@ kube-prometheus-stack:
               },
               "editable": true,
               "fiscalYearStartMonth": 0,
-              "graphTooltip": 0,
-              "id": 1,
+              "graphTooltip": 1,
               "links": [],
               "panels": [
                 {
@@ -230,8 +229,8 @@ kube-prometheus-stack:
                     "overrides": []
                   },
                   "gridPos": {
-                    "h": 15,
-                    "w": 7,
+                    "h": 13,
+                    "w": 11,
                     "x": 0,
                     "y": 0
                   },
@@ -241,7 +240,7 @@ kube-prometheus-stack:
                       "calcs": [],
                       "displayMode": "list",
                       "placement": "bottom",
-                      "showLegend": false
+                      "showLegend": true
                     },
                     "timezone": [
                       "browser"
@@ -342,23 +341,23 @@ kube-prometheus-stack:
                           }
                         ]
                       },
-                      "unit": "decbytes"
+                      "unit": "percentunit"
                     },
                     "overrides": []
                   },
                   "gridPos": {
-                    "h": 15,
-                    "w": 7,
-                    "x": 7,
+                    "h": 20,
+                    "w": 8,
+                    "x": 11,
                     "y": 0
                   },
-                  "id": 8,
+                  "id": 9,
                   "options": {
                     "legend": {
                       "calcs": [],
                       "displayMode": "list",
                       "placement": "bottom",
-                      "showLegend": false
+                      "showLegend": true
                     },
                     "timezone": [
                       "browser"
@@ -376,15 +375,14 @@ kube-prometheus-stack:
                         "uid": "prometheus"
                       },
                       "editorMode": "code",
-                      "expr": "label_join(\n    increase(\n      sum by (service_name, data_type) (\n        label_replace(\n          {__name__=~\"mdai_(log|metric|span)_bytes_sent_total\"},\n          \"data_type\",\n          \"$1\",\n          \"__name__\",\n          \"mdai_(log|metric|span)_bytes_sent_total\"\n        )\n      )[$__rate_interval:]\n), \"service_data_type\", \" - \", \"service_name\", \"data_type\")",
-                      "hide": false,
+                      "expr": "label_join(\nincrease(\n  sum by (service_name, data_type) (\n    label_replace(\n      {__name__=~\"mdai_(log|metric|span)_bytes_sent_total\"},\n      \"data_type\",\n      \"$1\",\n      \"__name__\",\n      \"mdai_(log|metric|span)_bytes_sent_total\") and ignoring(alertname, alertstate, time, __name__, instance, job, severity, data_type) ALERTS{alertstate=\"firing\"}\n  )[$__rate_interval:]\n) / increase(\n  sum by (service_name, data_type) (\n    label_replace(\n      {__name__=~\"mdai_(log|metric|span)_bytes_received_total\"},\n      \"data_type\",\n      \"$1\",\n      \"__name__\",\n      \"mdai_(log|metric|span)_bytes_received_total\") and ignoring(alertname, alertstate, time, __name__, instance, job, severity, data_type) ALERTS{alertstate=\"firing\"}\n  )[$__rate_interval:]\n), \"service_data_type\", \" - \", \"service_name\", \"data_type\")",
                       "instant": false,
                       "legendFormat": "__auto",
                       "range": true,
-                      "refId": "Total Egress"
+                      "refId": "Total Ingress"
                     }
                   ],
-                  "title": "Egress Services by Telemetry Volume",
+                  "title": "Egress/Ingress Bytes Percent for filtered services",
                   "transformations": [
                     {
                       "id": "labelsToFields",
@@ -397,85 +395,6 @@ kube-prometheus-stack:
                     }
                   ],
                   "type": "timeseries"
-                },
-                {
-                  "datasource": {
-                    "default": true,
-                    "type": "prometheus",
-                    "uid": "prometheus"
-                  },
-                  "fieldConfig": {
-                    "defaults": {
-                      "color": {
-                        "mode": "palette-classic-by-name"
-                      },
-                      "mappings": [],
-                      "min": 0,
-                      "thresholds": {
-                        "mode": "absolute",
-                        "steps": [
-                          {
-                            "color": "green",
-                            "value": null
-                          },
-                          {
-                            "color": "red",
-                            "value": 80
-                          }
-                        ]
-                      },
-                      "unit": "decbytes"
-                    },
-                    "overrides": []
-                  },
-                  "gridPos": {
-                    "h": 15,
-                    "w": 10,
-                    "x": 14,
-                    "y": 0
-                  },
-                  "id": 2,
-                  "options": {
-                    "displayMode": "basic",
-                    "legend": {
-                      "calcs": [],
-                      "displayMode": "list",
-                      "placement": "bottom",
-                      "showLegend": false
-                    },
-                    "maxVizHeight": 300,
-                    "minVizHeight": 16,
-                    "minVizWidth": 8,
-                    "namePlacement": "auto",
-                    "orientation": "horizontal",
-                    "reduceOptions": {
-                      "calcs": [
-                        "lastNotNull"
-                      ],
-                      "fields": "",
-                      "values": false
-                    },
-                    "showUnfilled": true,
-                    "sizing": "auto",
-                    "valueMode": "color"
-                  },
-                  "pluginVersion": "11.3.0",
-                  "targets": [
-                    {
-                      "datasource": {
-                        "type": "prometheus",
-                        "uid": "prometheus"
-                      },
-                      "editorMode": "code",
-                      "expr": "increase(\n  sum by (typeDirection) (\n    label_replace(\n      {__name__=~\"mdai_(log|metric|span)_bytes_(sent|received)_total\"},\n      \"typeDirection\",\n      \"$2 $1 volume\",\n      \"__name__\",\n      \"mdai_(log|metric|span)_bytes_(sent|received)_total\"\n    )\n  )[1h:]\n)",
-                      "instant": false,
-                      "legendFormat": "__auto",
-                      "range": true,
-                      "refId": "Total Data per type and direction"
-                    }
-                  ],
-                  "title": "Total Volume per Telemetry Type (last hour)",
-                  "type": "bargauge"
                 },
                 {
                   "datasource": {
@@ -505,12 +424,12 @@ kube-prometheus-stack:
                     "overrides": []
                   },
                   "gridPos": {
-                    "h": 9,
-                    "w": 3,
-                    "x": 0,
-                    "y": 15
+                    "h": 10,
+                    "w": 5,
+                    "x": 19,
+                    "y": 0
                   },
-                  "id": 10,
+                  "id": 3,
                   "options": {
                     "colorMode": "value",
                     "graphMode": "area",
@@ -528,12 +447,12 @@ kube-prometheus-stack:
                     "textMode": "auto",
                     "wideLayout": true
                   },
-                  "pluginVersion": "11.3.0",
+                  "pluginVersion": "11.2.2",
                   "targets": [
                     {
                       "disableTextWrap": false,
                       "editorMode": "builder",
-                      "expr": "group by(alertname) (ALERTS)",
+                      "expr": "group(ALERTS{alertstate=\"firing\"})",
                       "fullMetaSearch": false,
                       "includeNullMetadata": true,
                       "legendFormat": "__auto",
@@ -542,7 +461,7 @@ kube-prometheus-stack:
                       "useBackend": false
                     }
                   ],
-                  "title": "Configured Data Filtering Alerts",
+                  "title": "Active data filtering alerts",
                   "type": "stat"
                 },
                 {
@@ -573,12 +492,12 @@ kube-prometheus-stack:
                     "overrides": []
                   },
                   "gridPos": {
-                    "h": 9,
-                    "w": 3,
-                    "x": 3,
-                    "y": 15
+                    "h": 10,
+                    "w": 5,
+                    "x": 19,
+                    "y": 10
                   },
-                  "id": 3,
+                  "id": 10,
                   "options": {
                     "colorMode": "value",
                     "graphMode": "area",
@@ -596,12 +515,12 @@ kube-prometheus-stack:
                     "textMode": "auto",
                     "wideLayout": true
                   },
-                  "pluginVersion": "11.3.0",
+                  "pluginVersion": "11.2.2",
                   "targets": [
                     {
                       "disableTextWrap": false,
                       "editorMode": "builder",
-                      "expr": "group(ALERTS{alertstate=\"firing\"})",
+                      "expr": "group by(alertname) (ALERTS)",
                       "fullMetaSearch": false,
                       "includeNullMetadata": true,
                       "legendFormat": "__auto",
@@ -610,7 +529,7 @@ kube-prometheus-stack:
                       "useBackend": false
                     }
                   ],
-                  "title": "Active data filtering alerts",
+                  "title": "Configured Data Filtering Alerts",
                   "type": "stat"
                 },
                 {
@@ -675,17 +594,17 @@ kube-prometheus-stack:
                           }
                         ]
                       },
-                      "unit": "percentunit"
+                      "unit": "decbytes"
                     },
                     "overrides": []
                   },
                   "gridPos": {
-                    "h": 18,
-                    "w": 8,
-                    "x": 6,
-                    "y": 15
+                    "h": 14,
+                    "w": 11,
+                    "x": 0,
+                    "y": 13
                   },
-                  "id": 9,
+                  "id": 8,
                   "options": {
                     "legend": {
                       "calcs": [],
@@ -709,14 +628,15 @@ kube-prometheus-stack:
                         "uid": "prometheus"
                       },
                       "editorMode": "code",
-                      "expr": "label_join(\nincrease(\n  sum by (service_name, data_type) (\n    label_replace(\n      {__name__=~\"mdai_(log|metric|span)_bytes_sent_total\"},\n      \"data_type\",\n      \"$1\",\n      \"__name__\",\n      \"mdai_(log|metric|span)_bytes_sent_total\") and ignoring(alertname, alertstate, time, __name__, instance, job, severity, data_type) ALERTS{alertstate=\"firing\"}\n  )[$__rate_interval:]\n) / increase(\n  sum by (service_name, data_type) (\n    label_replace(\n      {__name__=~\"mdai_(log|metric|span)_bytes_received_total\"},\n      \"data_type\",\n      \"$1\",\n      \"__name__\",\n      \"mdai_(log|metric|span)_bytes_received_total\") and ignoring(alertname, alertstate, time, __name__, instance, job, severity, data_type) ALERTS{alertstate=\"firing\"}\n  )[$__rate_interval:]\n), \"service_data_type\", \" - \", \"service_name\", \"data_type\")",
+                      "expr": "label_join(\n    increase(\n      sum by (service_name, data_type) (\n        label_replace(\n          {__name__=~\"mdai_(log|metric|span)_bytes_sent_total\"},\n          \"data_type\",\n          \"$1\",\n          \"__name__\",\n          \"mdai_(log|metric|span)_bytes_sent_total\"\n        )\n      )[$__rate_interval:]\n), \"service_data_type\", \" - \", \"service_name\", \"data_type\")",
+                      "hide": false,
                       "instant": false,
                       "legendFormat": "__auto",
                       "range": true,
-                      "refId": "Total Ingress"
+                      "refId": "Total Egress"
                     }
                   ],
-                  "title": "Egress/Ingress Bytes Percent for filtered services",
+                  "title": "Egress Services by Telemetry Volume",
                   "transformations": [
                     {
                       "id": "labelsToFields",
@@ -762,10 +682,10 @@ kube-prometheus-stack:
                     "overrides": []
                   },
                   "gridPos": {
-                    "h": 18,
-                    "w": 10,
-                    "x": 14,
-                    "y": 15
+                    "h": 19,
+                    "w": 8,
+                    "x": 11,
+                    "y": 20
                   },
                   "id": 11,
                   "options": {
@@ -792,7 +712,7 @@ kube-prometheus-stack:
                     "sizing": "auto",
                     "valueMode": "color"
                   },
-                  "pluginVersion": "11.3.0",
+                  "pluginVersion": "11.2.2",
                   "targets": [
                     {
                       "datasource": {
@@ -855,10 +775,10 @@ kube-prometheus-stack:
                     "overrides": []
                   },
                   "gridPos": {
-                    "h": 9,
-                    "w": 6,
-                    "x": 0,
-                    "y": 24
+                    "h": 19,
+                    "w": 5,
+                    "x": 19,
+                    "y": 20
                   },
                   "id": 4,
                   "options": {
@@ -873,7 +793,7 @@ kube-prometheus-stack:
                     },
                     "showHeader": true
                   },
-                  "pluginVersion": "11.3.0",
+                  "pluginVersion": "11.2.2",
                   "targets": [
                     {
                       "disableTextWrap": false,
@@ -923,11 +843,89 @@ kube-prometheus-stack:
                     }
                   ],
                   "type": "table"
+                },
+                {
+                  "datasource": {
+                    "default": true,
+                    "type": "prometheus",
+                    "uid": "prometheus"
+                  },
+                  "fieldConfig": {
+                    "defaults": {
+                      "color": {
+                        "mode": "palette-classic-by-name"
+                      },
+                      "mappings": [],
+                      "min": 0,
+                      "thresholds": {
+                        "mode": "absolute",
+                        "steps": [
+                          {
+                            "color": "green",
+                            "value": null
+                          },
+                          {
+                            "color": "red",
+                            "value": 80
+                          }
+                        ]
+                      },
+                      "unit": "decbytes"
+                    },
+                    "overrides": []
+                  },
+                  "gridPos": {
+                    "h": 12,
+                    "w": 11,
+                    "x": 0,
+                    "y": 27
+                  },
+                  "id": 2,
+                  "options": {
+                    "displayMode": "basic",
+                    "legend": {
+                      "calcs": [],
+                      "displayMode": "list",
+                      "placement": "bottom",
+                      "showLegend": false
+                    },
+                    "maxVizHeight": 300,
+                    "minVizHeight": 16,
+                    "minVizWidth": 8,
+                    "namePlacement": "auto",
+                    "orientation": "horizontal",
+                    "reduceOptions": {
+                      "calcs": [
+                        "lastNotNull"
+                      ],
+                      "fields": "",
+                      "values": false
+                    },
+                    "showUnfilled": true,
+                    "sizing": "auto",
+                    "valueMode": "color"
+                  },
+                  "pluginVersion": "11.2.2",
+                  "targets": [
+                    {
+                      "datasource": {
+                        "type": "prometheus",
+                        "uid": "prometheus"
+                      },
+                      "editorMode": "code",
+                      "expr": "increase(\n  sum by (typeDirection) (\n    label_replace(\n      {__name__=~\"mdai_(log|metric|span)_bytes_(sent|received)_total\"},\n      \"typeDirection\",\n      \"$2 $1 volume\",\n      \"__name__\",\n      \"mdai_(log|metric|span)_bytes_(sent|received)_total\"\n    )\n  )[1h:]\n)",
+                      "instant": false,
+                      "legendFormat": "__auto",
+                      "range": true,
+                      "refId": "Total Data per type and direction"
+                    }
+                  ],
+                  "title": "Total Volume per Telemetry Type (last hour)",
+                  "type": "bargauge"
                 }
               ],
-              "preload": false,
               "refresh": "5s",
-              "schemaVersion": 40,
+              "schemaVersion": 39,
               "tags": [],
               "templating": {
                 "list": []
@@ -6434,7 +6432,7 @@ kube-prometheus-stack:
                               "type": "prometheus",
                               "uid": "Prometheus"
                           },
-                          "expr": "rate(container_cpu_usage_seconds_total{namespace=\"$namespace\",pod=~\"mdai-otel-collector.*\", container=\"otc-container\"}[$__rate_interval])\n",
+                          "expr": "rate(container_cpu_usage_seconds_total{namespace=\"$namespace\",pod=~\"gateway-collector.*\", container=\"otc-container\"}[$__rate_interval])\n",
                           "legendFormat": "{{pod}}"
                         }
                     ],
@@ -6471,7 +6469,7 @@ kube-prometheus-stack:
                               "type": "prometheus",
                               "uid": "Prometheus"
                           },
-                          "expr": "container_memory_working_set_bytes{namespace=\"$namespace\",pod=~\"mdai-otel-collector.*\", container=\"otc-container\"}\n",
+                          "expr": "container_memory_working_set_bytes{namespace=\"$namespace\",pod=~\"gateway-collector.*\", container=\"otc-container\"}\n",
                           "legendFormat": "{{pod}}"
                         }
                     ],
@@ -6608,7 +6606,7 @@ kube-prometheus-stack:
                               "type": "prometheus",
                               "uid": "Prometheus"
                           },
-                          "expr": "rate(container_cpu_usage_seconds_total{namespace=\"$namespace\",pod=~\"mydecisive-engine-operator.*\", container=\"manager\"}[$__rate_interval])\n",
+                          "expr": "rate(container_cpu_usage_seconds_total{namespace=\"$namespace\",pod=~\"mdai-operator-controller-manager.*\", container=\"manager\"}[$__rate_interval])\n",
                           "legendFormat": "{{pod}}"
                         }
                     ],
@@ -6645,7 +6643,7 @@ kube-prometheus-stack:
                               "type": "prometheus",
                               "uid": "Prometheus"
                           },
-                          "expr": "container_memory_working_set_bytes{namespace=\"$namespace\",pod=~\"mydecisive-engine-operator.*\", container=\"manager\"}\n",
+                          "expr": "container_memory_working_set_bytes{namespace=\"$namespace\",pod=~\"mdai-operator-controller-manager.*\", container=\"manager\"}\n",
                           "legendFormat": "{{pod}}"
                         }
                     ],
@@ -6782,7 +6780,7 @@ kube-prometheus-stack:
                               "type": "prometheus",
                               "uid": "Prometheus"
                           },
-                          "expr": "rate(container_cpu_usage_seconds_total{namespace=\"$namespace\",pod=~\"prometheus-.*\", container=\"prometheus-server\"}[$__rate_interval])\n",
+                          "expr": "rate(container_cpu_usage_seconds_total{namespace=\"$namespace\",pod=~\"prometheus-mdai-kube-prometheus-stack-prometheus.*\", container=\"prometheus\"}[$__rate_interval])\n",
                           "legendFormat": "{{pod}}"
                         }
                     ],
@@ -6819,7 +6817,7 @@ kube-prometheus-stack:
                               "type": "prometheus",
                               "uid": "Prometheus"
                           },
-                          "expr": "container_memory_working_set_bytes{namespace=\"$namespace\",pod=~\"prometheus-.*\", container=\"prometheus-server\"}\n",
+                          "expr": "container_memory_working_set_bytes{namespace=\"$namespace\",pod=~\"prometheus-mdai-kube-prometheus-stack-prometheus.*\", container=\"prometheus\"}\n",
                           "legendFormat": "{{pod}}"
                         }
                     ],
