@@ -578,7 +578,7 @@ kube-prometheus-stack:
     serviceMonitor:
       ## If true, a ServiceMonitor will be created for the AlertManager service.
       ##
-      selfMonitor: true
+      selfMonitor: false
 
       ## Scrape interval. If not set, the Prometheus default scrape interval is used.
       ##
@@ -1188,7 +1188,7 @@ kube-prometheus-stack:
   ## Flag to disable all the kubernetes component scrapers
   ##
   kubernetesServiceMonitors:
-    enabled: true
+    enabled: false
 
   ## Component scraping the kube api server
   ##
@@ -1267,7 +1267,7 @@ kube-prometheus-stack:
   ## Component scraping the kubelet and kubelet-hosted cAdvisor
   ##
   kubelet:
-    enabled: true
+    enabled: false
     namespace: kube-system
 
     serviceMonitor:
@@ -2043,12 +2043,12 @@ kube-prometheus-stack:
   ## Component scraping kube state metrics
   ##
   kubeStateMetrics:
-    enabled: true
+    enabled: false
 
   ## Configuration for kube-state-metrics subchart
   ##
   kube-state-metrics:
-    enabled: true
+    enabled: false
     namespaceOverride: ""
     rbac:
       create: true
@@ -2118,7 +2118,7 @@ kube-prometheus-stack:
   ## Deploy node exporter as a daemonset to all nodes
   ##
   nodeExporter:
-    enabled: true
+    enabled: false
     operatingSystems:
       linux:
         enabled: true
@@ -2700,7 +2700,7 @@ kube-prometheus-stack:
       ## If true, the operator will create and maintain a service for scraping kubelets
       ## ref: https://github.com/prometheus-operator/prometheus-operator/blob/main/helm/prometheus-operator/README.md
       ##
-      enabled: true
+      enabled: false
       namespace: kube-system
       selector: ""
       ## Use '{{ template "kube-prometheus-stack.fullname" . }}-kubelet' by default
