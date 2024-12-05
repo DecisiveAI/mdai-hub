@@ -65,6 +65,8 @@ kube-prometheus-stack:
       monitor:
         enabled: false
   prometheusOperator:
+    namespaces: 
+      releaseNamespace: true
     kubeletService:
       enabled: false
     serviceMonitor:
