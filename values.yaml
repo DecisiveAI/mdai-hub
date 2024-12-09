@@ -68,6 +68,8 @@ mdai-operator:
         tag: sha-5682872
 
 kubeprometheusstack:
+  nameOverride: kube-prometheus-stack
+  fullnameOverride: kube-prometheus-stack
   enable: true
   crds:
     enabled: true
