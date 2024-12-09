@@ -60,7 +60,7 @@ mdai-operator:
       enabled: true
       certValidDays: 3650
   cleanup: false
-  datalyzerNamespace: default
+  datalyzerNamespace: mdai 
   controllerManager:
     manager:
       image:
