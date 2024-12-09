@@ -8,8 +8,8 @@ default:
     tolerations: []
   securityContext: {}
 
-global:
-  enableMonitoringFeatures: true
+defaultCollector:
+  enabled: false
 
 serviceAccount:
   # Specifies whether a service account should be created

@@ -1,3 +1,4 @@
+{{- if .Values.defaultCollector.enabled }}
 apiVersion: batch/v1
 kind: Job
 metadata:
@@ -27,3 +28,4 @@ spec:
           configMap:
             name: example-collector-manifest-config
   backoffLimit: 3
+{{- end }}
