@@ -97,9 +97,9 @@ kube-prometheus-stack:
           - url: 'http://mdai-api.mdai.svc.cluster.local:8081/alerts'
             send_resolved: true
     serviceMonitor:
-      selfMonitor: false
+      selfMonitor: true
   grafana:
-    enabled: false
+    enabled: true
     defaultDashboardsEnabled: false
     adminPassword: mdai
 
@@ -6838,11 +6838,11 @@ kube-prometheus-stack:
   serviceMonitor:
     enabled: false
   kubernetesServiceMonitors:
-    enabled: false
+    enabled: true
   kubeApiServer:
     enabled: false
   kubelet:
-    enabled: false
+    enabled: true
   kubeControllerManager:
     enabled: false
     serviceMonitor:
@@ -6864,9 +6864,9 @@ kube-prometheus-stack:
     serviceMonitor:
       enabled: false
   kubeStateMetrics:
-    enabled: false
+    enabled: true
   nodeExporter:
-    enabled: false
+    enabled: true
   prometheus-node-exporter:
     prometheus:
       monitor:
@@ -6876,7 +6876,7 @@ kube-prometheus-stack:
     namespaces:
       releaseNamespace: true
     kubeletService:
-      enabled: false
+      enabled: true
     serviceMonitor:
       selfMonitor: false
   prometheus:
