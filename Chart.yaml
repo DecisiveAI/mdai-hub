@@ -30,11 +30,3 @@ dependencies:
     version: 0.0.17
     repository: https://decisiveai.github.io/mdai-helm-charts
     condition: mdai-operator.enabled
-  - name: minio
-    version: ~5.3.0
-    repository: https://charts.min.io
-    condition: minio.enabled
-  - name: fluentd
-    version: ~0.5.2
-    repository: https://fluent.github.io/helm-charts
-    condition: fluentd.enabled
