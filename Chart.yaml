@@ -10,9 +10,10 @@ dependencies:
     repository: https://open-telemetry.github.io/opentelemetry-helm-charts
     condition: opentelemetry-operator.enabled
   - name: kube-prometheus-stack
+    alias: kubeprometheusstack
     version: ~65.3.1
     repository: https://prometheus-community.github.io/helm-charts
-    condition: kube-prometheus-stack.enabled
+    condition: kubeprometheusstack.enabled
   - name: metrics-server
     version: ~3.12.1
     repository: https://kubernetes-sigs.github.io/metrics-server
