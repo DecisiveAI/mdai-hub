@@ -16,4 +16,3 @@ example_prometheus_rule.yaml
 values_fluentd.yaml
 values_minio.yaml
 .idea/*
-files/*
