@@ -9,7 +9,7 @@ This is the official Helm chart for [MyDecisive.ai](https://www.mydecisive.ai/),
 To install via Helm, run the following command.
 
 ```bash
-helm upgrade --install --create-namespace --namespace mdai --cleanup-on-fail --wait-for-jobs -f values.yaml mdai .
+helm upgrade --install --create-namespace --namespace mdai --cleanup-on-fail --wait-for-jobs mdai .
 ```
 
 Alternatively, add the Helm repository first and scan for updates
