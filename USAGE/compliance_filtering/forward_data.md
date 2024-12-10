@@ -17,7 +17,7 @@ You can review the logs for the fluentD pod to ensure operations are working as 
 
 ## Logs are now being forwarded
 
-Your logs should now be forwarded to the collector you setup in a previous step.
+Your logs should now be forwarded to the collector you set up in a previous step.
 
 ----
 
