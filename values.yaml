@@ -62,10 +62,6 @@ mdai-operator:
       certValidDays: 3650
   cleanup: false
   datalyzerNamespace: mdai
-  controllerManager:
-    manager:
-      image:
-        tag: sha-5682872
 
 kubeprometheusstack:
   nameOverride: kube-prometheus-stack
