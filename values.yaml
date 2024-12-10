@@ -66,7 +66,7 @@ mdai-operator:
       enabled: true
       certValidDays: 3650
   cleanup: false
-  datalyzerNamespace: mdai 
+  datalyzerNamespace: mdai
   controllerManager:
     manager:
       image:
@@ -331,3 +331,4 @@ kubeprometheusstack:
                     )
                 )
               record: "namespace_cpu:kube_pod_container_resource_limits:sum"
+
