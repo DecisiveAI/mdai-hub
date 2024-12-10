@@ -170,6 +170,7 @@ kubeprometheusstack:
     serviceMonitor:
       selfMonitor: false
     prometheusSpec:
+      ruleSelectorNilUsesHelmValues: false
       additionalArgs:
       - name: enable-feature
         value: exemplar-storage
