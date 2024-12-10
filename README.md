@@ -9,7 +9,7 @@ This is the official Helm chart for [MyDecisive.ai](https://www.mydecisive.ai/),
 To install via Helm, run the following command.
 
 ```bash
-helm upgrade --install --create-namespace --namespace mdai --cleanup-on-fail --dependency-update --wait-for-jobs -f values.yaml -f values_prometheus.yaml mdai .
+helm upgrade --install --create-namespace --namespace mdai --cleanup-on-fail --wait-for-jobs mdai .
 ```
 
 Alternatively, add the Helm repository first and scan for updates
@@ -22,20 +22,30 @@ helm repo update
 ### With cert-manager
 
 ```bash
-helm upgrade --install --create-namespace --namespace mdai --cleanup-on-fail --dependency-update --wait-for-jobs --set mdai-operator.webhooks.certManager.enabled=true --set mdai-operator.webhooks.autoGenerateCert.enabled=false -f values.yaml -f values_prometheus.yaml mdai .
+helm upgrade --install --create-namespace --namespace mdai --cleanup-on-fail --wait-for-jobs --set mdai-operator.webhooks.certManager.enabled=true --set mdai-operator.webhooks.autoGenerateCert.enabled=false mdai .
+```
+
+### Without Prometheus operator/CRDs
+```bash
+helm upgrade --install --create-namespace --namespace mdai --cleanup-on-fail --wait-for-jobs --set kube-prometheus-stack.crds.enabled=false --set kube-prometheus-stack.prometheusOperator.enabled=false mdai .
+```
+
+### Without Grafana
+```bash
+helm upgrade --install --create-namespace --namespace mdai --cleanup-on-fail --wait-for-jobs -f without_grafana.yaml mdai .
 ```
 
 ### Without cleanup on uninstall
 
 ```bash
-helm upgrade --install --create-namespace --namespace mdai --cleanup-on-fail --dependency-update --wait-for-jobs --set cleanup=false -f values.yaml -f values_prometheus.yaml mdai .
+helm upgrade --install --create-namespace --namespace mdai --cleanup-on-fail --wait-for-jobs --set cleanup=false mdai .
 ```
 
 see `values.yaml` for other options.
 
 ## Use Cases
 
-- [Compliance and Dynamic Filtering](./usage/compliance_filtering/start_here.md)
+- [Compliance and Dynamic Filtering](./USAGE/compliance_filtering/start_here.md)
 
 *Stay tuned! More coming soon!*
 

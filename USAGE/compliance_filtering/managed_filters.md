@@ -4,11 +4,11 @@ We mentioned we planted an excess amount of data to flow through your telemetry 
 
 ### What's a managed filter?
 
-MDAI has create a construct known as, *Managed Filters*. They enable our infrastructure to monitor and react to your data streams via configuration. This use case monitors services by a service identifier, `service.name` and a tolerance threshold over a rolling time window using Prometheus' promql. When a given service surpasses your configured threshold, log data that is deemed non-critical (< level `WARN`) will be suppressed and dropped on the floor. 
+MDAI has created a construct known as, *Managed Filters*. They enable our infrastructure to monitor and react to your data streams via configuration. This use case monitors services by a service identifier, `service.name` and a tolerance threshold over a rolling time window using Prometheus' promql. When a given service surpasses your configured threshold, log data that is deemed non-critical (< level `WARN`) will be suppressed and dropped on the floor. 
 
 ### Where and how do I modify my managed filter?
 
-If you view the [example_collector.yaml](../../example_collector.yaml), you'll notice that there is a block in the config under filters where the filter `mute-noisy-services` is false. 
+If you view the [example_collector.yaml](../../files/example_collector.yaml), you'll notice that there is a block in the config under filters where the filter `mute-noisy-services` is false. 
 
 ```yaml
 telemetryFiltering:
@@ -33,13 +33,13 @@ telemetryFiltering:
 
 ### Enable your managed filter
 
-Let's enable the filter in [example_collector.yaml](../../example_collector.yaml) by changing `enabled: false` to `enabled: true` (approximately ln. 21).
+Let's enable the filter in [example_collector.yaml](../../files/example_collector.yaml) by changing `enabled: false` to `enabled: true` (approximately ln. 21).
 
 
 ### Update the config in your collector
 
 ```bash
-kubectl apply -f ./example_collector.yaml --namespace mdai
+kubectl apply -f ./files/example_collector.yaml --namespace mdai
 ```
 
 ### Validate
