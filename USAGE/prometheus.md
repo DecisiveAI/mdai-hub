@@ -19,7 +19,6 @@ kubectl -n mdai get configmaps --selector app.kubernetes.io/name=prometheus-####
 ## Prometheus settings
 
 There are more advanced configs you can review 
-- [Example Prometheus instance config](../values_prometheus.yaml)
 - [Example Prometheus Alert Manager Rule](../example_prometheus_rule.yaml)
 
 ## Data Persistence - Prometheus
@@ -32,5 +31,5 @@ Until MDAI is able to support a more robust persistence layer or snapshot capabi
 
 <br />
 
-[Back to README.md](../../README.md)
+[Back to README.md](../README.md)
 

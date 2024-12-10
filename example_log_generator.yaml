@@ -2,15 +2,20 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: loggy-mclogface
+  namespace: mdai
+  labels:
+    app.kubernetes.io/name: loggy-mclogface
+    app.kubernetes.io/part-of: mdai-log-generator
 spec:
   replicas: 3
   selector:
     matchLabels:
-      app: loggy-mclogface
+      app.kubernetes.io/name: loggy-mclogface
   template:
     metadata:
       labels:
-        app: loggy-mclogface
+        app.kubernetes.io/name: loggy-mclogface
+        app.kubernetes.io/part-of: mdai-log-generator
     spec:
       containers:
         - name: loggy-mclogface

@@ -1,6 +1,6 @@
 ## Investigate alerts
 
-We previously setup alert settings as part of the managed filters. Let's validate your alerts are configured. 
+We previously set up alert settings as part of the managed filters. Let's validate your alerts are configured. 
 
 ### Alert Statuses
 
@@ -38,7 +38,7 @@ This is a quick <a href="http://localhost:9090/graph?g0.expr=increase(mdai_log_b
   <img alt="prometheus alerts" src="../../media/alert_query_graph.png" />
 </a>
 
-The result will validate the threshold of 5MB over a 6 min time window being surpassed. 
+The result will validate the threshold of 5MB over a 6-minute time window being surpassed. 
 
 ### Congrats!
 

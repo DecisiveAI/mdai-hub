@@ -2,15 +2,20 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: xtra-noisy-logz
+  namespace: mdai
+  labels:
+    app.kubernetes.io/name: xtra-noisy-logz
+    app.kubernetes.io/part-of: mdai-log-generator
 spec:
   replicas: 3
   selector:
     matchLabels:
-      app: xtra-noisy-logz
+      app.kubernetes.io/name: xtra-noisy-logz
   template:
     metadata:
       labels:
-        app: xtra-noisy-logz
+        app.kubernetes.io/name: xtra-noisy-logz
+        app.kubernetes.io/part-of: mdai-log-generator
     spec:
       containers:
         - name: xtra-noisy-logz

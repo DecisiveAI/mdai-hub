@@ -1,4 +1,4 @@
-## Create and initialize log generators
+## Create and initialize log generators 
 
 You will spin up three different mock data generators to see data flowing through your pipelines. 
 
@@ -41,7 +41,7 @@ You should be able to view the log output to validate the generation of logs. Se
 <video controls src="../../media/log_xtra_noisy.mp4"></video>
 
 
-### Validating generators 
+### Validating generators
 
 ### Using k9s
 
@@ -56,10 +56,12 @@ If you'd prefer to use `kubectl`, for viewing logs, you can run the following co
 
 ```bash
 # list all pods 
-kubectl get pods
+kubectl get pods -n mdai -l app.kubernetes.io/part-of=mdai-log-generator
 
-# view logs for a given pod
-kubectl logs <pod_name>
+# view logs for a given generator
+kubectl get pods -n mdai -l app.kubernetes.io/name=loggy-mclogface # normal
+kubectl get pods -n mdai -l app.kubernetes.io/name=noisy-mclogface # noisy
+kubectl get pods -n mdai -l app.kubernetes.io/name=xtra-noisy-logz # extra noisy
 ```
 
 ## Data generated!

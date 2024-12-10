@@ -12,7 +12,7 @@ An end-to-end mocked example for collecting log data from services/infrastructur
 
 ### Telemetry Pipelines
 
-Two log pipelines will be create for the transmission from fluentD to MinIO via OTel data collection.
+Two log pipelines will be created for the transmission from fluentD to MinIO via OTel data collection.
 1. Compliance pipeline (see section)
 2. Dynamic Filtering (see below)
 
@@ -66,7 +66,13 @@ helm upgrade --install --repo https://charts.min.io minio minio -f values_minio.
 <i>If you have already done this from our <a href="../../README.md#without-cert-manager" target="_blank">Installation steps</a> feel free to skip to the next step.</i>
 
 ```bash
-helm upgrade --install --create-namespace --namespace mdai --cleanup-on-fail --dependency-update --wait-for-jobs -f values.yaml -f values_prometheus.yaml mdai .
+helm upgrade --install --create-namespace --namespace mdai --cleanup-on-fail --wait-for-jobs mdai .
+```
+
+### Install MDAI without Prometheus operator/CRDs
+<i>If you already have the Prometheus operator & custom resource definitions (CRDs) installed
+```bash
+helm upgrade --install --create-namespace --namespace mdai --cleanup-on-fail --wait-for-jobs --set kube-prometheus-stack.crds.enabled=false --set kube-prometheus-stack.prometheusOperator.enabled=false mdai .
 ```
 
 ### Validate 
@@ -74,7 +80,7 @@ helm upgrade --install --create-namespace --namespace mdai --cleanup-on-fail --d
 You can verify that your pods are all up and running with the following command
 
 ```bash
-kubectl get pods -A
+kubectl get pods -n mdai
 ```
 
 The output should look something like...
