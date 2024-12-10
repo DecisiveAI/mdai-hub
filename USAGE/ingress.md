@@ -79,7 +79,9 @@ where
 
 *\$NLB_NAME* - proposed name for the NLB (non-gRPC traffic)
 
+## Example configuration
 
+Example configuration can be found [here](./example_ingress_config.yaml)
 
 ## Learn more
 
