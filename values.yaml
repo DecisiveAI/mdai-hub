@@ -23,12 +23,17 @@ serviceAccount:
 opentelemetry-operator:
   enabled: true
   fullnameOverride: opentelemetry-operator
+  crds:
+    create: false  
   admissionWebhooks:
     certManager:
       enabled: false
     autoGenerateCert:
       enabled: true
   manager:
+    image:
+      repository: public.ecr.aws/decisiveai/opentelemetry-operator
+      tag: 0.113.0  
     collectorImage:
       repository: otel/opentelemetry-collector-contrib
       tag: 0.112.0
@@ -326,3 +331,4 @@ kubeprometheusstack:
                     )
                 )
               record: "namespace_cpu:kube_pod_container_resource_limits:sum"
+
