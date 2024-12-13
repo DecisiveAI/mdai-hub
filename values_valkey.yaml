@@ -8,6 +8,7 @@ primary:
   # TODO: KILL VALKEY PODS, REVIVE THEM AND MAKE SURE PERSISTENCE HAPPENS. I've had issues with replicas crash looping on rehydration.
   persistence:
     enabled: false
+  # TODO: This is the most horrible line in here. This lets connected users drop the whole database. Using only for testing
   disableCommands: []
 replica:
   # TODO: Define actual resources, do not use preset
