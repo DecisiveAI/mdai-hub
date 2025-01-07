@@ -332,3 +332,27 @@ kubeprometheusstack:
                 )
               record: "namespace_cpu:kube_pod_container_resource_limits:sum"
 
+valkey:
+  enabled: true
+  auth:
+    password: mdai
+  primary:
+    # TODO: Define actual resources, do not use preset
+    resourcesPreset: nano
+    replicaCount: 1
+    # TODO: THIS MUST BE REMOVED, DISABLED FOR BENCHMARKING
+    # TODO: KILL VALKEY PODS, REVIVE THEM AND MAKE SURE PERSISTENCE HAPPENS. I've had issues with replicas crash looping on rehydration.
+    persistence:
+      enabled: false
+    # TODO: This is the most horrible line in here. This lets connected users drop the whole database. Using only for testing
+    disableCommands: []
+  replica:
+    # TODO: Define actual resources, do not use preset
+    resourcesPreset: nano
+    replicaCount: 3
+    # TODO: THIS MUST BE REMOVED, DISABLED FOR BENCHMARKING
+    # TODO: KILL VALKEY PODS, REVIVE THEM AND MAKE SURE PERSISTENCE HAPPENS. I've had issues with replicas crash looping on rehydration.
+    persistence:
+      enabled: false
+  serviceMonitor:
+    enabled: true
