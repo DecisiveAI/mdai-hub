@@ -1,7 +1,7 @@
 replicas: 1
 mode: standalone
 persistence:
-  enabled: true
+  enabled: false
   size: 10Gi
   storageClass: standard 
 resources:
