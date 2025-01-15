@@ -72,8 +72,16 @@ helm upgrade --install --create-namespace --namespace mdai --cleanup-on-fail --w
 ### Install MDAI without Prometheus operator/CRDs
 <i>If you already have the Prometheus operator & custom resource definitions (CRDs) installed
 ```bash
-helm upgrade --install --create-namespace --namespace mdai --cleanup-on-fail --wait-for-jobs --set kube-prometheus-stack.crds.enabled=false --set kube-prometheus-stack.prometheusOperator.enabled=false mdai .
+helm upgrade --install --create-namespace --namespace mdai --cleanup-on-fail --wait-for-jobs --set kubeprometheusstack.crds.enabled=false --set kubeprometheusstack.prometheusOperator.enabled=false mdai .
 ```
+
+
+### Install MDAI with its own instance of Prometheus Operator
+<i>This option will allow you to install a dedicated instance of the Prometheus Operator</i>
+```bash
+helm upgrade --install --create-namespace --namespace mdai --cleanup-on-fail --wait-for-jobs --set kubeprometheusstack.crds.enabled=false  mdai .
+```
+
 
 ### Validate 
 

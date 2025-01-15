@@ -27,8 +27,18 @@ helm upgrade --install --create-namespace --namespace mdai --cleanup-on-fail --w
 
 ### Without Prometheus operator/CRDs
 ```bash
-helm upgrade --install --create-namespace --namespace mdai --cleanup-on-fail --wait-for-jobs --set kube-prometheus-stack.crds.enabled=false --set kube-prometheus-stack.prometheusOperator.enabled=false mdai .
+helm upgrade --install --create-namespace --namespace mdai --cleanup-on-fail --wait-for-jobs --set kubeprometheusstack.crds.enabled=false --set kubeprometheusstack.prometheusOperator.enabled=false --set kubeprometheusstack.nodeExporter.enabled=false mdai .
 ```
+When this option is chosen, make sure existing Prometheus Operator's configuration allows to manage Custom Resources in the above namespace
+Prometheus NodeExporter  installation is disabled as it's considered deployed along with the Prometheus Operator.
+
+### Without Prometheus CRDs. Prometheus Operator will be installed.
+```bash
+helm upgrade --install --create-namespace --namespace mdai --cleanup-on-fail --wait-for-jobs --set kubeprometheusstack.crds.enabled=false --set kubeprometheusstack.nodeExporter.enabled=false mdai .
+```
+When this option is chosen, make sure existing Prometheus Operator's configuration allows to manage Custom Resources in the above namespace
+Prometheus NodeExporter  installation is disabled as it's considered deployed along with the Prometheus Operator.
+
 
 ### Without Grafana
 ```bash
