@@ -18,6 +18,7 @@
   "editable": true,
   "fiscalYearStartMonth": 0,
   "graphTooltip": 0,
+  "id": 29,
   "links": [],
   "panels": [
     {
@@ -39,7 +40,7 @@
         "type": "prometheus",
         "uid": "prometheus"
       },
-      "description": "Unique service logs MDAI is capturing",
+      "description": "Shows how many services monitored based on the current selected time interval.",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -151,7 +152,7 @@
         "type": "prometheus",
         "uid": "prometheus"
       },
-      "description": "The ingress and egress of logs sent through MDAI",
+      "description": "Total ingress and egress logs filtered through MDAI operator.",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -294,7 +295,7 @@
         "type": "prometheus",
         "uid": "prometheus"
       },
-      "description": "Difference between I/O logs on average over selected timeframe.",
+      "description": "Average percentage difference between ingress and egress logs.",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -463,7 +464,7 @@
         "type": "prometheus",
         "uid": "prometheus"
       },
-      "description": "Logs received by MDAI and sent from MDAI in total and bytes",
+      "description": "Total number of logs and size per service based on time interval for ingress and egress.",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -820,7 +821,7 @@
         "type": "prometheus",
         "uid": "prometheus"
       },
-      "description": "Top talkers received through MDAI and reduction",
+      "description": "Total number of logs from top talkers services based on time interval for ingress and egress",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -999,7 +1000,7 @@
         "type": "prometheus",
         "uid": "prometheus"
       },
-      "description": "",
+      "description": "Current active filters for logs limiting egress of logs.",
       "gridPos": {
         "h": 9,
         "w": 12,
@@ -1008,12 +1009,14 @@
       },
       "id": 20,
       "options": {
-        "alertInstanceLabelFilter": "",
+        "alertInstanceLabelFilter": "job=\"datalyzer-scrape\"",
         "alertName": "",
         "dashboardAlerts": false,
-        "groupBy": [],
+        "groupBy": [
+          "service_name"
+        ],
         "groupMode": "default",
-        "maxItems": 18,
+        "maxItems": 100,
         "sortOrder": 1,
         "stateFilter": {
           "error": true,
@@ -1025,18 +1028,18 @@
         "viewMode": "list"
       },
       "pluginVersion": "11.2.2+security-01",
-      "title": "Active Filters",
+      "title": "MDAI Active Filters for Logs",
       "type": "alertlist"
     }
   ],
-  "refresh": "5s",
+  "refresh": "auto",
   "schemaVersion": 39,
   "tags": [],
   "templating": {
     "list": []
   },
   "time": {
-    "from": "now-30m",
+    "from": "now-5m",
     "to": "now"
   },
   "timepicker": {},
@@ -1046,4 +1049,3 @@
   "version": 1,
   "weekStart": ""
 }
-            
