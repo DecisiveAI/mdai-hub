@@ -2,7 +2,10 @@
 
 This is the official Helm chart for [MyDecisive.ai](https://www.mydecisive.ai/), an open-core solution for monitoring and managing OpenTelemetry pipelines on Kubernetes. 
 
+### After initial checkout, switching branches or modifying `Chart.yaml`, run `helm dependency update . --repository-config /dev/null`
+
 ## Install MDAI
+
 
 ### Without cert-manager
 

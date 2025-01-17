@@ -41,6 +41,7 @@ opentelemetry-operator:
       enabled: false
     env:
       ENABLE_WEBHOOKS: "true"
+      WATCH_NAMESPACE: mdai
   kubeRBACProxy:
     enabled: false
 
@@ -332,3 +333,44 @@ kubeprometheusstack:
                 )
               record: "namespace_cpu:kube_pod_container_resource_limits:sum"
 
+valkey:
+  enabled: true
+  auth:
+    enabled: true
+    existingSecret: mdai-valkey-credentials
+  primary:
+    replicaCount: 1
+    persistence:
+      enabled: false
+    disableCommands:
+      - FLUSHDB
+      - FLUSHALL
+    service:
+      type: ClusterIP
+      ports:
+        valkey: 6379
+    resources:
+      requests:
+        memory: "64Mi"
+        cpu: "100m"
+      limits:
+        memory: "128Mi"
+        cpu: "200m"
+  replica:
+    replicaCount: 0
+    persistence:
+      enabled: false
+    disableCommands:
+      - FLUSHDB
+      - FLUSHALL
+    service:
+      type: ClusterIP
+      ports:
+        valkey: 6379
+    resources:
+      requests:
+        memory: "64Mi"
+        cpu: "100m"
+      limits:
+        memory: "128Mi"
+        cpu: "200m"

@@ -17,6 +17,8 @@ dependencies:
 - name: mydecisive-engine-operator
   repository: https://decisiveai.github.io/mdai-helm-charts
   version: 0.0.20
-digest: sha256:003f71927d5a06fab227742294759522d641fdaac014d211cd7556bc80d95f3c
-generated: "2024-12-09T17:42:01.310679-07:00"
-
+- name: valkey
+  repository: oci://registry-1.docker.io/bitnamicharts
+  version: 2.2.3
+digest: sha256:2008d3592e02440055f2fa8565a45fd7eaa1ae72883092705f38bb6da8d10910
+generated: "2025-01-17T11:03:14.95466-07:00"
