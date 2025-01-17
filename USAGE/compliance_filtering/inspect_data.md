@@ -10,7 +10,9 @@ kubectl port-forward -n mdai svc/mdai-grafana 3000:80
 
 ### Grafana dashboard
 
-View summaries of you metric using the [MDAI Data Monitoring Dashboard](http://localhost:3000/d/de978rcegwfswb/mdai-data-management?orgId=1&refresh=auto&from=now-5m&to=now) in Grafana. The admin password is `mdai`
+View summaries of you metric using the [MDAI Data Monitoring Dashboard](http://localhost:3000/d/de978rcegwfswb/mdai-data-management?orgId=1&refresh=auto&from=now-5m&to=now) in Grafana. 
+- username: `admin`
+- password: `mdai`
 
 ----
 
