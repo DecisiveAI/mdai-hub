@@ -31,3 +31,7 @@ dependencies:
     version: 0.0.20
     repository: https://decisiveai.github.io/mdai-helm-charts
     condition: mdai-operator.enabled
+  - name: valkey
+    version: ~2.2.0
+    repository: oci://registry-1.docker.io/bitnamicharts
+    condition: valkey.enabled
