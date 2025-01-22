@@ -105,6 +105,18 @@ spec:
                 keys:
                   - service.name
 
+              resource/watcher_receiver_tag:
+                attributes:
+                  - key: watcher_direction
+                    value: "received"
+                    action: upsert
+
+              resource/watcher_exporter_tag:
+                attributes:
+                  - key: watcher_direction
+                    value: "exported"
+                    action: upsert
+
               filter/severity:
                 error_mode: ignore
                 logs:
@@ -113,14 +125,10 @@ spec:
 
             exporters:
               debug: {}
-              awss3:
-                marshaler: otlp_json
-                s3uploader:
-                  endpoint: http://minio.default.svc.cluster.local:9000
-                  file_prefix: loggy-mclogfile_
-                  s3_bucket: 'logs'
-                  s3_force_path_style: true
-                  s3_partition: hour
+              otlp/watcher:
+                endpoint: watcher-collector-service.default.svc.cluster.local:4317
+                tls:
+                  insecure: true
 
             service:
               telemetry:
@@ -131,10 +139,10 @@ spec:
               pipelines:
                 logs/customer_pipeline:
                   receivers: [otlp, fluentforward]
-                  processors: [memory_limiter, batch, groupbyattrs]
-                  exporters: [debug]
+                  processors: [memory_limiter, batch, groupbyattrs, resource/watcher_exporter_tag]
+                  exporters: [debug, otlp/watcher]
 
-                logs/long_term_storage:
+                logs/watch_receivers: 
                   receivers: [otlp, fluentforward]
-                  processors: [filter/severity, memory_limiter, batch, groupbyattrs]
-                  exporters: [awss3]
+                  processors: [memory_limiter, batch, groupbyattrs, resource/watcher_receiver_tag]
+                  exporters: [debug, otlp/watcher]
