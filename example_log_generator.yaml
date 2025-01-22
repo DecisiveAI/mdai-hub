@@ -52,7 +52,7 @@ spec:
                   LOG_LEVEL=$(echo $LEVELS | awk -v idx=$((RANDOM % 3 + 1)) '{print $idx}')
                   RANDOM_NUMBER=$((RANDOM % ${SERVICE_COUNT}))
                   SERVICE_NAME="service${RANDOM_NUMBER}"
-                  echo "$(date -Iseconds) - ${SERVICE_NAME} - ${LOG_LEVEL} - ${LOG_MESSAGE}"
+                  echo "$(date -Iseconds) - ${SERVICE_NAME} - ${LOG_LEVEL} - teamA - us-east-1 - ${LOG_MESSAGE}"
                 done
                 sleep $INTERVAL
               done

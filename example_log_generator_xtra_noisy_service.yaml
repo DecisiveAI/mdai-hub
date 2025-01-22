@@ -54,7 +54,7 @@ spec:
                     # Output 10 logs if the level is INFO
                     if [ "$LOG_LEVEL" = "INFO" ]; then
                       for j in $(seq 1 10); do
-                        echo "$(date -Iseconds) - ${NOISY_SERVICE_NAME} - ${LOG_LEVEL} - ${LOG_MESSAGE}"
+                        echo "$(date -Iseconds) - ${NOISY_SERVICE_NAME} - ${LOG_LEVEL} - teamC - us-east-1 - ${LOG_MESSAGE}"
                       done
                     else
                       echo "$(date -Iseconds) - ${NOISY_SERVICE_NAME} - ${LOG_LEVEL} - ${LOG_MESSAGE}"

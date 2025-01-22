@@ -10,7 +10,7 @@ fileConfigs:
         @type multi_format
         <pattern>
           format regexp
-          expression (?<timestamp>\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}[+-]\d{2}:\d{2}) - (?<service.name>service\d+) - (?<log_level>INFO|ERROR|WARNING) - (?<message>.+)
+          expression (?<timestamp>\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}[+-]\d{2}:\d{2}) - (?<service.name>service\d+) - (?<log_level>INFO|ERROR|WARNING) - (?<team>.+) - (?<region>.+) - (?<message>.+)
           time_format %Y-%m-%dT%H:%M:%S%z
         </pattern>
         <pattern>
