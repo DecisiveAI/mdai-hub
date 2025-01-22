@@ -331,7 +331,8 @@ valkey:
   enabled: true
   auth:
     enabled: true
-    existingSecret: mdai-valkey-credentials
+    existingSecret: valkey-secret
+    existingSecretPasswordKey: VALKEY_PASSWORD
   primary:
     replicaCount: 1
     persistence:
