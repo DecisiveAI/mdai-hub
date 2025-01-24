@@ -49,7 +49,7 @@ fileConfigs:
       <match kubernetes.**>
         @type forward
         <server>
-          host gateway-collector.mdai.svc.cluster.local
+          host gateway-3-collector.mdai.svc.cluster.local
           port 8006
         </server>
       </match>

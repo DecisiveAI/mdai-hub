@@ -2,7 +2,6 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: xtra-noisy-logz
-  namespace: mdai
   labels:
     app.kubernetes.io/name: xtra-noisy-logz
     app.kubernetes.io/part-of: mdai-log-generator
