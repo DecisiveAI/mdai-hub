@@ -48,10 +48,6 @@ opentelemetry-operator:
 metrics-server:
   enabled: false
 
-mdai-api:
-  enabled: yes
-  fullnameOverride: mdai-api
-
 datalyzer:
   enabled: true
 
@@ -66,7 +62,15 @@ mdai-operator:
       certValidDays: 3650
   cleanup: false
   datalyzerNamespace: mdai
-  
+
+  controllerManager:
+    manager:
+      image:
+        tag: 0.1.0
+
+event-handler-webservice:
+  enabled: true
+
 kubeprometheusstack:
   nameOverride: kube-prometheus-stack
   fullnameOverride: kube-prometheus-stack
@@ -96,7 +100,7 @@ kubeprometheusstack:
       - name: 'null'
       - name: 'event-handler'
         webhook_configs:
-          - url: 'http://mdai-api.mdai.svc.cluster.local:8081/alerts'
+          - url: 'http://event-handler-webservice.mdai.svc.cluster.local:8081/alerts'
             send_resolved: true
     serviceMonitor:
       selfMonitor: true
@@ -333,6 +337,8 @@ valkey:
     enabled: true
     existingSecret: valkey-secret
     existingSecretPasswordKey: VALKEY_PASSWORD
+  configuration: |-
+    notify-keyspace-events KEA
   primary:
     replicaCount: 1
     persistence:
