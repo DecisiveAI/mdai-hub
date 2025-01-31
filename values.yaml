@@ -49,7 +49,7 @@ metrics-server:
   enabled: false
 
 datalyzer:
-  enabled: true
+  enabled: false
 
 mdai-operator:
   enabled: true
