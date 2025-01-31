@@ -63,11 +63,6 @@ mdai-operator:
   cleanup: false
   datalyzerNamespace: mdai
 
-  controllerManager:
-    manager:
-      image:
-        tag: 0.1.0
-
 event-handler-webservice:
   enabled: true
 
