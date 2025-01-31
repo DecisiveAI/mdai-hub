@@ -332,8 +332,6 @@ valkey:
     enabled: true
     existingSecret: valkey-secret
     existingSecretPasswordKey: VALKEY_PASSWORD
-  configuration: |-
-    notify-keyspace-events KEA
   primary:
     replicaCount: 1
     persistence:
@@ -341,6 +339,8 @@ valkey:
     disableCommands:
       - FLUSHDB
       - FLUSHALL
+    configuration: |-
+      notify-keyspace-events KEA
     service:
       type: ClusterIP
       ports:
