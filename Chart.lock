@@ -13,10 +13,10 @@ dependencies:
   version: 0.0.8
 - name: mdai-operator
   repository: https://decisiveai.github.io/mdai-helm-charts
-  version: 0.1.0
+  version: 0.1.1
 - name: event-handler-webservice
   repository: https://decisiveai.github.io/mdai-helm-charts
-  version: 0.0.1
+  version: 0.0.2
 - name: valkey
   repository: oci://registry-1.docker.io/bitnamicharts
   version: 2.2.3
