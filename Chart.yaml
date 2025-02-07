@@ -28,6 +28,6 @@ dependencies:
     condition: datalyzer.enabled
   - name: mydecisive-engine-operator
     alias: mdai-operator
-    version: 0.0.20
+    version: 0.0.21
     repository: https://decisiveai.github.io/mdai-helm-charts
     condition: mdai-operator.enabled
