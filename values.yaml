@@ -50,8 +50,6 @@ metrics-server:
 mdai-api:
   enabled: yes
   fullnameOverride: mdai-api
-  image:
-    tag: 0.0.3
 
 datalyzer:
   enabled: true
@@ -67,15 +65,11 @@ mdai-operator:
       certValidDays: 3650
   cleanup: false
   datalyzerNamespace: mdai
-  controllerManager:
-    manager:
-      image:
-        tag: 0.1.1
-
+  
 kubeprometheusstack:
   nameOverride: kube-prometheus-stack
   fullnameOverride: kube-prometheus-stack
-  enable: true
+  enabled: true
   crds:
     enabled: true
   defaultRules:
