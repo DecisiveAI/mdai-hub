@@ -69,7 +69,7 @@ event-handler-webservice:
 kubeprometheusstack:
   nameOverride: kube-prometheus-stack
   fullnameOverride: kube-prometheus-stack
-  enable: true
+  enabled: true
   crds:
     enabled: true
   defaultRules:
