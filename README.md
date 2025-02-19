@@ -54,6 +54,10 @@ helm upgrade --install --create-namespace --namespace mdai --cleanup-on-fail --w
 helm upgrade --install --create-namespace --namespace mdai --cleanup-on-fail --wait-for-jobs --set cleanup=false mdai .
 ```
 
+### With persistent storage for Prometheus and Valkey.
+
+[Persistent storage](./PV.md)
+
 see `values.yaml` for other options.
 
 ## Use Cases
