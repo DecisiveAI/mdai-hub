@@ -1,9 +1,9 @@
 apiVersion: v2
 type: application
 name: mdai-cluster
-version: 0.6.0
+version: 0.7.0
 description: MDAI Cluster helm chart
-appVersion: 0.6.0
+appVersion: 0.7.0
 dependencies:
   - name: opentelemetry-operator
     version: ~0.71.2
@@ -23,11 +23,11 @@ dependencies:
     repository: https://decisiveai.github.io/mdai-helm-charts
     condition: datalyzer.enabled
   - name: mdai-operator
-    version: 0.1.3
+    version: 0.1.4
     repository: https://decisiveai.github.io/mdai-helm-charts
     condition: mdai-operator.enabled
   - name: event-handler-webservice
-    version: 0.0.3
+    version: 0.0.5
     repository: https://decisiveai.github.io/mdai-helm-charts
     condition: event-handler-webservice.enabled
   - name: valkey
