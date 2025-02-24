@@ -1,7 +1,7 @@
 {
   "__inputs": [
     {
-      "name": "DS_PROMETHEUS",
+      "name": "PROMETHEUS",
       "label": "Prometheus",
       "description": "",
       "type": "datasource",
@@ -9,14 +9,14 @@
       "pluginName": "Prometheus"
     },
     {
-      "name": "DS_EXPRESSION",
+      "name": "EXPRESSION",
       "label": "Expression",
       "description": "",
       "type": "datasource",
       "pluginId": "__expr__"
     },
     {
-      "name": "DS_INFINTYJSON",
+      "name": "INFINTYJSON",
       "label": "InfintyJSON",
       "description": "",
       "type": "datasource",
@@ -81,7 +81,7 @@
     },
     {
       "type": "datasource",
-      "id": "yesoreyeram-infinity-datasource",
+      "id": "INFINTYJSON",
       "name": "Infinity",
       "version": "3.0.0-beta.1"
     }
@@ -124,7 +124,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "${DS_PROMETHEUS}"
+        "uid": "prometheus"
       },
       "description": "Shows how many services monitored based on the current selected time interval.",
       "fieldConfig": {
@@ -175,7 +175,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "${DS_PROMETHEUS}"
+            "uid": "prometheus"
           },
           "disableTextWrap": false,
           "editorMode": "code",
@@ -192,7 +192,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "${DS_PROMETHEUS}"
+            "uid": "prometheus"
           },
           "expr": "",
           "hide": false,
@@ -203,7 +203,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "${DS_PROMETHEUS}"
+            "uid": "prometheus"
           },
           "expr": "",
           "hide": false,
@@ -235,7 +235,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "${DS_PROMETHEUS}"
+        "uid": "prometheus"
       },
       "description": "Total ingress and egress logs filtered through MDAI operator.",
       "fieldConfig": {
@@ -326,7 +326,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "${DS_PROMETHEUS}"
+            "uid": "prometheus"
           },
           "disableTextWrap": false,
           "editorMode": "code",
@@ -344,7 +344,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "${DS_PROMETHEUS}"
+            "uid": "prometheus"
           },
           "disableTextWrap": false,
           "editorMode": "code",
@@ -377,7 +377,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "${DS_PROMETHEUS}"
+        "uid": "prometheus"
       },
       "description": "Average percentage difference between ingress and egress logs.",
       "fieldConfig": {
@@ -465,7 +465,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "${DS_PROMETHEUS}"
+            "uid": "prometheus"
           },
           "editorMode": "code",
           "expr": "sum(increase($receiverMetric{data_type=\"$dataType\"}[$__rate_interval:])) - sum(increase($exporterMetric{data_type=\"$dataType\"}[$__rate_interval:]))",
@@ -479,7 +479,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "${DS_PROMETHEUS}"
+            "uid": "prometheus"
           },
           "editorMode": "code",
           "expr": "sum(increase($receiverMetric{data_type=\"$dataType\"}[$__rate_interval:]))",
@@ -493,7 +493,7 @@
         {
           "datasource": {
             "type": "__expr__",
-            "uid": "${DS_EXPRESSION}"
+            "uid": "__expr__"
           },
           "expression": "$Difference / $B",
           "hide": true,
@@ -503,7 +503,7 @@
         {
           "datasource": {
             "type": "__expr__",
-            "uid": "${DS_EXPRESSION}"
+            "uid": "__expr__"
           },
           "expression": "$A * 100",
           "hide": false,
@@ -543,7 +543,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "${DS_PROMETHEUS}"
+        "uid": "prometheus"
       },
       "description": "Total number of logs and size per service based on time interval for ingress and egress.",
       "fieldConfig": {
@@ -721,7 +721,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "${DS_PROMETHEUS}"
+            "uid": "prometheus"
           },
           "disableTextWrap": false,
           "editorMode": "code",
@@ -738,7 +738,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "${DS_PROMETHEUS}"
+            "uid": "prometheus"
           },
           "disableTextWrap": false,
           "editorMode": "code",
@@ -756,7 +756,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "${DS_PROMETHEUS}"
+            "uid": "prometheus"
           },
           "disableTextWrap": false,
           "editorMode": "code",
@@ -774,7 +774,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "${DS_PROMETHEUS}"
+            "uid": "prometheus"
           },
           "disableTextWrap": false,
           "editorMode": "code",
@@ -899,7 +899,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "${DS_PROMETHEUS}"
+        "uid": "prometheus"
       },
       "description": "Total number of logs from top talkers services based on time interval for ingress and egress",
       "fieldConfig": {
@@ -1036,7 +1036,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "${DS_PROMETHEUS}"
+            "uid": "prometheus"
           },
           "disableTextWrap": false,
           "editorMode": "code",
@@ -1053,7 +1053,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "${DS_PROMETHEUS}"
+            "uid": "prometheus"
           },
           "disableTextWrap": false,
           "editorMode": "code",
@@ -1088,7 +1088,7 @@
     {
       "datasource": {
         "type": "yesoreyeram-infinity-datasource",
-        "uid": "${DS_INFINTYJSON}"
+        "uid": "INFINTYJSON"
       },
       "description": "MDAI events fired and collector restarts",
       "fieldConfig": {
@@ -1148,7 +1148,7 @@
           "columns": [],
           "datasource": {
             "type": "yesoreyeram-infinity-datasource",
-            "uid": "${DS_INFINTYJSON}"
+            "uid": "INFINTYJSON"
           },
           "filters": [],
           "format": "table",
@@ -1241,7 +1241,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "${DS_PROMETHEUS}"
+        "uid": "prometheus"
       },
       "description": "Current active filters for logs limiting egress of logs.",
       "gridPos": {
@@ -1284,7 +1284,7 @@
         "current": {},
         "datasource": {
           "type": "prometheus",
-          "uid": "${DS_PROMETHEUS}"
+          "uid": "prometheus"
         },
         "definition": "label_values({__name__=~\".+\", data_type!=\"\"}, __name__)",
         "hide": 0,
@@ -1308,7 +1308,7 @@
         "current": {},
         "datasource": {
           "type": "prometheus",
-          "uid": "${DS_PROMETHEUS}"
+          "uid": "prometheus"
         },
         "definition": "label_values({__name__=~\".+\", data_type!=\"\"}, __name__)",
         "hide": 0,
@@ -1385,7 +1385,7 @@
         "current": {},
         "datasource": {
           "type": "prometheus",
-          "uid": "${DS_PROMETHEUS}"
+          "uid": "prometheus"
         },
         "definition": "label_values({__name__=~\".+\", data_type!=\"\"}, __name__)",
         "hide": 0,
@@ -1409,7 +1409,7 @@
         "current": {},
         "datasource": {
           "type": "prometheus",
-          "uid": "${DS_PROMETHEUS}"
+          "uid": "prometheus"
         },
         "definition": "label_values({__name__=~\".+\", data_type!=\"\"}, __name__)",
         "hide": 0,
@@ -1438,7 +1438,7 @@
   "timepicker": {},
   "timezone": "browser",
   "title": "MDAI Data Management",
-  "uid": "de978rcegwfswb1",
-  "version": 4,
+  "uid": "de978rcegwfswb",
+  "version": 1,
   "weekStart": ""
 }

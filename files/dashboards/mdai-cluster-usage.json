@@ -1,7 +1,7 @@
 {
   "__inputs": [
     {
-      "name": "DS_PROMETHEUS",
+      "name": "PROMETHEUS",
       "label": "Prometheus",
       "description": "",
       "type": "datasource",
@@ -1239,7 +1239,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "${DS_PROMETHEUS}"
+        "uid": "prometheus"
       },
       "description": "No data is generally a good thing here.",
       "fieldConfig": {
@@ -1326,7 +1326,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "${DS_PROMETHEUS}"
+            "uid": "prometheus"
           },
           "disableTextWrap": false,
           "editorMode": "code",
@@ -2820,7 +2820,7 @@
         "current": {},
         "datasource": {
           "type": "prometheus",
-          "uid": "${DS_PROMETHEUS}"
+          "uid": "prometheus"
         },
         "definition": "label_values(kube_pod_info{cluster=\"$cluster\"}, namespace)",
         "hide": 0,
@@ -2919,7 +2919,7 @@
   },
   "timepicker": {},
   "timezone": "",
-  "title": "Kubernetes Cluster Usage",
+  "title": "MDAI Cluster Usage",
   "uid": "bedojhupyve9sf",
   "version": 1,
   "weekStart": ""

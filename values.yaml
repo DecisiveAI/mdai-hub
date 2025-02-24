@@ -103,7 +103,17 @@ kubeprometheusstack:
     enabled: true
     defaultDashboardsEnabled: false
     adminPassword: mdai
-
+    plugins:
+      - yesoreyeram-infinity-datasource  
+    datasources:
+      datasources.yaml:
+        apiVersion: 1
+        datasources:
+          - name: INFINTYJSON
+            type: yesoreyeram-infinity-datasource
+            access: proxy
+            jsonData:
+              dataSourceType: json 
     dashboardProviders:
       dashboardproviders.yaml:
         apiVersion: 1
@@ -121,6 +131,7 @@ kubeprometheusstack:
         mdai-dashboard: {}    # files/dashboards/mdai-dashboard.json
         mdai-resource-use: {} # files/dashboards/mdai-resource-use.json
         otel-collector: {}    # files/dashboards/otel-collector.json
+        mdai-cluster-usage: {}   #files/dashboards/mdai-cluster-usage.json  
   serviceMonitor:
     enabled: false
   kubernetesServiceMonitors:
