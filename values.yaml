@@ -364,7 +364,8 @@ valkey:
     existingSecret: valkey-secret
     existingSecretPasswordKey: VALKEY_PASSWORD
   primary:
-    ## uncomment below initContainers block if going to enable persistent storage
+    ## uncomment below block to enable persistent storage
+    ## BEGIN: persistent storage block
     nodeSelector:
       topology.kubernetes.io/zone: us-east-1a
     initContainers:
@@ -382,6 +383,7 @@ valkey:
       volumeMounts:
       - mountPath: /data
         name: valkey-data
+    ## END: persistent storage block
     replicaCount: 1
     persistence:
       # set to true to enable persistent storage
