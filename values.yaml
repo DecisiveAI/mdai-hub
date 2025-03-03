@@ -56,12 +56,10 @@ mdai-operator:
   fullnameOverride: mdai-operator
   webhooks:
     certManager:
-      enabled: false
-    autoGenerateCert:
       enabled: true
+    autoGenerateCert:
+      enabled: false
       certValidDays: 3650
-  cleanup: false
-  datalyzerNamespace: mdai
 
 event-handler-webservice:
   enabled: true
