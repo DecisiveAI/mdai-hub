@@ -33,7 +33,7 @@ opentelemetry-operator:
   manager:
     image:
       repository: public.ecr.aws/decisiveai/opentelemetry-operator
-      tag: 0.113.0  
+      tag: 0.117.0
     collectorImage:
       repository: otel/opentelemetry-collector-contrib
       tag: 0.112.0
@@ -41,31 +41,29 @@ opentelemetry-operator:
       enabled: false
     env:
       ENABLE_WEBHOOKS: "true"
+      WATCH_NAMESPACE: mdai
   kubeRBACProxy:
     enabled: false
 
 metrics-server:
   enabled: false
 
-mdai-api:
-  enabled: yes
-  fullnameOverride: mdai-api
-
 datalyzer:
-  enabled: true
+  enabled: false
 
 mdai-operator:
   enabled: true
   fullnameOverride: mdai-operator
   webhooks:
     certManager:
-      enabled: false
-    autoGenerateCert:
       enabled: true
+    autoGenerateCert:
+      enabled: false
       certValidDays: 3650
-  cleanup: false
-  datalyzerNamespace: mdai
-  
+
+event-handler-webservice:
+  enabled: true
+
 kubeprometheusstack:
   nameOverride: kube-prometheus-stack
   fullnameOverride: kube-prometheus-stack
@@ -95,7 +93,7 @@ kubeprometheusstack:
       - name: 'null'
       - name: 'event-handler'
         webhook_configs:
-          - url: 'http://mdai-api.mdai.svc.cluster.local:8081/alerts'
+          - url: 'http://event-handler-webservice.mdai.svc.cluster.local:8081/alerts'
             send_resolved: true
     serviceMonitor:
       selfMonitor: true
@@ -169,6 +167,34 @@ kubeprometheusstack:
     serviceMonitor:
       selfMonitor: false
     prometheusSpec:
+    ## uncomment below block to enable persistent storage
+    ## BEGIN: persistent storage block
+    #  securityContext:
+    #    fsGroup: 65534
+    #    runAsGroup: 65534
+    #    runAsNonRoot: true
+    #    runAsUser: 65534
+    #  initContainers:
+    #  - name: prometheus-data-permission-setup
+    #    image: busybox
+    #    securityContext:
+    #      runAsGroup: 0
+    #      runAsNonRoot: false
+    #      runAsUser: 0
+    #      fsGroup: 0
+    #    command: ["/bin/chown","-R","65534:65534","/prometheus"]
+    #    volumeMounts:
+    #    - name: prometheus-kube-prometheus-stack-prometheus-db
+    #      mountPath: /prometheus
+    #  storageSpec:
+    #    volumeClaimTemplate:
+    #      spec:
+    #        storageClassName: ""
+    #        accessModes: ["ReadWriteOnce"]
+    #        resources:
+    #          requests:
+    #            storage: 5Gi
+    ## END: persistent storage block
       ruleSelectorNilUsesHelmValues: false
       additionalArgs:
       - name: enable-feature
@@ -194,16 +220,27 @@ kubeprometheusstack:
               separator: ;
               regex: opentelemetry-collector;true;8888
               action: keep
-        - job_name: datalyzer-scrape
+        - job_name: mdai-watcher-scrape
           honor_labels: true
           tls_config:
             insecure_skip_verify: true
           kubernetes_sd_configs:
             - role: pod
           relabel_configs:
-            - source_labels: [__meta_kubernetes_pod_label_app_kubernetes_io_component, __meta_kubernetes_pod_annotation_prometheus_io_scrape, __meta_kubernetes_pod_container_port_number]
+            - source_labels: [__meta_kubernetes_pod_annotation_mdai_component_type, __meta_kubernetes_pod_annotation_prometheus_io_scrape, __meta_kubernetes_pod_container_port_number]
               separator: ;
-              regex: datalyzer;true;8888
+              regex: mdai-watcher;true;8899
+              action: keep
+        - job_name: mdai-watcher-otel-scrape
+          honor_labels: true
+          tls_config:
+            insecure_skip_verify: true
+          kubernetes_sd_configs:
+            - role: pod
+          relabel_configs:
+            - source_labels: [__meta_kubernetes_pod_annotation_mdai_component_type, __meta_kubernetes_pod_annotation_prometheus_io_scrape, __meta_kubernetes_pod_container_port_number]
+              separator: ;
+              regex: mdai-watcher;true;8888
               action: keep
   additionalPrometheusRulesMap:
     mdai-rules:
@@ -326,3 +363,64 @@ kubeprometheusstack:
                 )
               record: "namespace_cpu:kube_pod_container_resource_limits:sum"
 
+valkey:
+  enabled: true
+  auth:
+    enabled: true
+    existingSecret: valkey-secret
+    existingSecretPasswordKey: VALKEY_PASSWORD
+  primary:
+    ## uncomment below initContainers block if going to enable persistent storage
+    #initContainers:
+    #- command:
+    #  - /bin/chown
+    #  - -R
+    #  - 1001:1001
+    #  - /data
+    #  image: busybox
+    #  name: valkey-data-permission-setup
+    #  securityContext:
+    #    runAsGroup: 0
+    #    runAsNonRoot: false
+    #    runAsUser: 0
+    #  volumeMounts:
+    #  - mountPath: /data
+    #    name: valkey-data
+    replicaCount: 1
+    persistence:
+      # set to true to enable persistent storage
+      enabled: false
+    disableCommands:
+      - FLUSHDB
+      - FLUSHALL
+    configuration: |-
+      notify-keyspace-events KEA
+    service:
+      type: ClusterIP
+      ports:
+        valkey: 6379
+    resources:
+      requests:
+        memory: "64Mi"
+        cpu: "100m"
+      limits:
+        memory: "128Mi"
+        cpu: "200m"
+  replica:
+    replicaCount: 0
+    persistence:
+      enabled: false
+    disableCommands:
+      - FLUSHDB
+      - FLUSHALL
+    service:
+      type: ClusterIP
+      ports:
+        valkey: 6379
+    resources:
+      requests:
+        memory: "64Mi"
+        cpu: "100m"
+      limits:
+        memory: "128Mi"
+        cpu: "200m"

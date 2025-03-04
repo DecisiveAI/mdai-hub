@@ -2,7 +2,10 @@
 
 This is the official Helm chart for [MyDecisive.ai](https://www.mydecisive.ai/), an open-core solution for monitoring and managing OpenTelemetry pipelines on Kubernetes. 
 
+### After initial checkout, switching branches or modifying `Chart.yaml`, run `helm dependency update . --repository-config /dev/null`
+
 ## Install MDAI
+
 
 ### Without cert-manager
 
@@ -50,6 +53,10 @@ helm upgrade --install --create-namespace --namespace mdai --cleanup-on-fail --w
 ```bash
 helm upgrade --install --create-namespace --namespace mdai --cleanup-on-fail --wait-for-jobs --set cleanup=false mdai .
 ```
+
+### With persistent storage for Prometheus and Valkey.
+
+[Persistent storage](./PV.md)
 
 see `values.yaml` for other options.
 
