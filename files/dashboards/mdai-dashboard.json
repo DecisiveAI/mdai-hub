@@ -1,4 +1,91 @@
 {
+  "__inputs": [
+    {
+      "name": "PROMETHEUS",
+      "label": "Prometheus",
+      "description": "",
+      "type": "datasource",
+      "pluginId": "prometheus",
+      "pluginName": "Prometheus"
+    },
+    {
+      "name": "EXPRESSION",
+      "label": "Expression",
+      "description": "",
+      "type": "datasource",
+      "pluginId": "__expr__"
+    },
+    {
+      "name": "INFINTYJSON",
+      "label": "InfintyJSON",
+      "description": "",
+      "type": "datasource",
+      "pluginId": "yesoreyeram-infinity-datasource",
+      "pluginName": "Infinity"
+    }
+  ],
+  "__elements": {},
+  "__requires": [
+    {
+      "type": "datasource",
+      "id": "__expr__",
+      "version": "1.0.0"
+    },
+    {
+      "type": "panel",
+      "id": "alertlist",
+      "name": "Alert list",
+      "version": ""
+    },
+    {
+      "type": "panel",
+      "id": "barchart",
+      "name": "Bar chart",
+      "version": ""
+    },
+    {
+      "type": "panel",
+      "id": "gauge",
+      "name": "Gauge",
+      "version": ""
+    },
+    {
+      "type": "grafana",
+      "id": "grafana",
+      "name": "Grafana",
+      "version": "11.2.2+security-01"
+    },
+    {
+      "type": "datasource",
+      "id": "prometheus",
+      "name": "Prometheus",
+      "version": "1.0.0"
+    },
+    {
+      "type": "panel",
+      "id": "stat",
+      "name": "Stat",
+      "version": ""
+    },
+    {
+      "type": "panel",
+      "id": "table",
+      "name": "Table",
+      "version": ""
+    },
+    {
+      "type": "panel",
+      "id": "timeseries",
+      "name": "Time series",
+      "version": ""
+    },
+    {
+      "type": "datasource",
+      "id": "INFINTYJSON",
+      "name": "Infinity",
+      "version": "3.0.0-beta.1"
+    }
+  ],
   "annotations": {
     "list": [
       {
@@ -18,6 +105,7 @@
   "editable": true,
   "fiscalYearStartMonth": 0,
   "graphTooltip": 0,
+  "id": null,
   "links": [],
   "panels": [
     {
@@ -1113,7 +1201,7 @@
               "include": [
                 "eventName",
                 "name"
-              ],
+                ],
               "reducer": "lastNotNull"
             }
           }
@@ -1221,11 +1309,7 @@
   "templating": {
     "list": [
       {
-        "current": {
-          "selected": false,
-          "text": "bytes_received_by_service_total",
-          "value": "bytes_received_by_service_total"
-        },
+        "current": {},
         "datasource": {
           "type": "prometheus",
           "uid": "prometheus"
@@ -1249,11 +1333,7 @@
         "type": "query"
       },
       {
-        "current": {
-          "selected": false,
-          "text": "items_sent_by_team_region_total",
-          "value": "items_sent_by_team_region_total"
-        },
+        "current": {},
         "datasource": {
           "type": "prometheus",
           "uid": "prometheus"
@@ -1330,11 +1410,7 @@
         "type": "textbox"
       },
       {
-        "current": {
-          "selected": false,
-          "text": "items_sent_by_team_region_total",
-          "value": "items_sent_by_team_region_total"
-        },
+        "current": {},
         "datasource": {
           "type": "prometheus",
           "uid": "prometheus"
@@ -1358,11 +1434,7 @@
         "type": "query"
       },
       {
-        "current": {
-          "selected": false,
-          "text": "bytes_received_by_service_total",
-          "value": "bytes_received_by_service_total"
-        },
+        "current": {},
         "datasource": {
           "type": "prometheus",
           "uid": "prometheus"
