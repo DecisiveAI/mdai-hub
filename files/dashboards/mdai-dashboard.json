@@ -1,4 +1,91 @@
 {
+  "__inputs": [
+    {
+      "name": "PROMETHEUS",
+      "label": "Prometheus",
+      "description": "",
+      "type": "datasource",
+      "pluginId": "prometheus",
+      "pluginName": "Prometheus"
+    },
+    {
+      "name": "EXPRESSION",
+      "label": "Expression",
+      "description": "",
+      "type": "datasource",
+      "pluginId": "__expr__"
+    },
+    {
+      "name": "INFINTYJSON",
+      "label": "InfintyJSON",
+      "description": "",
+      "type": "datasource",
+      "pluginId": "yesoreyeram-infinity-datasource",
+      "pluginName": "Infinity"
+    }
+  ],
+  "__elements": {},
+  "__requires": [
+    {
+      "type": "datasource",
+      "id": "__expr__",
+      "version": "1.0.0"
+    },
+    {
+      "type": "panel",
+      "id": "alertlist",
+      "name": "Alert list",
+      "version": ""
+    },
+    {
+      "type": "panel",
+      "id": "barchart",
+      "name": "Bar chart",
+      "version": ""
+    },
+    {
+      "type": "panel",
+      "id": "gauge",
+      "name": "Gauge",
+      "version": ""
+    },
+    {
+      "type": "grafana",
+      "id": "grafana",
+      "name": "Grafana",
+      "version": "11.2.2+security-01"
+    },
+    {
+      "type": "datasource",
+      "id": "prometheus",
+      "name": "Prometheus",
+      "version": "1.0.0"
+    },
+    {
+      "type": "panel",
+      "id": "stat",
+      "name": "Stat",
+      "version": ""
+    },
+    {
+      "type": "panel",
+      "id": "table",
+      "name": "Table",
+      "version": ""
+    },
+    {
+      "type": "panel",
+      "id": "timeseries",
+      "name": "Time series",
+      "version": ""
+    },
+    {
+      "type": "datasource",
+      "id": "INFINTYJSON",
+      "name": "Infinity",
+      "version": "3.0.0-beta.1"
+    }
+  ],
   "annotations": {
     "list": [
       {
@@ -18,7 +105,7 @@
   "editable": true,
   "fiscalYearStartMonth": 0,
   "graphTooltip": 0,
-  "id": 29,
+  "id": null,
   "links": [],
   "panels": [
     {
@@ -93,7 +180,7 @@
           },
           "disableTextWrap": false,
           "editorMode": "code",
-          "expr": "count(count by(service_name) (rate(mdai_logs_received_total[$__rate_interval])))",
+          "expr": "count(count by($groupByLabel) (rate($receiverMetric{data_type=\"$dataType\"}[$__rate_interval])))",
           "format": "time_series",
           "fullMetaSearch": false,
           "includeNullMetadata": false,
@@ -126,7 +213,7 @@
           "refId": "C"
         }
       ],
-      "title": "MDAI Total Services Monitored",
+      "title": "MDAI Total by $groupByLabel",
       "transformations": [
         {
           "id": "groupBy",
@@ -148,7 +235,6 @@
     },
     {
       "datasource": {
-        "default": true,
         "type": "prometheus",
         "uid": "prometheus"
       },
@@ -203,7 +289,7 @@
               }
             ]
           },
-          "unit": "locale"
+          "unit": "decbytes"
         },
         "overrides": []
       },
@@ -244,8 +330,8 @@
             "uid": "prometheus"
           },
           "disableTextWrap": false,
-          "editorMode": "builder",
-          "expr": "sum(sum by(service_name) (increase(mdai_logs_received_total[$__rate_interval:])))",
+          "editorMode": "code",
+          "expr": "sum(sum by($groupByLabel) (increase($receiverMetric{data_type=\"$dataType\"}[$__rate_interval:])))",
           "format": "table",
           "fullMetaSearch": false,
           "hide": false,
@@ -262,8 +348,8 @@
             "uid": "prometheus"
           },
           "disableTextWrap": false,
-          "editorMode": "builder",
-          "expr": "sum(sum by(service_name) (increase(mdai_logs_sent_total[$__rate_interval:])))",
+          "editorMode": "code",
+          "expr": "sum(sum by($groupByLabel) (increase($exporterMetric{data_type=\"$dataType\"}[$__rate_interval:])))",
           "format": "table",
           "fullMetaSearch": false,
           "hide": false,
@@ -291,7 +377,6 @@
     },
     {
       "datasource": {
-        "default": true,
         "type": "prometheus",
         "uid": "prometheus"
       },
@@ -384,7 +469,7 @@
             "uid": "prometheus"
           },
           "editorMode": "code",
-          "expr": "sum(increase(mdai_logs_received_total[$__rate_interval:])) - sum(increase(mdai_logs_sent_total[$__rate_interval:]))",
+          "expr": "sum(increase($receiverMetricByBytes{data_type=\"$dataType\"}[$__rate_interval:])) - sum(increase($exporterMetricByBytes{data_type=\"$dataType\"}[$__rate_interval:]))",
           "format": "table",
           "hide": false,
           "instant": false,
@@ -398,7 +483,7 @@
             "uid": "prometheus"
           },
           "editorMode": "code",
-          "expr": "sum(increase(mdai_logs_received_total[$__rate_interval:]))",
+          "expr": "sum(increase($receiverMetricByBytes{data_type=\"$dataType\"}[$__rate_interval:]))",
           "format": "table",
           "hide": true,
           "instant": false,
@@ -408,7 +493,6 @@
         },
         {
           "datasource": {
-            "name": "Expression",
             "type": "__expr__",
             "uid": "__expr__"
           },
@@ -419,7 +503,6 @@
         },
         {
           "datasource": {
-            "name": "Expression",
             "type": "__expr__",
             "uid": "__expr__"
           },
@@ -460,7 +543,6 @@
     },
     {
       "datasource": {
-        "default": true,
         "type": "prometheus",
         "uid": "prometheus"
       },
@@ -644,7 +726,7 @@
           },
           "disableTextWrap": false,
           "editorMode": "code",
-          "expr": "sum by(service_name) (increase(mdai_logs_received_total[$__rate_interval:]))",
+          "expr": "sum by($groupByLabel) (increase($receiverMetric{data_type=\"$dataType\"}[$__rate_interval:]))",
           "format": "table",
           "fullMetaSearch": false,
           "includeNullMetadata": true,
@@ -661,7 +743,7 @@
           },
           "disableTextWrap": false,
           "editorMode": "code",
-          "expr": "sum by(service_name) (increase(mdai_log_bytes_received_total[$__rate_interval:]))",
+          "expr": "sum by($groupByLabel) (increase($receiverMetricByBytes{data_type=\"$dataType\"}[$__rate_interval:]))",
           "format": "table",
           "fullMetaSearch": false,
           "hide": false,
@@ -679,7 +761,7 @@
           },
           "disableTextWrap": false,
           "editorMode": "code",
-          "expr": "sum by(service_name) (increase(mdai_logs_sent_total[$__rate_interval:]))",
+          "expr": "sum by($groupByLabel) (increase($exporterMetric{data_type=\"$dataType\"}[$__rate_interval:]))",
           "format": "table",
           "fullMetaSearch": false,
           "hide": false,
@@ -697,7 +779,7 @@
           },
           "disableTextWrap": false,
           "editorMode": "code",
-          "expr": "sum by(service_name) (increase(mdai_log_bytes_sent_total[$__rate_interval:]))",
+          "expr": "sum by($groupByLabel) (increase($exporterMetricByBytes{data_type=\"$dataType\"}[$__rate_interval:]))",
           "format": "table",
           "fullMetaSearch": false,
           "hide": false,
@@ -709,7 +791,7 @@
           "useBackend": false
         }
       ],
-      "title": "MDAI I/O by service_name",
+      "title": "MDAI I/O by $groupByLabel",
       "transformations": [
         {
           "id": "merge",
@@ -817,7 +899,6 @@
     },
     {
       "datasource": {
-        "default": true,
         "type": "prometheus",
         "uid": "prometheus"
       },
@@ -861,6 +942,7 @@
               "mode": "off"
             }
           },
+          "fieldMinMax": false,
           "mappings": [
             {
               "options": {
@@ -880,7 +962,8 @@
                 "value": null
               }
             ]
-          }
+          },
+          "unit": "decbytes"
         },
         "overrides": [
           {
@@ -897,20 +980,8 @@
                 "id": "color",
                 "value": {
                   "fixedColor": "dark-purple",
-                  "mode": "continuous-BlPu"
+                  "mode": "continuous-RdYlGr"
                 }
-              }
-            ]
-          },
-          {
-            "matcher": {
-              "id": "byName",
-              "options": "unlabeled_service"
-            },
-            "properties": [
-              {
-                "id": "displayName",
-                "value": "other"
               }
             ]
           },
@@ -918,6 +989,25 @@
             "matcher": {
               "id": "byFrameRefID",
               "options": "A"
+            },
+            "properties": [
+              {
+                "id": "custom.axisColorMode",
+                "value": "text"
+              },
+              {
+                "id": "color",
+                "value": {
+                  "mode": "continuous-BlPu",
+                  "seriesBy": "last"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byFrameRefID",
+              "options": "B"
             },
             "properties": []
           }
@@ -934,7 +1024,7 @@
         "legend": {
           "calcs": [],
           "displayMode": "list",
-          "placement": "bottom",
+          "placement": "right",
           "showLegend": true
         },
         "tooltip": {
@@ -950,8 +1040,8 @@
             "uid": "prometheus"
           },
           "disableTextWrap": false,
-          "editorMode": "builder",
-          "expr": "sum by(service_name) (increase(mdai_logs_sent_total[$__rate_interval:])) > 50",
+          "editorMode": "code",
+          "expr": "sum by($groupByLabel) (increase($exporterMetricByBytes{data_type=\"$dataType\"}[$__rate_interval:]))",
           "fullMetaSearch": false,
           "hide": false,
           "includeNullMetadata": true,
@@ -967,8 +1057,8 @@
             "uid": "prometheus"
           },
           "disableTextWrap": false,
-          "editorMode": "builder",
-          "expr": "sum by(service_name) (increase(mdai_logs_received_total[$__rate_interval:])) > 50",
+          "editorMode": "code",
+          "expr": "sum by($groupByLabel) (increase($receiverMetricByBytes{data_type=\"$dataType\"}[$__rate_interval:]))",
           "format": "time_series",
           "fullMetaSearch": false,
           "includeNullMetadata": true,
@@ -980,7 +1070,189 @@
         }
       ],
       "title": "Top Talkers I/O Logs Totals",
+      "transformations": [
+        {
+          "id": "filterFieldsByName",
+          "options": {
+            "include": {
+              "names": [
+                "Time",
+                "service1234",
+                "service4321"
+              ]
+            }
+          }
+        }
+      ],
       "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "yesoreyeram-infinity-datasource",
+        "uid": "INFINTYJSON"
+      },
+      "description": "MDAI OODA Loop events, actions, and collector restarts",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "custom": {
+            "align": "left",
+            "cellOptions": {
+              "type": "auto",
+              "wrapText": false
+            },
+            "filterable": true,
+            "inspect": true
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Event"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 99
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Input"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 113
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 12,
+        "w": 24,
+        "x": 0,
+        "y": 30
+      },
+      "id": 21,
+      "options": {
+        "cellHeight": "sm",
+        "footer": {
+          "countRows": false,
+          "enablePagination": true,
+          "fields": "",
+          "reducer": [
+            "sum"
+          ],
+          "show": false
+        },
+        "showHeader": true,
+        "sortBy": []
+      },
+      "pluginVersion": "11.2.2+security-01",
+      "targets": [
+        {
+          "columns": [],
+          "datasource": {
+            "type": "yesoreyeram-infinity-datasource",
+            "uid": "INFINTYJSON"
+          },
+          "filters": [],
+          "format": "table",
+          "global_query_id": "",
+          "refId": "A",
+          "root_selector": "",
+          "source": "url",
+          "type": "json",
+          "url": "http://host.docker.internal:8081/events",
+          "url_options": {
+            "data": "",
+            "method": "GET"
+          }
+        }
+      ],
+      "title": "MDAI OODA Events",
+      "transformations": [
+        {
+          "id": "calculateField",
+          "options": {
+            "alias": "Event",
+            "mode": "reduceRow",
+            "reduce": {
+              "include": [
+                "eventName",
+                "name"
+                ],
+              "reducer": "lastNotNull"
+            }
+          }
+        },
+        {
+          "id": "organize",
+          "options": {
+            "excludeByName": {
+              "eventName": true,
+              "name": true
+            },
+            "includeByName": {},
+            "indexByName": {
+              "Event": 2,
+              "eventName": 12,
+              "expression": 11,
+              "hubName": 1,
+              "metricName": 3,
+              "name": 13,
+              "operation": 6,
+              "status": 9,
+              "stored_variables": 10,
+              "target": 8,
+              "timestamp": 0,
+              "type": 7,
+              "value": 5,
+              "variable": 4
+            },
+            "renameByName": {
+              "Event": "",
+              "expression": "Expression",
+              "hubName": "Hub",
+              "metricName": "Metric",
+              "operation": "Action",
+              "operation (allValues)": "Operation",
+              "status": "Status",
+              "stored_variables": "Filtered Variables",
+              "target": "Modified",
+              "timestamp": "Timestamp",
+              "type": "Effect",
+              "type (uniqueValues)": "Action",
+              "value": "Value when triggered",
+              "value (allValues)": "Result",
+              "variable": "Input",
+              "variable (uniqueValues)": "Variable"
+            }
+          }
+        }
+      ],
+      "type": "table"
     },
     {
       "collapsed": false,
@@ -988,7 +1260,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 30
+        "y": 42
       },
       "id": 19,
       "panels": [],
@@ -1005,11 +1277,11 @@
         "h": 9,
         "w": 12,
         "x": 0,
-        "y": 31
+        "y": 43
       },
       "id": 20,
       "options": {
-        "alertInstanceLabelFilter": "job=\"datalyzer-scrape\"",
+        "alertInstanceLabelFilter": "",
         "alertName": "",
         "dashboardAlerts": false,
         "groupBy": [
@@ -1032,11 +1304,177 @@
       "type": "alertlist"
     }
   ],
-  "refresh": "auto",
+  "refresh": "5s",
   "schemaVersion": 39,
   "tags": [],
   "templating": {
-    "list": []
+    "list": [
+      {
+        "current": {
+          "selected": true,
+          "text": "items_received_by_service_total",
+          "value": "items_received_by_service_total"
+        },
+        "datasource": {
+          "type": "prometheus",
+          "uid": "prometheus"
+        },
+        "definition": "label_values({__name__=~\".+\", data_type!=\"\"}, __name__)",
+        "hide": 0,
+        "includeAll": false,
+        "label": "Receiver Metric",
+        "multi": false,
+        "name": "receiverMetric",
+        "options": [],
+        "query": {
+          "qryType": 4,
+          "query": "label_values({__name__=~\".+\", data_type!=\"\"}, __name__)",
+          "refId": "PrometheusVariableQueryEditor-VariableQuery"
+        },
+        "refresh": 1,
+        "regex": "^(?!ALERTS|otelcol_).+",
+        "skipUrlSync": false,
+        "sort": 1,
+        "type": "query"
+      },
+      {
+        "current": {
+          "selected": false,
+          "text": "bytes_received_by_service_total",
+          "value": "bytes_received_by_service_total"
+        },
+        "datasource": {
+          "type": "prometheus",
+          "uid": "prometheus"
+        },
+        "definition": "label_values({__name__=~\".+\", data_type!=\"\"}, __name__)",
+        "hide": 0,
+        "includeAll": false,
+        "label": "Receiver Metric by Bytes",
+        "multi": false,
+        "name": "receiverMetricByBytes",
+        "options": [],
+        "query": {
+          "qryType": 4,
+          "query": "label_values({__name__=~\".+\", data_type!=\"\"}, __name__)",
+          "refId": "PrometheusVariableQueryEditor-VariableQuery"
+        },
+        "refresh": 1,
+        "regex": "^(?!ALERTS|otelcol_).+",
+        "skipUrlSync": false,
+        "sort": 1,
+        "type": "query"
+      },
+      {
+        "current": {
+          "selected": true,
+          "text": "items_sent_by_service_total",
+          "value": "items_sent_by_service_total"
+        },
+        "datasource": {
+          "type": "prometheus",
+          "uid": "prometheus"
+        },
+        "definition": "label_values({__name__=~\".+\", data_type!=\"\"}, __name__)",
+        "hide": 0,
+        "includeAll": false,
+        "label": "Exporter Metric",
+        "multi": false,
+        "name": "exporterMetric",
+        "options": [],
+        "query": {
+          "qryType": 4,
+          "query": "label_values({__name__=~\".+\", data_type!=\"\"}, __name__)",
+          "refId": "PrometheusVariableQueryEditor-VariableQuery"
+        },
+        "refresh": 1,
+        "regex": "^(?!ALERTS|otelcol_).+",
+        "skipUrlSync": false,
+        "sort": 2,
+        "type": "query"
+      },
+      {
+        "current": {
+          "selected": true,
+          "text": "bytes_sent_by_service_total",
+          "value": "bytes_sent_by_service_total"
+        },
+        "datasource": {
+          "type": "prometheus",
+          "uid": "prometheus"
+        },
+        "definition": "label_values({__name__=~\".+\", data_type!=\"\"}, __name__)",
+        "hide": 0,
+        "includeAll": false,
+        "label": "Exporter Metric by Bytes",
+        "multi": false,
+        "name": "exporterMetricByBytes",
+        "options": [],
+        "query": {
+          "qryType": 4,
+          "query": "label_values({__name__=~\".+\", data_type!=\"\"}, __name__)",
+          "refId": "PrometheusVariableQueryEditor-VariableQuery"
+        },
+        "refresh": 1,
+        "regex": "^(?!ALERTS|otelcol_).+",
+        "skipUrlSync": false,
+        "sort": 2,
+        "type": "query"
+      },
+      {
+        "current": {
+          "selected": false,
+          "text": "logs",
+          "value": "logs"
+        },
+        "hide": 0,
+        "includeAll": false,
+        "label": "Data Type",
+        "multi": false,
+        "name": "dataType",
+        "options": [
+          {
+            "selected": true,
+            "text": "logs",
+            "value": "logs"
+          },
+          {
+            "selected": false,
+            "text": "metrics",
+            "value": "metrics"
+          },
+          {
+            "selected": false,
+            "text": "traces",
+            "value": "traces"
+          }
+        ],
+        "query": "logs,metrics,traces",
+        "queryValue": "",
+        "skipUrlSync": false,
+        "type": "custom"
+      },
+      {
+        "current": {
+          "selected": true,
+          "text": "service_name",
+          "value": "service_name"
+        },
+        "hide": 0,
+        "label": "Group By Label",
+        "name": "groupByLabel",
+        "options": [
+          {
+            "selected": true,
+            "text": "service_name",
+            "value": "service_name"
+          }
+        ],
+        "query": "service_name",
+        "skipUrlSync": false,
+        "type": "textbox"
+      }
+    ]
   },
   "time": {
     "from": "now-5m",
