@@ -164,7 +164,8 @@ kubeprometheusstack:
     serviceMonitor:
       selfMonitor: false
     prometheusSpec:
-    ## uncomment below block to enable persistent storage
+      serviceMonitorSelectorNilUsesHelmValues: false
+      ## uncomment below block to enable persistent storage
     ## BEGIN: persistent storage block
     #  securityContext:
     #    fsGroup: 65534
