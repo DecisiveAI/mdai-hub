@@ -33,7 +33,7 @@ opentelemetry-operator:
   manager:
     image:
       repository: public.ecr.aws/decisiveai/opentelemetry-operator
-      tag: 0.113.0  
+      tag: 0.117.0
     collectorImage:
       repository: otel/opentelemetry-collector-contrib
       tag: 0.112.0
@@ -56,12 +56,10 @@ mdai-operator:
   fullnameOverride: mdai-operator
   webhooks:
     certManager:
-      enabled: false
-    autoGenerateCert:
       enabled: true
+    autoGenerateCert:
+      enabled: false
       certValidDays: 3650
-  cleanup: false
-  datalyzerNamespace: mdai
 
 event-handler-webservice:
   enabled: true
@@ -103,7 +101,17 @@ kubeprometheusstack:
     enabled: true
     defaultDashboardsEnabled: false
     adminPassword: mdai
-
+    plugins:
+      - yesoreyeram-infinity-datasource  
+    datasources:
+      datasources.yaml:
+        apiVersion: 1
+        datasources:
+          - name: INFINTYJSON
+            type: yesoreyeram-infinity-datasource
+            access: proxy
+            jsonData:
+              dataSourceType: json 
     dashboardProviders:
       dashboardproviders.yaml:
         apiVersion: 1
@@ -115,12 +123,13 @@ kubeprometheusstack:
             disableDeletion: false
             editable: true
             options:
-              path: /var/lib/grafana/dashboards/default
+              path: /var/lib/grafana/dashboards/default  
     dashboards:
       default:
         mdai-dashboard: {}    # files/dashboards/mdai-dashboard.json
         mdai-resource-use: {} # files/dashboards/mdai-resource-use.json
         otel-collector: {}    # files/dashboards/otel-collector.json
+        mdai-cluster-usage: {}   #files/dashboards/mdai-cluster-usage.json 
   serviceMonitor:
     enabled: false
   kubernetesServiceMonitors:
@@ -169,6 +178,34 @@ kubeprometheusstack:
     serviceMonitor:
       selfMonitor: false
     prometheusSpec:
+    ## uncomment below block to enable persistent storage
+    ## BEGIN: persistent storage block
+    #  securityContext:
+    #    fsGroup: 65534
+    #    runAsGroup: 65534
+    #    runAsNonRoot: true
+    #    runAsUser: 65534
+    #  initContainers:
+    #  - name: prometheus-data-permission-setup
+    #    image: busybox
+    #    securityContext:
+    #      runAsGroup: 0
+    #      runAsNonRoot: false
+    #      runAsUser: 0
+    #      fsGroup: 0
+    #    command: ["/bin/chown","-R","65534:65534","/prometheus"]
+    #    volumeMounts:
+    #    - name: prometheus-kube-prometheus-stack-prometheus-db
+    #      mountPath: /prometheus
+    #  storageSpec:
+    #    volumeClaimTemplate:
+    #      spec:
+    #        storageClassName: ""
+    #        accessModes: ["ReadWriteOnce"]
+    #        resources:
+    #          requests:
+    #            storage: 5Gi
+    ## END: persistent storage block
       ruleSelectorNilUsesHelmValues: false
       additionalArgs:
       - name: enable-feature
@@ -204,6 +241,17 @@ kubeprometheusstack:
             - source_labels: [__meta_kubernetes_pod_annotation_mdai_component_type, __meta_kubernetes_pod_annotation_prometheus_io_scrape, __meta_kubernetes_pod_container_port_number]
               separator: ;
               regex: mdai-watcher;true;8899
+              action: keep
+        - job_name: mdai-watcher-otel-scrape
+          honor_labels: true
+          tls_config:
+            insecure_skip_verify: true
+          kubernetes_sd_configs:
+            - role: pod
+          relabel_configs:
+            - source_labels: [__meta_kubernetes_pod_annotation_mdai_component_type, __meta_kubernetes_pod_annotation_prometheus_io_scrape, __meta_kubernetes_pod_container_port_number]
+              separator: ;
+              regex: mdai-watcher;true;8888
               action: keep
   additionalPrometheusRulesMap:
     mdai-rules:
@@ -333,8 +381,25 @@ valkey:
     existingSecret: valkey-secret
     existingSecretPasswordKey: VALKEY_PASSWORD
   primary:
+    ## uncomment below initContainers block if going to enable persistent storage
+    #initContainers:
+    #- command:
+    #  - /bin/chown
+    #  - -R
+    #  - 1001:1001
+    #  - /data
+    #  image: busybox
+    #  name: valkey-data-permission-setup
+    #  securityContext:
+    #    runAsGroup: 0
+    #    runAsNonRoot: false
+    #    runAsUser: 0
+    #  volumeMounts:
+    #  - mountPath: /data
+    #    name: valkey-data
     replicaCount: 1
     persistence:
+      # set to true to enable persistent storage
       enabled: false
     disableCommands:
       - FLUSHDB
