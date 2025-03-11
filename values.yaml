@@ -379,7 +379,6 @@ valkey:
     #  volumeMounts:
     #  - mountPath: /data
     #    name: valkey-data
-    replicaCount: 1
     persistence:
       # set to true to enable persistent storage
       enabled: false
@@ -400,7 +399,7 @@ valkey:
         memory: "128Mi"
         cpu: "200m"
   replica:
-    replicaCount: 0
+    replicaCount: 1
     persistence:
       enabled: false
     disableCommands:
@@ -417,7 +416,3 @@ valkey:
       limits:
         memory: "128Mi"
         cpu: "200m"
-  sentinel:
-    enabled: true
-#    persistence:
-#      enabled: true
