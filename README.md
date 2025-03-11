@@ -9,15 +9,7 @@ This is the official Helm chart for [MyDecisive.ai](https://www.mydecisive.ai/),
 - Helm 3.9+
 - [cert-manager](https://cert-manager.io/docs/)
 
-## Add repository
-```bash
-helm repo add mdai https://decisiveai.github.io/mdai-helm-charts
-helm repo update
-```
-_See [`helm repo`](https://helm.sh/docs/helm/helm_repo/) for command documentation._
-
 ## Install MDAI helm chart
-
 ```bash
 helm upgrade --install --create-namespace --namespace mdai --cleanup-on-fail --wait-for-jobs mdai .
 ```
