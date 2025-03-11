@@ -18,12 +18,8 @@ dependencies:
     version: ~3.12.1
     repository: https://kubernetes-sigs.github.io/metrics-server
     condition: metrics-server.enabled
-  - name: datalyzer
-    version: 0.0.8
-    repository: https://decisiveai.github.io/mdai-helm-charts
-    condition: datalyzer.enabled
   - name: mdai-operator
-    version: 0.1.7
+    version: 0.1.8
     repository: https://decisiveai.github.io/mdai-helm-charts
     condition: mdai-operator.enabled
   - name: event-handler-webservice

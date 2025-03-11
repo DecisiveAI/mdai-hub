@@ -42,10 +42,7 @@ Two log pipelines will be created for the transmission from fluentD to MinIO via
 * kind
 * Helm
 * k8s
-
-#### Optional
-
-* k9s 
+* cert manager
 
 ### Create a new cluster via kind
 
@@ -61,10 +58,9 @@ kind create cluster --name mdai
 helm upgrade --install --repo https://charts.min.io minio minio -f values_minio.yaml
 ```
 
-### Install MDAI without cert-manager 
+## Install MDAI
 
-<i>If you have already done this from our <a href="../../README.md#without-cert-manager" target="_blank">Installation steps</a> feel free to skip to the next step.</i>
-
+### Standard MDAI Installation
 ```bash
 helm upgrade --install --create-namespace --namespace mdai --cleanup-on-fail --wait-for-jobs mdai .
 ```
@@ -77,11 +73,10 @@ helm upgrade --install --create-namespace --namespace mdai --cleanup-on-fail --w
 
 
 ### Install MDAI with its own instance of Prometheus Operator
-<i>This option will allow you to install a dedicated instance of the Prometheus Operator</i>
+<i>This option will allow you to install a dedicated instance of the Prometheus Operator if you already have another instance of Prometheus operator deployed. They will share a CRD.</i>
 ```bash
 helm upgrade --install --create-namespace --namespace mdai --cleanup-on-fail --wait-for-jobs --set kubeprometheusstack.crds.enabled=false  mdai .
 ```
-
 
 ### Validate 
 

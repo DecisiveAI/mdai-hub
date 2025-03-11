@@ -24,12 +24,7 @@ opentelemetry-operator:
   enabled: true
   fullnameOverride: opentelemetry-operator
   crds:
-    create: false  
-  admissionWebhooks:
-    certManager:
-      enabled: false
-    autoGenerateCert:
-      enabled: true
+    create: false
   manager:
     image:
       repository: public.ecr.aws/decisiveai/opentelemetry-operator
@@ -48,18 +43,12 @@ opentelemetry-operator:
 metrics-server:
   enabled: false
 
-datalyzer:
-  enabled: false
-
 mdai-operator:
   enabled: true
   fullnameOverride: mdai-operator
   webhooks:
     certManager:
       enabled: true
-    autoGenerateCert:
-      enabled: false
-      certValidDays: 3650
 
 event-handler-webservice:
   enabled: true
@@ -178,7 +167,8 @@ kubeprometheusstack:
     serviceMonitor:
       selfMonitor: false
     prometheusSpec:
-    ## uncomment below block to enable persistent storage
+      serviceMonitorSelectorNilUsesHelmValues: false
+      ## uncomment below block to enable persistent storage
     ## BEGIN: persistent storage block
     #  securityContext:
     #    fsGroup: 65534
@@ -397,7 +387,6 @@ valkey:
     #  volumeMounts:
     #  - mountPath: /data
     #    name: valkey-data
-    replicaCount: 1
     persistence:
       # set to true to enable persistent storage
       enabled: false

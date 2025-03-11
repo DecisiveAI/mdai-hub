@@ -8,17 +8,14 @@ dependencies:
 - name: metrics-server
   repository: https://kubernetes-sigs.github.io/metrics-server
   version: 3.12.2
-- name: datalyzer
-  repository: https://decisiveai.github.io/mdai-helm-charts
-  version: 0.0.8
 - name: mdai-operator
   repository: https://decisiveai.github.io/mdai-helm-charts
-  version: 0.1.7
+  version: 0.1.8
 - name: event-handler-webservice
   repository: https://decisiveai.github.io/mdai-helm-charts
   version: 0.0.6
 - name: valkey
   repository: oci://registry-1.docker.io/bitnamicharts
   version: 2.2.4
-digest: sha256:ba48b11a9b81020c550e8dc595c0bb6927faae5c9aea1b80902621e6c9024864
-generated: "2025-03-07T11:32:45.676457-07:00"
+digest: sha256:ee7ed6c50087ab13f75006c6f9ccf2c5f88a1056f50a7fbea8a9d52c9cf7dc04
+generated: "2025-03-11T14:34:46.852433-04:00"
