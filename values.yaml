@@ -24,12 +24,7 @@ opentelemetry-operator:
   enabled: true
   fullnameOverride: opentelemetry-operator
   crds:
-    create: false  
-  admissionWebhooks:
-    certManager:
-      enabled: false
-    autoGenerateCert:
-      enabled: true
+    create: false
   manager:
     image:
       repository: public.ecr.aws/decisiveai/opentelemetry-operator
@@ -422,3 +417,7 @@ valkey:
       limits:
         memory: "128Mi"
         cpu: "200m"
+  sentinel:
+    enabled: true
+#    persistence:
+#      enabled: true
