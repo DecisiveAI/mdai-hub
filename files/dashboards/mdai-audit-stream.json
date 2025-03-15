@@ -1,8 +1,8 @@
 {
     "__inputs": [
       {
-        "name": "DS_INFINTYJSON",
-        "label": "INFINTYJSON",
+        "name": "INFINTYJSON",
+        "label": "InfintyJSON",
         "description": "",
         "type": "datasource",
         "pluginId": "yesoreyeram-infinity-datasource",
@@ -25,9 +25,9 @@
       },
       {
         "type": "datasource",
-        "id": "yesoreyeram-infinity-datasource",
+        "id": "INFINTYJSON",
         "name": "Infinity",
-        "version": "3.0.0"
+        "version": "3.0.0-beta.1"
       }
     ],
     "annotations": {
@@ -56,7 +56,7 @@
       {
         "datasource": {
           "type": "yesoreyeram-infinity-datasource",
-          "uid": "${DS_INFINTYJSON}"
+          "uid": "INFINTYJSON"
         },
         "description": "MDAI OODA Loop events, actions, and collector restarts",
         "fieldConfig": {
@@ -124,7 +124,7 @@
             "columns": [],
             "datasource": {
               "type": "yesoreyeram-infinity-datasource",
-              "uid": "${DS_INFINTYJSON}"
+              "uid": "INFINTYJSON"
             },
             "filters": [],
             "format": "table",
