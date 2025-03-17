@@ -2,6 +2,7 @@
 
 ## Prometheus
 
+Prometheus operator does not allow to specify an existing PVC, so make sure you PV satisfied a Prometheus PVC requirements
 In order to enable persistent storage for Prometheus, uncomment the following block in 
 Prometheus section (`kubeprometheusstack.prometheus.prometheusSpec`) of [values.yaml](./values.yaml):
 
