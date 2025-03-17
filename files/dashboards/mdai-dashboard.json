@@ -1,77 +1,4 @@
 {
-  "__inputs": [
-    {
-      "name": "PROMETHEUS",
-      "label": "Prometheus",
-      "description": "",
-      "type": "datasource",
-      "pluginId": "prometheus",
-      "pluginName": "Prometheus"
-    },
-    {
-      "name": "EXPRESSION",
-      "label": "Expression",
-      "description": "",
-      "type": "datasource",
-      "pluginId": "__expr__"
-    }
-  ],
-  "__elements": {},
-  "__requires": [
-    {
-      "type": "datasource",
-      "id": "__expr__",
-      "version": "1.0.0"
-    },
-    {
-      "type": "panel",
-      "id": "alertlist",
-      "name": "Alert list",
-      "version": ""
-    },
-    {
-      "type": "panel",
-      "id": "barchart",
-      "name": "Bar chart",
-      "version": ""
-    },
-    {
-      "type": "panel",
-      "id": "gauge",
-      "name": "Gauge",
-      "version": ""
-    },
-    {
-      "type": "grafana",
-      "id": "grafana",
-      "name": "Grafana",
-      "version": "11.2.2+security-01"
-    },
-    {
-      "type": "datasource",
-      "id": "prometheus",
-      "name": "Prometheus",
-      "version": "1.0.0"
-    },
-    {
-      "type": "panel",
-      "id": "stat",
-      "name": "Stat",
-      "version": ""
-    },
-    {
-      "type": "panel",
-      "id": "table",
-      "name": "Table",
-      "version": ""
-    },
-    {
-      "type": "panel",
-      "id": "timeseries",
-      "name": "Time series",
-      "version": ""
-    }
-  ],
   "annotations": {
     "list": [
       {
@@ -88,10 +15,10 @@
       }
     ]
   },
+  "description": "The MDAI Data Management dashboard shows the received and exported metrics for data running through MDAI, offering a high-level view of metrics for configured data being monitored and filtered via MDAI using MDAI Hub Custom Resource Configuration.",
   "editable": true,
   "fiscalYearStartMonth": 0,
   "graphTooltip": 0,
-  "id": null,
   "links": [],
   "panels": [
     {
@@ -104,7 +31,7 @@
       },
       "id": 18,
       "panels": [],
-      "title": "Totals for I/O Logs",
+      "title": "Totals for I/O $dataType",
       "type": "row"
     },
     {
@@ -113,7 +40,7 @@
         "type": "prometheus",
         "uid": "prometheus"
       },
-      "description": "Shows how many services monitored based on the current selected time interval.",
+      "description": "Shows how many $groupByLabel monitored based on the current selected time interval.",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -224,7 +151,7 @@
         "type": "prometheus",
         "uid": "prometheus"
       },
-      "description": "Total ingress and egress logs filtered through MDAI operator.",
+      "description": "Total ingress and egress $dataType filtered through MDAI operator.",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -347,7 +274,7 @@
           "useBackend": false
         }
       ],
-      "title": "I/O Logs",
+      "title": "I/O $dataType",
       "transformations": [
         {
           "id": "reduce",
@@ -366,7 +293,7 @@
         "type": "prometheus",
         "uid": "prometheus"
       },
-      "description": "Average percentage difference between ingress and egress logs.",
+      "description": "Average percentage difference between ingress and egress $dataType.",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -524,7 +451,7 @@
       },
       "id": 13,
       "panels": [],
-      "title": "Logs",
+      "title": "$dataType",
       "type": "row"
     },
     {
@@ -532,7 +459,7 @@
         "type": "prometheus",
         "uid": "prometheus"
       },
-      "description": "Total number of logs and size per service based on time interval for ingress and egress.",
+      "description": "Total number of $dataType and size per service based on time interval for ingress and egress.",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -888,7 +815,7 @@
         "type": "prometheus",
         "uid": "prometheus"
       },
-      "description": "Total number of logs from top talkers services based on time interval for ingress and egress",
+      "description": "Total number of $dataType from top talkers $groupByLabel based on time interval for ingress and egress",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -1055,7 +982,7 @@
           "useBackend": false
         }
       ],
-      "title": "Top Talkers I/O Logs Totals",
+      "title": "Top Talkers I/O $dataType Totals",
       "transformations": [
         {
           "id": "filterFieldsByName",
@@ -1078,7 +1005,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 42
+        "y": 30
       },
       "id": 19,
       "panels": [],
@@ -1090,12 +1017,12 @@
         "type": "prometheus",
         "uid": "prometheus"
       },
-      "description": "Current active filters for logs limiting egress of logs.",
+      "description": "Current active filters for $dataType limiting egress of logs.",
       "gridPos": {
         "h": 9,
         "w": 12,
         "x": 0,
-        "y": 43
+        "y": 31
       },
       "id": 20,
       "options": {
@@ -1118,20 +1045,20 @@
         "viewMode": "list"
       },
       "pluginVersion": "11.2.2+security-01",
-      "title": "MDAI Active Filters for Logs",
+      "title": "MDAI Active Filters for $dataType",
       "type": "alertlist"
     }
   ],
   "refresh": "5s",
   "schemaVersion": 39,
   "tags": [
-      "mdai"
-    ],
+    "mdai"
+  ],
   "templating": {
     "list": [
       {
         "current": {
-          "selected": true,
+          "selected": false,
           "text": "items_received_by_service_total",
           "value": "items_received_by_service_total"
         },
@@ -1187,7 +1114,7 @@
       },
       {
         "current": {
-          "selected": true,
+          "selected": false,
           "text": "items_sent_by_service_total",
           "value": "items_sent_by_service_total"
         },
@@ -1215,7 +1142,7 @@
       },
       {
         "current": {
-          "selected": true,
+          "selected": false,
           "text": "bytes_sent_by_service_total",
           "value": "bytes_sent_by_service_total"
         },
