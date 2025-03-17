@@ -2,21 +2,30 @@
 
 This is the official Helm chart for [MyDecisive.ai](https://www.mydecisive.ai/), an open-core solution for monitoring and managing OpenTelemetry pipelines on Kubernetes. 
 
-> After initial checkout, switching branches or modifying `Chart.yaml`, run `helm dependency update . --repository-config /dev/null`
+_After initial checkout, switching branches or modifying `Chart.yaml`, run `helm dependency update . --repository-config /dev/null`_
 
 ## Prerequisites
 - Kubernetes 1.24+
 - Helm 3.9+
 - [cert-manager](https://cert-manager.io/docs/)
 
-## Install MDAI helm chart
+## Add Helm repository
 ```bash
-helm upgrade --install --create-namespace --namespace mdai --cleanup-on-fail --wait-for-jobs mdai .
+helm repo add mdai https://decisiveai.github.io/mdai-helm-charts
+helm repo update
+```
+_See [`helm repo`](https://helm.sh/docs/helm/helm_repo/) for command documentation._
+
+## Install MDAI helm chart
+> mdai-hub is not released yet, until then you can use older mdai-cluster chart
+```bash
+helm upgrade --install --create-namespace --namespace mdai --cleanup-on-fail --wait-for-jobs mdai mdai/mdai-hub
 ```
 
 ### Without Prometheus operator/CRDs
+If you already have Prometheus operator installed and would like to use it for your mdai hub:
 ```bash
-helm upgrade --install --create-namespace --namespace mdai --cleanup-on-fail --wait-for-jobs --set kubeprometheusstack.crds.enabled=false --set kubeprometheusstack.prometheusOperator.enabled=false --set kubeprometheusstack.nodeExporter.enabled=false mdai .
+helm upgrade --install --create-namespace --namespace mdai --cleanup-on-fail --wait-for-jobs --set kubeprometheusstack.crds.enabled=false --set kubeprometheusstack.prometheusOperator.enabled=false --set kubeprometheusstack.nodeExporter.enabled=false mdai mdai/mdai-hub
 ```
 When this option is chosen, make sure existing Prometheus Operator's configuration allows to manage Custom Resources in the above namespace
 Prometheus NodeExporter  installation is disabled as it's considered deployed along with the Prometheus Operator.
@@ -51,9 +60,16 @@ see `values.yaml` for other options.
 ```console
 helm upgrade [RELEASE_NAME] prometheus-community/kube-prometheus-stack
 ```
+A major chart version change (like 0.6.5 to 0.7.0) indicates that there are incompatible breaking changes needing manual actions.
 
-With Helm v3, CRDs created by this chart are not updated by default and should be manually updated.
+>With Helm v3, CRDs created by this chart are not updated by default and should be manually updated.
 Consult also the [Helm Documentation on CRDs](https://helm.sh/docs/chart_best_practices/custom_resource_definitions).
+
+### Upgrade from 0.6.x to 0.7.x
+Run these commands to update the CRDs before applying the upgrade:
+```shell
+kubectl apply --server-side --force-conflicts -f upgrade/0.7/mdaihub-crd.yaml
+```
 
 ## Use Cases
 
