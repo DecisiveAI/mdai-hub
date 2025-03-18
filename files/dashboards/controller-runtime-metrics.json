@@ -963,7 +963,9 @@
   ],
   "refresh": "",
   "schemaVersion": 39,
-  "tags": [],
+  "tags": [
+      "mdai"
+    ],
   "templating": {
     "list": [
       {
@@ -1041,7 +1043,7 @@
   },
   "timepicker": {},
   "timezone": "",
-  "title": "Controller-Runtime-Metrics",
+  "title": "MDAI Controller Runtime Metrics",
   "uid": "beg8ec1qy1fr4e",
   "version": 1,
   "weekStart": ""
