@@ -170,33 +170,35 @@ kubeprometheusstack:
     prometheusSpec:
       serviceMonitorSelectorNilUsesHelmValues: false
       ## uncomment below block to enable persistent storage
-    ## BEGIN: persistent storage block
-    #  securityContext:
-    #    fsGroup: 65534
-    #    runAsGroup: 65534
-    #    runAsNonRoot: true
-    #    runAsUser: 65534
-    #  initContainers:
-    #  - name: prometheus-data-permission-setup
-    #    image: busybox
-    #    securityContext:
-    #      runAsGroup: 0
-    #      runAsNonRoot: false
-    #      runAsUser: 0
-    #      fsGroup: 0
-    #    command: ["/bin/chown","-R","65534:65534","/prometheus"]
-    #    volumeMounts:
-    #    - name: prometheus-kube-prometheus-stack-prometheus-db
-    #      mountPath: /prometheus
-    #  storageSpec:
-    #    volumeClaimTemplate:
-    #      spec:
-    #        storageClassName: ""
-    #        accessModes: ["ReadWriteOnce"]
-    #        resources:
-    #          requests:
-    #            storage: 5Gi
-    ## END: persistent storage block
+      ## BEGIN: persistent storage block
+      #nodeSelector:
+      #  topology.kubernetes.io/zone: us-east-1a
+      #securityContext:
+      #  fsGroup: 65534
+      #  runAsGroup: 65534
+      #  runAsNonRoot: true
+      #  runAsUser: 65534
+      #initContainers:
+      #- name: prometheus-data-permission-setup
+      #  image: busybox
+      #  securityContext:
+      #    runAsGroup: 0
+      #    runAsNonRoot: false
+      #    runAsUser: 0
+      #  command: ["/bin/chown","-R","65534:65534","/prometheus"]
+      #  volumeMounts:
+      #  - name: prometheus-kube-prometheus-stack-prometheus-db
+      #    mountPath: /prometheus
+      #storageSpec:
+      #  volumeClaimTemplate:
+      #    spec:
+      #      storageClassName: gp2
+      #      accessModes: ["ReadWriteOnce"]
+      #      volumeName: pv-prometheus
+      #      resources:
+      #        requests:
+      #          storage: 10Gi
+      ## END: persistent storage block  
       ruleSelectorNilUsesHelmValues: false
       additionalArgs:
       - name: enable-feature
@@ -372,7 +374,10 @@ valkey:
     existingSecret: valkey-secret
     existingSecretPasswordKey: VALKEY_PASSWORD
   primary:
-    ## uncomment below initContainers block if going to enable persistent storage
+    ## uncomment below block to enable persistent storage
+    ## BEGIN: persistent storage block
+    #nodeSelector:
+    #  topology.kubernetes.io/zone: us-east-1a
     #initContainers:
     #- command:
     #  - /bin/chown
@@ -388,9 +393,16 @@ valkey:
     #  volumeMounts:
     #  - mountPath: /data
     #    name: valkey-data
+    ## END: persistent storage block    
+    replicaCount: 1
     persistence:
-      # set to true to enable persistent storage
       enabled: false
+      ## uncomment below block to enable persistent storage
+      ## BEGIN: persistent storage block
+      #enabled: true
+      #size: 10Gi
+      #existingClaim: pvc-valkey
+      ## END: persistent storage block    
     disableCommands:
       - FLUSHDB
       - FLUSHALL
