@@ -1,4 +1,77 @@
 {
+  "__inputs": [
+    {
+      "name": "PROMETHEUS",
+      "label": "Prometheus",
+      "description": "",
+      "type": "datasource",
+      "pluginId": "prometheus",
+      "pluginName": "Prometheus"
+    },
+    {
+      "name": "EXPRESSION",
+      "label": "Expression",
+      "description": "",
+      "type": "datasource",
+      "pluginId": "__expr__"
+    }
+  ],
+  "__elements": {},
+  "__requires": [
+    {
+      "type": "datasource",
+      "id": "__expr__",
+      "version": "1.0.0"
+    },
+    {
+      "type": "panel",
+      "id": "alertlist",
+      "name": "Alert list",
+      "version": ""
+    },
+    {
+      "type": "panel",
+      "id": "barchart",
+      "name": "Bar chart",
+      "version": ""
+    },
+    {
+      "type": "panel",
+      "id": "gauge",
+      "name": "Gauge",
+      "version": ""
+    },
+    {
+      "type": "grafana",
+      "id": "grafana",
+      "name": "Grafana",
+      "version": "11.2.2+security-01"
+    },
+    {
+      "type": "datasource",
+      "id": "prometheus",
+      "name": "Prometheus",
+      "version": "1.0.0"
+    },
+    {
+      "type": "panel",
+      "id": "stat",
+      "name": "Stat",
+      "version": ""
+    },
+    {
+      "type": "panel",
+      "id": "table",
+      "name": "Table",
+      "version": ""
+    },
+    {
+      "type": "panel",
+      "id": "timeseries",
+      "name": "Time series",
+      "version": ""
+    }
+  ],
   "annotations": {
     "list": [
       {
@@ -1058,7 +1131,7 @@
     "list": [
       {
         "current": {
-          "selected": false,
+          "selected": true,
           "text": "items_received_by_service_total",
           "value": "items_received_by_service_total"
         },
@@ -1114,7 +1187,7 @@
       },
       {
         "current": {
-          "selected": false,
+          "selected": true,
           "text": "items_sent_by_service_total",
           "value": "items_sent_by_service_total"
         },
@@ -1142,7 +1215,7 @@
       },
       {
         "current": {
-          "selected": false,
+          "selected": true,
           "text": "bytes_sent_by_service_total",
           "value": "bytes_sent_by_service_total"
         },
