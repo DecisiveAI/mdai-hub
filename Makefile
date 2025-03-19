@@ -1,73 +1,77 @@
 # Variables
 KUBERNETES_VERSION_MIN = 1.21
 PROMETHEUS_OPERATOR_VERSION_MIN = 0.71.2
-OTEL_OPERATOR_VERSION_MIN = 0.71.2
-CERT_MANAGER_VERSION_MIN = 1.5.4
-EKS_CLUSTER_NAME = <YOUR_CLUSTER_NAME>
-EKS_REGION = <YOUR_REGION>
+OTEL_OPERATOR_VERSION_MIN = 0.117.0
+CERT_MANAGER_VERSION_MIN = 1.10.1
+EKS_CLUSTER_NAME ?= Foo
+EKS_REGION ?= us-east-1
 HELM_CHART_PATH = ./charts/mdai-hub
 HELM_RELEASE_NAME = mdai-hub
-HELM_NAMESPACE = default
+HELM_NAMESPACE ?= mdai
 
 # Check if Kubernetes is installed and check version
 check_kubernetes_version:
 	@echo "Checking Kubernetes version..."
-	@KUBE_VERSION=$(kubectl version --short | grep "Server Version" | awk '{print $$3}' | cut -d'.' -f1) && \
-	if [ $$KUBE_VERSION -lt $(KUBERNETES_VERSION_MIN) ]; then \
-		echo "Error: Kubernetes version is too old. Minimum required version is $(KUBERNETES_VERSION_MIN)."; \
+	@K8S_VERSION=$$(kubectl version 2>/dev/null | grep Server | awk '{print $$3}' | sed 's/^v//'); \
+	if [ -z "$$K8S_VERSION" ]; then \
+		echo "❌ Error: Unable to fetch Kubernetes version. Is your cluster running and accessible?"; \
 		exit 1; \
-	else \
-		echo "Kubernetes version is compatible."; \
-	fi
+	fi; \
+    if [ "$$(printf '%s\n' "$(KUBERNETES_VERSION_MIN)" "$$K8S_VERSION" | sort -V | head -n1)" = "$(KUBERNETES_VERSION_MIN)" ]; then \
+      echo "✅ Kubernetes version ($$K8S_VERSION) is sufficient."; \
+    else \
+      echo "❌ Kubernetes version ($$K8S_VERSION) is too old. Required: $(KUBERNETES_VERSION_MIN)."; \
+      exit 1; \
+    fi
 
 # Check if EKS Cluster is running
 check_eks_cluster:
 	@echo "Checking if EKS cluster is running..."
 	@aws eks describe-cluster --name $(EKS_CLUSTER_NAME) --region $(EKS_REGION) >/dev/null 2>&1
 	@if [ $$? -eq 0 ]; then \
-		echo "EKS Cluster $(EKS_CLUSTER_NAME) is running."; \
+		echo "✅ EKS Cluster $(EKS_CLUSTER_NAME) is running."; \
 	else \
-		echo "Error: EKS Cluster $(EKS_CLUSTER_NAME) is not running."; \
+		echo "❌ Error: EKS Cluster $(EKS_CLUSTER_NAME) is not running."; \
 		exit 1; \
 	fi
 
 # Check if Prometheus Operator is installed and check version
 check_prometheus_operator_version:
 	@echo "Checking Prometheus Operator version..."
-	@PROM_OPERATOR_VERSION=$(helm list --namespace $(HELM_NAMESPACE) | grep "kubeprometheusstack" | awk '{print $$3}') && \
-	if [ -z "$$PROM_OPERATOR_VERSION" ]; then \
-		echo "Error: Prometheus Operator is not installed."; \
+	@PROMETHEUS_OPERATOR_VERSION=$$(kubectl get crd prometheuses.monitoring.coreos.com -o jsonpath='{.metadata.annotations.operator\.prometheus\.io/version}') && \
+	if [ -z "$$PROMETHEUS_OPERATOR_VERSION" ]; then \
+		echo "❌ Error: Prometheus Operator is not installed."; \
 		exit 1; \
-	elif [ $$PROM_OPERATOR_VERSION != $(PROMETHEUS_OPERATOR_VERSION_MIN) ]; then \
-		echo "Warning: Prometheus Operator version is incompatible. Minimum required version is $(PROMETHEUS_OPERATOR_VERSION_MIN)."; \
+	elif [ "$$(printf '%s\n' "$(PROMETHEUS_OPERATOR_VERSION_MIN)" "$$PROMETHEUS_OPERATOR_VERSION" | sort -V | head -n1)" = "$(PROMETHEUS_OPERATOR_VERSION_MIN)" ]; then \
+		echo "✅ Prometheus Operator version ($$PROMETHEUS_OPERATOR_VERSION) is compatible."; \
 	else \
-		echo "Prometheus Operator version is compatible."; \
+		echo "❌ Prometheus Operator version ($$PROMETHEUS_OPERATOR_VERSION) is incompatible. Minimum required version is $(PROMETHEUS_OPERATOR_VERSION_MIN)."; \
 	fi
 
 # Check if OTEL Operator is installed and check version
 check_otel_operator_version:
 	@echo "Checking OTEL Operator version..."
-	@OTEL_OPERATOR_VERSION=$(helm list --namespace $(HELM_NAMESPACE) | grep "opentelemetry-operator" | awk '{print $$3}') && \
+	@OTEL_OPERATOR_VERSION=$$(kubectl get deployment -n mdai opentelemetry-operator -o jsonpath='{.spec.template.spec.containers[0].image}' | tr -d '\n' | grep -v '^$$' | cut -d':' -f2) && \
 	if [ -z "$$OTEL_OPERATOR_VERSION" ]; then \
 		echo "Error: OTEL Operator is not installed."; \
 		exit 1; \
-	elif [ $$OTEL_OPERATOR_VERSION != $(OTEL_OPERATOR_VERSION_MIN) ]; then \
-		echo "Warning: OTEL Operator version is incompatible. Minimum required version is $(OTEL_OPERATOR_VERSION_MIN)."; \
+	elif [ "$$(printf '%s\n' "$(OTEL_OPERATOR_VERSION_MIN)" "$$OTEL_OPERATOR_VERSION" | sort -V | head -n1)" = "$(OTEL_OPERATOR_VERSION_MIN)" ]; then \
+		echo "✅ OTEL Operator version ($$OTEL_OPERATOR_VERSION) is compatible."; \
 	else \
-		echo "OTEL Operator version is compatible."; \
+		echo "❌ OTEL Operator version ($$OTEL_OPERATOR_VERSION) is incompatible. Minimum required version is $(OTEL_OPERATOR_VERSION_MIN)."; \
 	fi
 
 # Check if Cert Manager is installed and check version
 check_cert_manager_version:
 	@echo "Checking Cert Manager version..."
-	@CERT_MANAGER_VERSION=$(helm list --namespace $(HELM_NAMESPACE) | grep "cert-manager" | awk '{print $$3}') && \
+	@CERT_MANAGER_VERSION=$$(kubectl get crd clusterissuers.cert-manager.io -o jsonpath='{.metadata.labels.app\.kubernetes\.io/version}' | tr -d '\n' | grep -v '^$$' | sed 's/^v//'); \
 	if [ -z "$$CERT_MANAGER_VERSION" ]; then \
 		echo "Error: Cert Manager is not installed."; \
 		exit 1; \
-	elif [ $$CERT_MANAGER_VERSION != $(CERT_MANAGER_VERSION_MIN) ]; then \
-		echo "Warning: Cert Manager version is incompatible. Minimum required version is $(CERT_MANAGER_VERSION_MIN)."; \
+	elif [ "$$(printf '%s\n' "$(CERT_MANAGER_VERSION_MIN)" "$$CERT_MANAGER_VERSION" | sort -V | head -n1)" = "$(CERT_MANAGER_VERSION_MIN)" ]; then \
+		echo "✅ Cert Manager version ($$CERT_MANAGER_VERSION) is compatible."; \
 	else \
-		echo "Cert Manager version is compatible."; \
+		echo "❌ Cert Manager version ($$CERT_MANAGER_VERSION) is incompatible. Minimum required version is $(CERT_MANAGER_VERSION_MIN)."; \
 	fi
 
 # Run all preflight checks
