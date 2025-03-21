@@ -57,8 +57,8 @@ see `values.yaml` for other options.
 
 ## Upgrading Chart
 
-```console
-helm upgrade [RELEASE_NAME] prometheus-community/kube-prometheus-stack
+```shell
+helm upgrade mdai mdai/mdai-cluster
 ```
 A major chart version change (like 0.6.5 to 0.7.0) indicates that there are incompatible breaking changes needing manual actions.
 
@@ -68,7 +68,11 @@ Consult also the [Helm Documentation on CRDs](https://helm.sh/docs/chart_best_pr
 ### Upgrade from 0.6.x to 0.7.x
 Run these commands to update the CRDs before applying the upgrade:
 ```shell
-kubectl apply --server-side --force-conflicts -f upgrade/0.7/mdaihub-crd.yaml
+kubectl apply --server-side --force-conflicts -f https://raw.githubusercontent.com/DecisiveAI/mdai-helm-chart/refs/heads/main/upgrade/0.7/mdaihub-crd.yaml
+```
+Deploy 0.7.x helm chart
+```shell
+helm upgrade --install --namespace mdai --wait-for-jobs --set [YOUR-ADDITIONAL-SETTINGS] mdai mdai/mdai-cluster
 ```
 
 ## Use Cases
