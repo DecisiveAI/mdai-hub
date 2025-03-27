@@ -890,17 +890,8 @@
             }
           },
           "fieldMinMax": false,
-          "mappings": [
-            {
-              "options": {
-                "unlabeled_service": {
-                  "index": 0,
-                  "text": "other"
-                }
-              },
-              "type": "value"
-            }
-          ],
+          "mappings": [],
+          "min": 0,
           "thresholds": {
             "mode": "absolute",
             "steps": [
