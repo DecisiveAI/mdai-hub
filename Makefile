@@ -53,7 +53,7 @@ check_prometheus_operator_version:
 # Check if OTEL Operator is installed and check version
 check_otel_operator_version:
 	@echo "🔍 Checking OTEL Operator version..."
-	@OTEL_OPERATOR_VERSION=$$(kubectl get deployment -n mdai opentelemetry-operator -o jsonpath='{.spec.template.spec.containers[0].image}' 2>/dev/null || echo "" | tr -d '\n' | grep -v '^$$' | cut -d':' -f2 ) && \
+	@OTEL_OPERATOR_VERSION=$$(kubectl get deployments --all-namespaces -o jsonpath='{range .items[?(@.metadata.name=="opentelemetry-operator")]}{.spec.template.spec.containers[0].image}{"\n"}{end}' | tr -d '\n' | grep -v '^$$' | cut -d':' -f2) && \
 	if [ -z "$$OTEL_OPERATOR_VERSION" ]; then \
 		echo "ℹ️ OTEL Operator is not installed."; \
 	elif [ "$$(printf '%s\n' "$(OTEL_OPERATOR_VERSION_MIN)" "$$OTEL_OPERATOR_VERSION" | sort -V | head -n1)" = "$(OTEL_OPERATOR_VERSION_MIN)" ]; then \
@@ -66,9 +66,9 @@ check_otel_operator_version:
 # Check if Cert Manager is installed and check version
 check_cert_manager_version:
 	@echo "🔍 Checking Cert Manager version..."
-	@CERT_MANAGER_VERSION=$$(kubectl get crd clusterissuers.cert-manager.io -o jsonpath='{.metadata.labels.app\.kubernetes\.io/version}' | tr -d '\n' | grep -v '^$$' | sed 's/^v//'); \
+	@CERT_MANAGER_VERSION=$$(kubectl get crd clusterissuers.cert-manager.io -o jsonpath='{.metadata.labels.app\.kubernetes\.io/version}' 2>/dev/null | tr -d '\n' | grep -v '^$$' | sed 's/^v//'); \
 	if [ -z "$$CERT_MANAGER_VERSION" ]; then \
-		echo "Error: Cert Manager is not installed."; \
+		echo "❌ Cert Manager is not installed."; \
 		exit 1; \
 	elif [ "$$(printf '%s\n' "$(CERT_MANAGER_VERSION_MIN)" "$$CERT_MANAGER_VERSION" | sort -V | head -n1)" = "$(CERT_MANAGER_VERSION_MIN)" ]; then \
 		echo "✅ Cert Manager version ($$CERT_MANAGER_VERSION) is compatible."; \
