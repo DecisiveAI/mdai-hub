@@ -374,6 +374,16 @@ valkey:
     enabled: true
     existingSecret: valkey-secret
     existingSecretPasswordKey: VALKEY_PASSWORD
+  ## @param commonConfiguration [string] Common configuration to be added into the ConfigMap
+  ## ref: https://valkey.io/topics/valkey-conf/
+  ##
+  commonConfiguration: |-
+    # Enable AOF https://valkey.io/docs/topics/persistence.html
+    appendonly yes
+    # Enable fsyncing the AOF on every write
+    appendfsync always
+    # Disable RDB persistence, AOF persistence already enabled.
+    save ""
   primary:
     ## uncomment below block to enable persistent storage
     ## BEGIN: persistent storage block
