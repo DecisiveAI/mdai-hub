@@ -92,6 +92,9 @@ kubeprometheusstack:
     adminPassword: mdai
     plugins:
       - yesoreyeram-infinity-datasource  
+      - redis-datasource
+      - redis-app
+      - redis-explorer-app
     datasources:
       datasources.yaml:
         apiVersion: 1
