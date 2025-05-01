@@ -124,6 +124,7 @@ kubeprometheusstack:
         mdai-cluster-usage: {}   #files/dashboards/mdai-cluster-usage.json 
         mdai-audit-stream: {}   #files/dashboards/mdai-audit-stream.json
         controller-runtime-metrics: {}   #files/dashboards/controller-runtime-metrics.json
+        mdai-collector-logs-valkey: {}   #files/dashboards/mdai-collector-logs-valkey.json
   serviceMonitor:
     enabled: false
   kubernetesServiceMonitors:
@@ -373,11 +374,23 @@ kubeprometheusstack:
 
 valkey:
   enabled: true
+  global:
+    security:
+      allowInsecureImages: true
+  image:
+    registry: public.ecr.aws
+    repository: decisiveai/valkey
+    tag: latest
+    digest: ""
   auth:
     enabled: true
     existingSecret: valkey-secret
     existingSecretPasswordKey: VALKEY_PASSWORD
   primary:
+    configuration: |-
+      notify-keyspace-events KEA
+      enable-module-command yes
+      loadmodule /opt/bitnami/valkey/modules/libstreams.so
     ## uncomment below block to enable persistent storage
     ## BEGIN: persistent storage block
     #nodeSelector:
@@ -410,8 +423,6 @@ valkey:
     disableCommands:
       - FLUSHDB
       - FLUSHALL
-    configuration: |-
-      notify-keyspace-events KEA
     service:
       type: ClusterIP
       ports:
@@ -424,6 +435,10 @@ valkey:
         memory: "128Mi"
         cpu: "200m"
   replica:
+    configuration: |-
+      notify-keyspace-events KEA
+      enable-module-command yes
+      loadmodule /opt/bitnami/valkey/modules/libstreams.so
     replicaCount: 0
     persistence:
       enabled: false
