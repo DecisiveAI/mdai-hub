@@ -18,9 +18,57 @@
   "editable": true,
   "fiscalYearStartMonth": 0,
   "graphTooltip": 0,
-  "id": 7,
+  "id": 4,
   "links": [],
   "panels": [
+    {
+      "datasource": {
+        "default": false,
+        "type": "redis-datasource",
+        "uid": "P2392AD6B339F5133"
+      },
+      "gridPos": {
+        "h": 9,
+        "w": 24,
+        "x": 0,
+        "y": 0
+      },
+      "id": 4,
+      "options": {
+        "alertInstanceLabelFilter": "",
+        "alertName": "",
+        "dashboardAlerts": false,
+        "groupBy": [],
+        "groupMode": "default",
+        "maxItems": 20,
+        "sortOrder": 1,
+        "stateFilter": {
+          "error": false,
+          "firing": true,
+          "noData": false,
+          "normal": false,
+          "pending": true
+        },
+        "viewMode": "list"
+      },
+      "pluginVersion": "11.2.2+security-01",
+      "targets": [
+        {
+          "command": "",
+          "datasource": {
+            "type": "redis-datasource",
+            "uid": "P2392AD6B339F5133"
+          },
+          "query": "MDAI_ERR_RATE hub 20",
+          "refId": "A",
+          "streaming": true,
+          "streamingInterval": 20000,
+          "type": "cli"
+        }
+      ],
+      "title": "Alerts",
+      "type": "alertlist"
+    },
     {
       "datasource": {
         "default": false,
@@ -99,7 +147,7 @@
         "h": 10,
         "w": 24,
         "x": 0,
-        "y": 0
+        "y": 9
       },
       "id": 1,
       "options": {
@@ -276,7 +324,7 @@
         "h": 10,
         "w": 24,
         "x": 0,
-        "y": 10
+        "y": 19
       },
       "id": 2,
       "options": {
@@ -453,7 +501,7 @@
         "h": 10,
         "w": 24,
         "x": 0,
-        "y": 20
+        "y": 29
       },
       "id": 3,
       "options": {
@@ -566,6 +614,6 @@
   "timezone": "browser",
   "title": "MDAI Logs (Valkey Streams)",
   "uid": "mdai-collector-logs-valkey",
-  "version": 7,
+  "version": 1,
   "weekStart": ""
 }

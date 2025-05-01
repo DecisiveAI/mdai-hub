@@ -125,6 +125,11 @@ kubeprometheusstack:
         mdai-audit-stream: {}   #files/dashboards/mdai-audit-stream.json
         controller-runtime-metrics: {}   #files/dashboards/controller-runtime-metrics.json
         mdai-collector-logs-valkey: {}   #files/dashboards/mdai-collector-logs-valkey.json
+    sidecar:      
+      alerts:
+        enabled: true
+        default:
+          valkey: {}    # files/grafana_alerting_rules/valkey-group.json
   serviceMonitor:
     enabled: false
   kubernetesServiceMonitors:
