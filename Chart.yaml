@@ -1,9 +1,9 @@
 apiVersion: v2
 type: application
 name: mdai-hub
-version: "0.7.1-rc2"
+version: "0.8.0-dev"
 description: MDAI Hub helm chart
-appVersion: "0.7.1-rc2"
+appVersion: "0.8.0-dev"
 dependencies:
   - name: opentelemetry-operator
     version: ~0.71.2
@@ -19,11 +19,11 @@ dependencies:
     repository: https://kubernetes-sigs.github.io/metrics-server
     condition: metrics-server.enabled
   - name: mdai-operator
-    version: 0.1.9
+    version: 0.1.13
     repository: https://decisiveai.github.io/mdai-helm-charts
     condition: mdai-operator.enabled
   - name: event-handler-webservice
-    version: 0.0.7
+    version: 0.0.8
     repository: https://decisiveai.github.io/mdai-helm-charts
     condition: event-handler-webservice.enabled
   - name: valkey
