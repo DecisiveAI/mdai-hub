@@ -5,6 +5,10 @@ version: "0.7.1-rc2"
 description: MDAI Hub helm chart
 appVersion: "0.7.1-rc2"
 dependencies:
+  - name: rabbitmq
+    version: ~16.0.1
+    repository: oci://registry-1.docker.io/bitnamicharts
+    condition: rabbitmq.enabled
   - name: opentelemetry-operator
     version: ~0.71.2
     repository: https://open-telemetry.github.io/opentelemetry-helm-charts
@@ -18,15 +22,19 @@ dependencies:
     version: ~3.12.1
     repository: https://kubernetes-sigs.github.io/metrics-server
     condition: metrics-server.enabled
-  - name: mdai-operator
-    version: 0.1.9
-    repository: https://decisiveai.github.io/mdai-helm-charts
-    condition: mdai-operator.enabled
-  - name: event-handler-webservice
-    version: 0.0.7
-    repository: https://decisiveai.github.io/mdai-helm-charts
-    condition: event-handler-webservice.enabled
   - name: valkey
     version: ~2.2.0
     repository: oci://registry-1.docker.io/bitnamicharts
     condition: valkey.enabled
+  - name: mdai-operator
+    version: 0.1.11
+    repository: https://decisiveai.github.io/mdai-helm-charts
+    condition: mdai-operator.enabled
+  - name: event-handler-webservice
+    version: 0.0.8
+    repository: https://decisiveai.github.io/mdai-helm-charts
+    condition: event-handler-webservice.enabled
+  - name: event-hub-poc
+    version: 0.0.1
+    repository: https://decisiveai.github.io/mdai-helm-charts
+    condition: event-hub-poc.enabled
