@@ -2,7 +2,7 @@ apiVersion: monitoring.coreos.com/v1
 kind: PrometheusRule
 metadata:
   name: valkey-streams-errors-rate
-  namespace: {{ $parent.Release.Namespace }}
+  namespace: {{ .Release.Namespace }}
   labels:
     release: mdai
 spec:

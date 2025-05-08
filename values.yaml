@@ -125,6 +125,7 @@ kubeprometheusstack:
         mdai-audit-stream: {}   #files/dashboards/mdai-audit-stream.json
         controller-runtime-metrics: {}   #files/dashboards/controller-runtime-metrics.json
         mdai-collector-logs-valkey: {}   #files/dashboards/mdai-collector-logs-valkey.json
+        mdai-collector-logs-valkey-prometheus: {}  #files/dashboards/mdai-collector-logs-valkey-prometheus.json 
     sidecar:      
       alerts:
         enabled: true
