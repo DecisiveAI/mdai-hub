@@ -65,26 +65,6 @@ A major chart version change (like 0.6.5 to 0.7.0) indicates that there are inco
 >With Helm v3, CRDs created by this chart are not updated by default and should be manually updated.
 Consult also the [Helm Documentation on CRDs](https://helm.sh/docs/chart_best_practices/custom_resource_definitions).
 
-### Upgrade from 0.6.x to 0.7.0
-Run these commands to update the CRDs before applying the upgrade:
-```shell
-kubectl apply --server-side --force-conflicts -f https://raw.githubusercontent.com/DecisiveAI/mdai-helm-chart/refs/heads/main/upgrade/0.7/mdaihub-crd.yaml
-```
-Deploy 0.7.x helm chart
-```shell
-helm upgrade --install --namespace mdai --wait-for-jobs --set [YOUR-ADDITIONAL-SETTINGS] mdai mdai/mdai-cluster
-```
-### Upgrade from 0.7.0 to 0.7.1
-Run these commands to update the CRDs before applying the upgrade:
-```shell
-kubectl apply --server-side --force-conflicts -f https://raw.githubusercontent.com/DecisiveAI/mdai-helm-chart/refs/heads/main/upgrade/0.7.1/mdaihub-crd.yaml
-```
->**Important**: Starting with the 0.7.1 release, the minimum supported observer image is `0.1.3`. If you are using custom `observerResources` that override the default image, please update them to at least 0.1.3.  
-
-Deploy 0.7.1 helm chart
-```shell
-helm upgrade --install --namespace mdai --wait-for-jobs --set [YOUR-ADDITIONAL-SETTINGS] mdai mdai/mdai-cluster
-```
 ## Use Cases
 
 - [Compliance and Dynamic Filtering](./USAGE/compliance_filtering/start_here.md)
