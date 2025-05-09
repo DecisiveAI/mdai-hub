@@ -1,9 +1,9 @@
 apiVersion: v2
 type: application
 name: mdai-hub
-version: 0.8.0-dev
+version: "0.8.0-dev"
 description: MDAI Hub helm chart
-appVersion: 0.8.0-dev
+appVersion: "0.8.0-dev"
 dependencies:
   - name: opentelemetry-operator
     version: ~0.71.2
