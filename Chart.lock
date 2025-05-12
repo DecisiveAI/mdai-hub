@@ -10,7 +10,7 @@ dependencies:
   version: 3.12.2
 - name: mdai-operator
   repository: https://decisiveai.github.io/mdai-helm-charts
-  version: 0.1.14
+  version: 0.1.15
 - name: event-handler-webservice
   repository: https://decisiveai.github.io/mdai-helm-charts
   version: 0.0.9
@@ -20,5 +20,5 @@ dependencies:
 - name: valkey
   repository: oci://registry-1.docker.io/bitnamicharts
   version: 2.2.4
-digest: sha256:b06a33a622671737d0c4d4721f9ff0fa95181869761239e73e3e2ebcd0930778
-generated: "2025-05-07T15:52:35.415528-05:00"
+digest: sha256:dc52de165a646ee06cc7d493f1dfa50bdf78e3bf4ab55d3496c1d2b3001fc283
+generated: "2025-05-12T13:18:43.983275-05:00"
