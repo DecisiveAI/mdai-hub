@@ -46,12 +46,17 @@ metrics-server:
 mdai-operator:
   enabled: true
   fullnameOverride: mdai-operator
+  controllerManager:
+    manager:
+      env:
+        otelExporterOtlpEndpoint: http://hub-monitor-mdai-collector-service.mdai.svc.cluster.local:4318
   webhooks:
     certManager:
       enabled: true
 
 event-handler-webservice:
   enabled: true
+  otelExporterOtlpEndpoint: http://hub-monitor-mdai-collector-service.mdai.svc.cluster.local:4318
 
 kubeprometheusstack:
   nameOverride: kube-prometheus-stack
