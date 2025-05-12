@@ -49,14 +49,14 @@ mdai-operator:
   controllerManager:
     manager:
       env:
-        otelExporterOtlpEndpoint: http://mdai-collector-service.mdai.svc.cluster.local:4318
+        otelExporterOtlpEndpoint: http://hub-monitor-mdai-collector-service.mdai.svc.cluster.local:4318
   webhooks:
     certManager:
       enabled: true
 
 event-handler-webservice:
   enabled: true
-  otelExporterOtlpEndpoint: http://mdai-collector-service.mdai.svc.cluster.local:4318
+  otelExporterOtlpEndpoint: http://hub-monitor-mdai-collector-service.mdai.svc.cluster.local:4318
 
 kubeprometheusstack:
   nameOverride: kube-prometheus-stack
