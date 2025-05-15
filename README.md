@@ -30,7 +30,9 @@ The mdai-operator can manage an opinionated and configured collector called mdai
 
 #### Option A: Using mdai-collector to collect component telemetry
 
-In order to send telemetry to a managed mdai-collector, you will want to deploy the MdaiCollector custom resource and a Secret containing AWS credentials like so:
+> ℹ️ AWS S3 or Minio are the only supported destinations for sending logs through the mdai-collector. You will need to provide a AWS access key with PutObject permissions to the destination S3 bucket in a secret present in the same namespace as the mdai-collector.
+
+In order to send telemetry to a managed mdai-collector, you will want to deploy the MdaiCollector custom resource and a Secret containing AWS credentials. 
 
 ```yaml
 apiVersion: v1
@@ -38,8 +40,6 @@ kind: Secret
 metadata:
   name: aws-credentials
   namespace: mdai
-  labels:
-    app.kubernetes.io/name: aws-credentials
 type: Opaque
 stringData:
   AWS_ACCESS_KEY_ID: <secret-key-id-here>
@@ -59,7 +59,7 @@ spec:
      s3Bucket: "mdai-hub-logs"
 ```
 
-> ℹ️ The above name (`hub-monitor`) must correspond to the beginning of the host name in the `values.yaml` for the [operator](https://github.com/DecisiveAI/mdai-helm-chart/blob/422e1c345806f634ed92db2a67a672ed7e9c7101/values.yaml#L52) and [event-handler-webservice](https://github.com/DecisiveAI/mdai-helm-chart/blob/422e1c345806f634ed92db2a67a672ed7e9c7101/values.yaml#L59). So if the MdaiCollector resource name is `hub-monitor`, the corresponding service endpoint created is `http://hub-monitor-mdai-collector-service.mdai.svc.cluster.local:4318`
+> ℹ️ The above name (`hub-monitor`) must correspond to the beginning of the host name in the `values.yaml` for the [operator](https://github.com/DecisiveAI/mdai-helm-chart/blob/422e1c345806f634ed92db2a67a672ed7e9c7101/values.yaml#L52) and [event-handler-webservice](https://github.com/DecisiveAI/mdai-helm-chart/blob/422e1c345806f634ed92db2a67a672ed7e9c7101/values.yaml#L59). So if the MdaiCollector resource name is `hub-monitor`, the corresponding service endpoint created is `http://hub-monitor-mdai-collector-service.mdai.svc.cluster.local:4318`.
 
 #### Option B: Send hub component logs to a custom OTLP HTTP destination
 
