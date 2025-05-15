@@ -22,6 +22,55 @@ _See [`helm repo`](https://helm.sh/docs/helm/helm_repo/) for command documentati
 helm upgrade --install --create-namespace --namespace mdai --cleanup-on-fail --wait-for-jobs mdai mdai/mdai-hub
 ```
 
+### ⚠️ Required Step: Self-observability setup ⚠️
+
+The mdai-helm-chart-installed mdai-operator and event-handler-webservice expect a destination to send their logs to, but this chart does not manage deploying the logs destination for those services. 
+
+The mdai-operator can manage an opinionated and configured collector called mdai-collector that will send logs from these services to S3.
+
+#### Option A: Using mdai-collector to collect component telemetry
+
+In order to send telemetry to a managed mdai-collector, you will want to deploy the MdaiCollector custom resource and a Secret containing AWS credentials like so:
+
+```yaml
+apiVersion: v1
+kind: Secret
+metadata:
+  name: aws-credentials
+  namespace: mdai
+  labels:
+    app.kubernetes.io/name: aws-credentials
+type: Opaque
+stringData:
+  AWS_ACCESS_KEY_ID: <secret-key-id-here>
+  AWS_SECRET_ACCESS_KEY: <secret-access-key-here>
+---
+apiVersion: hub.mydecisive.ai/v1
+kind: MdaiCollector
+metadata:
+  namespace: mdai
+  name: hub-monitor
+spec:
+  aws:
+   awsAccessKeySecret: aws-credentials
+  logs:
+   s3:
+     s3Region: "us-east-1"
+     s3Bucket: "mdai-hub-logs"
+```
+
+> ℹ️ The above name (`hub-monitor`) must correspond to the beginning of the host name in the `values.yaml` for the [operator](https://github.com/DecisiveAI/mdai-helm-chart/blob/422e1c345806f634ed92db2a67a672ed7e9c7101/values.yaml#L52) and [event-handler-webservice](https://github.com/DecisiveAI/mdai-helm-chart/blob/422e1c345806f634ed92db2a67a672ed7e9c7101/values.yaml#L59). So if the MdaiCollector resource name is `hub-monitor`, the corresponding service endpoint created is `http://hub-monitor-mdai-collector-service.mdai.svc.cluster.local:4318`
+
+#### Option B: Send hub component logs to a custom OTLP HTTP destination
+
+You can update the `values.yaml` for the [operator](https://github.com/DecisiveAI/mdai-helm-chart/blob/422e1c345806f634ed92db2a67a672ed7e9c7101/values.yaml#L52) and [event-handler-webservice](https://github.com/DecisiveAI/mdai-helm-chart/blob/422e1c345806f634ed92db2a67a672ed7e9c7101/values.yaml#L59) to send logs to a destination of your choosing that accepts OTLP HTTP logs.
+
+#### Option C: Disable OTEL Logging for components in this chart
+
+If you do not want to send logs from these components, you can disable sending logs by updating the `values.yaml` by setting `mdai-operator.manager.env.otelSdkDisabled` and `event-handler-webservice.otelSdkDisabled` to `"true"` (a string value, not boolean).
+
+---
+
 ### Without Prometheus operator/CRDs
 If you already have Prometheus operator installed and would like to use it for your mdai hub:
 ```bash
