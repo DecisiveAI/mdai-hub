@@ -30,7 +30,7 @@ The mdai-operator can manage an opinionated and configured collector called mdai
 
 #### Option A: Using mdai-collector to collect component telemetry
 
-> ℹ️ AWS S3 or Minio are the only supported destinations for sending logs through the mdai-collector. You will need to provide a AWS access key with PutObject permissions to the destination S3 bucket in a secret present in the same namespace as the mdai-collector.
+> ℹ️ AWS S3 are the only supported destinations for sending logs through the mdai-collector. You will need to provide a AWS access key with PutObject permissions to the destination S3 bucket in a secret present in the same namespace as the mdai-collector.
 
 In order to send telemetry to a managed mdai-collector, you will want to deploy the MdaiCollector custom resource and a Secret containing AWS credentials. 
 
