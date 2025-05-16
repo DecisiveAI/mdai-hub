@@ -50,6 +50,7 @@ mdai-operator:
     manager:
       env:
         otelExporterOtlpEndpoint: http://hub-monitor-mdai-collector-service.mdai.svc.cluster.local:4318
+        # otelSdkDisabled: "true"
   webhooks:
     certManager:
       enabled: true
@@ -57,6 +58,7 @@ mdai-operator:
 event-handler-webservice:
   enabled: true
   otelExporterOtlpEndpoint: http://hub-monitor-mdai-collector-service.mdai.svc.cluster.local:4318
+  # otelSdkDisabled: "true"
 
 kubeprometheusstack:
   nameOverride: kube-prometheus-stack
