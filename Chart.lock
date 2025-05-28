@@ -23,5 +23,8 @@ dependencies:
 - name: event-hub-poc
   repository: https://decisiveai.github.io/mdai-helm-charts
   version: 0.0.1
-digest: sha256:165749f61eb0ac9b91dc044f079cbf05a06d00a1067475260bfc4aa5c9daab1f
-generated: "2025-05-28T10:00:14.50632-07:00"
+- name: mdai-s3-logs-reader
+  repository: https://decisiveai.github.io/mdai-helm-charts
+  version: 0.0.2
+digest: sha256:6b0211e59886e5ca1af251eb0466652299790c5bc5b48ddb4e6099a8a672209d
+generated: "2025-05-28T17:30:00.766929-05:00"
