@@ -19,11 +19,11 @@ dependencies:
     repository: https://kubernetes-sigs.github.io/metrics-server
     condition: metrics-server.enabled
   - name: mdai-operator
-    version: 0.1.16
+    version: 0.1.19
     repository: https://decisiveai.github.io/mdai-helm-charts
     condition: mdai-operator.enabled
   - name: event-handler-webservice
-    version: 0.0.10
+    version: 0.0.11
     repository: https://decisiveai.github.io/mdai-helm-charts
     condition: event-handler-webservice.enabled
   - name: valkey
