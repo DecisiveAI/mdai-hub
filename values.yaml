@@ -1,5 +1,6 @@
 default:
   env:
+    otelExporterOtlpEndpoint: http://mdai-collector-service.mdai.svc.cluster.local:4318
   envOverrides: []
   replicas: 1
   schedulingRules:
@@ -60,6 +61,9 @@ event-handler-webservice:
   otelExporterOtlpEndpoint: http://hub-monitor-mdai-collector-service.mdai.svc.cluster.local:4318
   # otelSdkDisabled: "true"
 
+event-hub-poc:
+  enabled: true
+
 kubeprometheusstack:
   nameOverride: kube-prometheus-stack
   fullnameOverride: kube-prometheus-stack
@@ -89,7 +93,7 @@ kubeprometheusstack:
       - name: 'null'
       - name: 'event-handler'
         webhook_configs:
-          - url: 'http://event-handler-webservice.mdai.svc.cluster.local:8081/alerts'
+          - url: 'http://event-handler-webservice.mdai.svc.cluster.local:8081/events'
             send_resolved: true
     serviceMonitor:
       selfMonitor: true
@@ -460,3 +464,22 @@ valkey:
       limits:
         memory: "128Mi"
         cpu: "200m"
+rabbitmq:
+  enabled: true
+  auth:
+    username: mdai
+    password: mdai
+    existingPasswordSecret: rabbitmq-secret
+    existingSecretPasswordKey: RABBITMQ_PASSWORD
+    updatePassword: true
+  service:
+    ports:
+      amqp: 5672
+      amqpTls: 5671
+      dist: 25672
+      manager: 15672
+      metrics: 9419
+      epmd: 4369
+
+crdMetadata:
+  fieldValue: ""
