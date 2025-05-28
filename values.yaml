@@ -64,6 +64,12 @@ event-handler-webservice:
 event-hub-poc:
   enabled: true
 
+mdai-s3-logs-reader:
+  enabled: true
+  AWS_REGION: "us-east-1"
+  S3_BUCKET: "mdai-collector-logs"
+  awsAccessKeySecret: aws-credentials
+
 kubeprometheusstack:
   nameOverride: kube-prometheus-stack
   fullnameOverride: kube-prometheus-stack
