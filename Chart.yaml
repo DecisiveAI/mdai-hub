@@ -34,10 +34,10 @@ dependencies:
     version: 0.0.11
     repository: https://decisiveai.github.io/mdai-helm-charts
     condition: event-handler-webservice.enabled
-  - name: event-hub-poc
+  - name: mdai-event-hub
     version: 0.0.1
     repository: https://decisiveai.github.io/mdai-helm-charts
-    condition: event-hub-poc.enabled
+    condition: mdai-event-hub.enabled
   - name: mdai-s3-logs-reader
     version: 0.0.2
     repository: https://decisiveai.github.io/mdai-helm-charts

@@ -61,7 +61,7 @@ event-handler-webservice:
   otelExporterOtlpEndpoint: http://hub-monitor-mdai-collector-service.mdai.svc.cluster.local:4318
   # otelSdkDisabled: "true"
 
-event-hub-poc:
+mdai-event-hub:
   enabled: true
 
 mdai-s3-logs-reader:
