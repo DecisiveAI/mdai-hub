@@ -30,6 +30,9 @@ The mdai-operator can manage an opinionated and configured collector called mdai
 
 #### Option A: Using mdai-collector to collect component telemetry
 
+You will need to set up an [AWS S3](https://docs.aws.amazon.com/AmazonS3/latest/userguide/GetStartedWithS3.html) bucket for this.
+
+
 > ℹ️ AWS S3 are the only supported destinations for sending logs through the mdai-collector. You will need to provide a AWS access key with PutObject permissions to the destination S3 bucket in a secret present in the same namespace as the mdai-collector.
 
 In order to send telemetry to a managed mdai-collector, you will want to deploy the MdaiCollector custom resource and a Secret containing AWS credentials. 
@@ -59,7 +62,7 @@ spec:
      s3Bucket: "mdai-hub-logs"
 ```
 
-> ℹ️ The above name (`hub-monitor`) must correspond to the beginning of the host name in the `values.yaml` for the [operator](https://github.com/DecisiveAI/mdai-helm-chart/blob/422e1c345806f634ed92db2a67a672ed7e9c7101/values.yaml#L52) and [mdai-gateway](https://github.com/DecisiveAI/mdai-helm-chart/blob/422e1c345806f634ed92db2a67a672ed7e9c7101/values.yaml#L59). So if the MdaiCollector resource name is `hub-monitor`, the corresponding service endpoint created is `http://hub-monitor-mdai-collector-service.mdai.svc.cluster.local:4318`.
+> ℹ️ The above name (`hub-monitor`) must correspond to the beginning of the host name in the `values.yaml` for the [operator](https://github.com/DecisiveAI/mdai-helm-chart/blob/422e1c345806f634ed92db2a67a672ed7e9c7101/values.yaml#L52) and [mdai-gateway](https://github.com/DecisiveAI/mdai-helm-chart/blob/422e1c345806f634ed92db2a67a672ed7e9c7101/values.yaml#L59), as well as, your fluentd configuration endpoint. So if the MdaiCollector resource name is `hub-monitor`, the corresponding service endpoint created is `http://hub-monitor-mdai-collector-service.mdai.svc.cluster.local:4318`.
 
 #### Option B: Send hub component logs to a custom OTLP HTTP destination
 
@@ -69,6 +72,7 @@ You can update the `values.yaml` for the [operator](https://github.com/DecisiveA
 
 If you do not want to send logs from these components, you can disable sending logs by updating the `values.yaml` by setting `mdai-operator.manager.env.otelSdkDisabled` and `mdai-gateway.otelSdkDisabled` to `"true"` (a string value, not boolean).
 
+> ℹ️ To stop logs from sending to s3, you will need to delete the MdaiCollector Custom Resource
 ---
 
 ### Without Prometheus operator/CRDs

@@ -1049,7 +1049,7 @@
         "alertName": "",
         "dashboardAlerts": false,
         "groupBy": [
-          "service_name"
+          "mdai_service"
         ],
         "groupMode": "default",
         "maxItems": 100,
