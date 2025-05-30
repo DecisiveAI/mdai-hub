@@ -24,7 +24,7 @@ helm upgrade --install --create-namespace --namespace mdai --cleanup-on-fail --w
 
 ### ⚠️ Required Step: Self-observability setup ⚠️
 
-The mdai-helm-chart-installed mdai-operator and event-handler-webservice expect a destination to send their logs to, but this chart does not manage deploying the logs destination for those services. 
+The mdai-helm-chart-installed mdai-operator and mdai-gateway expect a destination to send their logs to, but this chart does not manage deploying the logs destination for those services. 
 
 The mdai-operator can manage an opinionated and configured collector called mdai-collector that will send logs from these services to S3.
 
@@ -59,15 +59,15 @@ spec:
      s3Bucket: "mdai-hub-logs"
 ```
 
-> ℹ️ The above name (`hub-monitor`) must correspond to the beginning of the host name in the `values.yaml` for the [operator](https://github.com/DecisiveAI/mdai-helm-chart/blob/422e1c345806f634ed92db2a67a672ed7e9c7101/values.yaml#L52) and [event-handler-webservice](https://github.com/DecisiveAI/mdai-helm-chart/blob/422e1c345806f634ed92db2a67a672ed7e9c7101/values.yaml#L59). So if the MdaiCollector resource name is `hub-monitor`, the corresponding service endpoint created is `http://hub-monitor-mdai-collector-service.mdai.svc.cluster.local:4318`.
+> ℹ️ The above name (`hub-monitor`) must correspond to the beginning of the host name in the `values.yaml` for the [operator](https://github.com/DecisiveAI/mdai-helm-chart/blob/422e1c345806f634ed92db2a67a672ed7e9c7101/values.yaml#L52) and [mdai-gateway](https://github.com/DecisiveAI/mdai-helm-chart/blob/422e1c345806f634ed92db2a67a672ed7e9c7101/values.yaml#L59). So if the MdaiCollector resource name is `hub-monitor`, the corresponding service endpoint created is `http://hub-monitor-mdai-collector-service.mdai.svc.cluster.local:4318`.
 
 #### Option B: Send hub component logs to a custom OTLP HTTP destination
 
-You can update the `values.yaml` for the [operator](https://github.com/DecisiveAI/mdai-helm-chart/blob/422e1c345806f634ed92db2a67a672ed7e9c7101/values.yaml#L52) and [event-handler-webservice](https://github.com/DecisiveAI/mdai-helm-chart/blob/422e1c345806f634ed92db2a67a672ed7e9c7101/values.yaml#L59) to send logs to a destination of your choosing that accepts OTLP HTTP logs.
+You can update the `values.yaml` for the [operator](https://github.com/DecisiveAI/mdai-helm-chart/blob/422e1c345806f634ed92db2a67a672ed7e9c7101/values.yaml#L52) and [mdai-gateway](https://github.com/DecisiveAI/mdai-helm-chart/blob/422e1c345806f634ed92db2a67a672ed7e9c7101/values.yaml#L59) to send logs to a destination of your choosing that accepts OTLP HTTP logs.
 
 #### Option C: Disable OTEL Logging for components in this chart
 
-If you do not want to send logs from these components, you can disable sending logs by updating the `values.yaml` by setting `mdai-operator.manager.env.otelSdkDisabled` and `event-handler-webservice.otelSdkDisabled` to `"true"` (a string value, not boolean).
+If you do not want to send logs from these components, you can disable sending logs by updating the `values.yaml` by setting `mdai-operator.manager.env.otelSdkDisabled` and `mdai-gateway.otelSdkDisabled` to `"true"` (a string value, not boolean).
 
 ---
 
