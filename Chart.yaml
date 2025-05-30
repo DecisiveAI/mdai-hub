@@ -30,10 +30,10 @@ dependencies:
     version: 0.1.19
     repository: https://decisiveai.github.io/mdai-helm-charts
     condition: mdai-operator.enabled
-  - name: event-handler-webservice
-    version: 0.0.11
+  - name: mdai-gateway
+    version: 0.0.12
     repository: https://decisiveai.github.io/mdai-helm-charts
-    condition: event-handler-webservice.enabled
+    condition: mdai-gateway.enabled
   - name: mdai-event-hub
     version: 0.0.1
     repository: https://decisiveai.github.io/mdai-helm-charts

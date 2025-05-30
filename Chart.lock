@@ -1,7 +1,7 @@
 dependencies:
 - name: rabbitmq
   repository: oci://registry-1.docker.io/bitnamicharts
-  version: 16.0.3
+  version: 16.0.4
 - name: opentelemetry-operator
   repository: https://open-telemetry.github.io/opentelemetry-helm-charts
   version: 0.71.3
@@ -17,14 +17,14 @@ dependencies:
 - name: mdai-operator
   repository: https://decisiveai.github.io/mdai-helm-charts
   version: 0.1.19
-- name: event-handler-webservice
+- name: mdai-gateway
   repository: https://decisiveai.github.io/mdai-helm-charts
-  version: 0.0.11
-- name: event-hub-poc
+  version: 0.0.12
+- name: mdai-event-hub
   repository: https://decisiveai.github.io/mdai-helm-charts
   version: 0.0.1
 - name: mdai-s3-logs-reader
   repository: https://decisiveai.github.io/mdai-helm-charts
   version: 0.0.2
-digest: sha256:6b0211e59886e5ca1af251eb0466652299790c5bc5b48ddb4e6099a8a672209d
-generated: "2025-05-28T17:30:00.766929-05:00"
+digest: sha256:c74fb13835c532b8d121646747df84fbca64b51b7d39237ea391e4ff01902dc2
+generated: "2025-05-30T14:42:02.360744-04:00"

@@ -134,7 +134,7 @@
             "root_selector": "",
             "source": "url",
             "type": "json",
-            "url": "http://event-handler-webservice.mdai.svc.cluster.local:8081/events",
+            "url": "http://mdai-gateway.mdai.svc.cluster.local:8081/events",
             "url_options": {
               "data": "",
               "method": "GET"
