@@ -26,5 +26,5 @@ dependencies:
 - name: mdai-s3-logs-reader
   repository: https://decisiveai.github.io/mdai-helm-charts
   version: 0.0.2
-digest: sha256:4d8156fb2521057d82c5f76ec9aac5b9dd79d2297456b9f7b28e95fedebc95bd
-generated: "2025-06-02T13:22:53.125968-07:00"
+digest: sha256:9c880c284692a06e941b8caa88ef2e8aae2618f300db7577089c98febb067c4d
+generated: "2025-06-02T10:05:47.185973-07:00"

@@ -1,0 +1,38 @@
+name: Publish Helm Chart to GHCR
+
+on:
+  workflow_dispatch:
+  push:
+    tags:
+      - 'v*'
+
+jobs:
+  publish:
+    name: Build and Push Helm Chart
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install Helm
+        run: |
+          curl -fsSL https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 | bash
+
+      - name: Set Helm Chart Name Based on Repo Name
+        run: |
+          echo "CHART_NAME=mdai-hub" >> $GITHUB_ENV
+
+      - name: Package Helm Chart
+        run: |
+          make helm-package
+          ls -l *.tgz
+
+      - name: Log in to GitHub Container Registry
+        run: |
+          echo "${{ secrets.GITHUB_TOKEN }}" | helm registry login ghcr.io --username $GITHUB_ACTOR --password-stdin
+
+      - name: Push Helm Chart to GHCR
+        run: |
+          REPO_OWNER_LC=$(echo "${{ github.repository_owner }}" | tr '[:upper:]' '[:lower:]')
+          helm push ${{ env.CHART_NAME }}-*.tgz oci://ghcr.io/$REPO_OWNER_LC
