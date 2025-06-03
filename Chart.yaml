@@ -39,6 +39,6 @@ dependencies:
     repository: https://decisiveai.github.io/mdai-helm-charts
     condition: mdai-event-hub.enabled
   - name: mdai-s3-logs-reader
-    version: 0.0.2
+    version: 0.0.3
     repository: https://decisiveai.github.io/mdai-helm-charts
     condition: mdai-s3-logs-reader.enabled
