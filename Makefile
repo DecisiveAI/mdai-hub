@@ -8,6 +8,16 @@ EKS_REGION ?= us-east-1
 HELM_CHART_PATH = .
 HELM_RELEASE_NAME = mdai-hub
 HELM_NAMESPACE ?= mdai
+LATEST_TAG := $(shell git tag --sort=-v:refname | head -n1 | sed 's/^v//')
+CHART_VERSION ?= $(LATEST_TAG)
+CHART_DIR := ./
+CHART_NAME := mdai-helm-chart
+CHART_PACKAGE := mdai-hub-$(CHART_VERSION).tgz
+CHART_REPO := git@github.com:DecisiveAI/mdai-helm-charts.git
+BASE_BRANCH := gh-pages
+TARGET_BRANCH := $(CHART_NAME)-v$(CHART_VERSION)
+CLONE_DIR := $(shell mktemp -d /tmp/mdai-helm-charts.XXXXXX)
+REPO_DIR := $(shell pwd)
 
 CREATE_NAMESPACE_FLAG := $(if $(CREATE_NAMESPACE),--create-namespace,)
 
@@ -112,4 +122,36 @@ build_receipt:
 	@CMD=$$(command -v kubecolor >/dev/null 2>&1 && echo kubecolor || echo kubectl); \
 	$$CMD get all -n $(HELM_NAMESPACE) -l app.kubernetes.io/instance=$(HELM_RELEASE_NAME)
 
-.PHONY: check_kubernetes_version check_eks_cluster check_prometheus_operator_version check_otel_operator_version check_cert_manager_version preflight_check install_helm_chart uninstall_helm_chart install uninstall
+helm-dependency-update:
+	@echo "🔄 Updating helm dependencies..."
+	@helm dependency update . --repository-config /dev/null > /dev/null
+
+helm-package: helm-dependency-update
+	@echo "📦 Packaging Helm chart..."
+	@helm package -u --version $(CHART_VERSION) --app-version $(CHART_VERSION) $(CHART_DIR) > /dev/null
+
+helm-publish: helm-package
+	@echo "🚀 Cloning $(CHART_REPO)..."
+	@rm -rf $(CLONE_DIR)
+	@git clone -q --branch $(BASE_BRANCH) $(CHART_REPO) $(CLONE_DIR)
+
+	@echo "🌿 Creating branch $(TARGET_BRANCH) from $(BASE_BRANCH)..."
+	@cd $(CLONE_DIR) && git checkout -q -b $(TARGET_BRANCH)
+
+	@echo "📤 Copying and indexing chart..."
+	@cd $(CLONE_DIR) && \
+		rm -rf $(REPO_DIR)/charts && \
+		helm repo index $(REPO_DIR) --merge index.yaml && \
+		mv $(REPO_DIR)/$(CHART_PACKAGE) $(CLONE_DIR)/ && \
+		mv $(REPO_DIR)/index.yaml $(CLONE_DIR)/
+
+	@echo "🚀 Committing changes..."
+	@cd $(CLONE_DIR) && \
+		git add $(CHART_PACKAGE) index.yaml && \
+		git commit -q -m "chore: publish $(CHART_PACKAGE)" && \
+		git push -q origin $(TARGET_BRANCH) && \
+		rm -rf $(CLONE_DIR)
+
+	@echo "✅ Chart published"
+
+.PHONY: check_kubernetes_version check_eks_cluster check_prometheus_operator_version check_otel_operator_version check_cert_manager_version preflight_check install_helm_chart uninstall_helm_chart install uninstall helm-package helm-publish
