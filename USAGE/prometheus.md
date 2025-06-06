@@ -23,9 +23,9 @@ There are more advanced configs you can review
 
 ## Data Persistence - Prometheus
 
->⚠️⚠️⚠️ Currently, there is no data persistence for Prometheus. If you destroy your MDAI Cluster, you'll also be destroying your prometheus instance and all associated data. ⚠️⚠️⚠️
+>⚠️⚠️⚠️ By default there is no data persistence for Prometheus. If you destroy your MDAI Cluster, you'll also be destroying your prometheus instance and all associated data. ⚠️⚠️⚠️
 
-Until MDAI is able to support a more robust persistence layer or snapshot capability, we recommend using a <a href="https://prometheus.io/docs/prometheus/latest/storage/#remote-storage-integrations" target="_blank">remote storage option</a> for your persistence needs.
+To set up Prometheus persistence check PV.md
 
 ----
 

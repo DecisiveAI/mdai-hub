@@ -17,7 +17,6 @@ helm repo update
 _See [`helm repo`](https://helm.sh/docs/helm/helm_repo/) for command documentation._
 
 ## Install MDAI helm chart
-> mdai-hub is not released yet, until then you can use older mdai-cluster chart
 ```bash
 helm upgrade --install --create-namespace --namespace mdai --cleanup-on-fail --wait-for-jobs mdai mdai/mdai-hub
 ```
@@ -111,7 +110,7 @@ see `values.yaml` for other options.
 ## Upgrading Chart
 
 ```shell
-helm upgrade mdai mdai/mdai-cluster
+helm upgrade mdai mdai/mdai-hub
 ```
 A major chart version change (like 0.6.5 to 0.7.0) indicates that there are incompatible breaking changes needing manual actions.
 
