@@ -113,7 +113,8 @@ kubeprometheusstack:
       datasources.yaml:
         apiVersion: 1
         datasources:
-          - name: INFINTYJSON
+          - name: DS_INFINTYJSON
+            id: DS_INFINTYJSON
             type: yesoreyeram-infinity-datasource
             access: proxy
             jsonData:

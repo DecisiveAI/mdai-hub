@@ -1,35 +1,4 @@
 {
-  "__inputs": [
-    {
-      "name": "DS_INFINTYJSON",
-      "label": "INFINTYJSON",
-      "description": "",
-      "type": "datasource",
-      "pluginId": "yesoreyeram-infinity-datasource",
-      "pluginName": "Infinity"
-    }
-  ],
-  "__elements": {},
-  "__requires": [
-    {
-      "type": "grafana",
-      "id": "grafana",
-      "name": "Grafana",
-      "version": "11.2.2+security-01"
-    },
-    {
-      "type": "panel",
-      "id": "table",
-      "name": "Table",
-      "version": ""
-    },
-    {
-      "type": "datasource",
-      "id": "yesoreyeram-infinity-datasource",
-      "name": "Infinity",
-      "version": "3.2.2"
-    }
-  ],
   "annotations": {
     "list": [
       {
@@ -56,7 +25,7 @@
     {
       "datasource": {
         "type": "yesoreyeram-infinity-datasource",
-        "uid": "${DS_INFINTYJSON}"
+        "uid": "DS_INFINTYJSON"
       },
       "description": "MDAI automation logs showing events, actions, and collector restarts",
       "fieldConfig": {
@@ -124,7 +93,7 @@
           "columns": [],
           "datasource": {
             "type": "yesoreyeram-infinity-datasource",
-            "uid": "${DS_INFINTYJSON}"
+            "uid": "DS_INFINTYJSON"
           },
           "filters": [],
           "format": "table",
@@ -201,7 +170,7 @@
     {
       "datasource": {
         "type": "yesoreyeram-infinity-datasource",
-        "uid": "${DS_INFINTYJSON}"
+        "uid": "DS_INFINTYJSON"
       },
       "description": "Logs returned by S3 bucket for MDAI Hub K8s Runtime Logs.",
       "fieldConfig": {
@@ -267,7 +236,7 @@
           "columns": [],
           "datasource": {
             "type": "yesoreyeram-infinity-datasource",
-            "uid": "${DS_INFINTYJSON}"
+            "uid": "DS_INFINTYJSON"
           },
           "filters": [],
           "format": "table",
@@ -317,7 +286,7 @@
     {
       "datasource": {
         "type": "yesoreyeram-infinity-datasource",
-        "uid": "${DS_INFINTYJSON}"
+        "uid": "DS_INFINTYJSON"
       },
       "description": "Logs returned from S3 bucket for the MDAI Collector",
       "fieldConfig": {
@@ -383,7 +352,7 @@
           "columns": [],
           "datasource": {
             "type": "yesoreyeram-infinity-datasource",
-            "uid": "${DS_INFINTYJSON}"
+            "uid": "DS_INFINTYJSON"
           },
           "filters": [],
           "format": "table",
