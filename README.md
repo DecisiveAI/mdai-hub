@@ -1,6 +1,6 @@
 # MDAI Helm chart
 
-This is the official Helm chart for [MyDecisive.ai](https://www.mydecisive.ai/), an open-core solution for monitoring and managing OpenTelemetry pipelines on Kubernetes. 
+This is the official Helm chart for [MyDecisive.ai](https://www.mydecisive.ai/), an open-core solution for monitoring and managing OpenTelemetry pipelines on Kubernetes.
 
 _After initial checkout, switching branches or modifying `Chart.yaml`, run `helm dependency update . --repository-config /dev/null`_
 
@@ -23,10 +23,14 @@ helm upgrade --install --create-namespace --namespace mdai --cleanup-on-fail --w
 
 ## Learn more
 
-* Visit our [solutions page](https://www.mydecisive.ai/solutions) for more details MyDecisive's approach to composable observability. 
+* Visit our [solutions page](https://www.mydecisive.ai/solutions) for more details MyDecisive's approach to composable observability.
 * Head to our [docs](https://docs.mydecisive.ai/) to learn more about MyDecisive's tech.
 
-## Info and Support 
+## Info and Support
 
-* Contact [support@mydecisive.ai](mailto:support@mydecisive.ai) for assistance or to talk to with a member of our support team
-* Contact [info@mydecisive.ai](mailto:info@mydecisive.ai) if you're interested in learning more about our solutions
+Please contact us via our Community Slack channels
+
+* [#mdai-community-discussion](https://mydecisivecommunity.slack.com/archives/C08LE3DJ877) - All discussion
+* [#mdai-docs-questions](https://mydecisivecommunity.slack.com/archives/C090KU6F679) - Questions about docs
+* [#mdai-feature-requests](https://mydecisivecommunity.slack.com/archives/C090UH3JYNS) - Raising a request for new capabilities
+* [#mdai-platform-support](https://mydecisivecommunity.slack.com/archives/C090KU1MB6K) - Assistance with using MDAI
