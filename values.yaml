@@ -66,8 +66,8 @@ mdai-event-hub:
 
 mdai-s3-logs-reader:
   enabled: true
-  AWS_REGION: "us-east-1"
-  S3_BUCKET: "mdai-collector-logs"
+  awsRegion: "us-east-1"
+  s3Bucket: "mdai-collector-logs"
   awsAccessKeySecret: aws-credentials
 
 kubeprometheusstack:
