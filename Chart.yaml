@@ -1,9 +1,9 @@
 apiVersion: v2
 type: application
 name: mdai-hub
-version: "0.8.0-dev"
+version: "0.8.0-rc3"
 description: MDAI Hub helm chart
-appVersion: "0.8.0-dev"
+appVersion: "0.8.0-rc3"
 dependencies:
   - name: rabbitmq
     version: ~16.0.1
