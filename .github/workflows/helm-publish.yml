@@ -10,36 +10,51 @@ jobs:
   publish:
     name: Build and Push Helm Chart
     runs-on: ubuntu-latest
+    env:
+      ORAS_DRY_RUN: false
 
     steps:
       - name: Checkout repository
-        id: repo-checkout
         uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-          fetch-tags: true
 
       - name: Install Helm
         id: helm-install
         uses: azure/setup-helm@v4.3.0
 
-      - name: Set Helm Chart Name Based on Repo Name
-        id: set-chart-name
-        run: |
-          echo "CHART_NAME=mdai-hub" >> $GITHUB_ENV
+      - name: Setup ORAS
+        uses: oras-project/setup-oras@v1
+        with:
+          version: 1.2.3
 
-      - name: Package Helm Chart
-        id: helm-package
+      - name: Set environment variables
+        shell: bash
         run: |
-          make helm-package
+          if [[ "${{ github.event_name }}" == "workflow_dispatch" ]]; then
+            echo "🔧 Mocking tag version for dry-run..."
+            echo "GITHUB_REF=refs/tags/v0.0.0-dryrun" >> "$GITHUB_ENV"
+            echo "ORAS_DRY_RUN=true" >> "$GITHUB_ENV"
+          fi
+          echo "CHART_NAME=${GITHUB_REPOSITORY##*/}" >> "$GITHUB_ENV"
+          echo "CHART_VERSION=${GITHUB_REF#refs/tags/v}" >> "$GITHUB_ENV"
+          echo "REPO_OWNER_LC=${GITHUB_REPOSITORY_OWNER,,}" >> "$GITHUB_ENV"
+          echo "README_URL=https://raw.githubusercontent.com/${GITHUB_REPOSITORY}/v${GITHUB_REF#refs/tags/v}/README.md" >> "$GITHUB_ENV"
+          echo "CHART_FILE=${GITHUB_REPOSITORY##*/}-${GITHUB_REF#refs/tags/v}.tgz" >> "$GITHUB_ENV"
+      - name: Package Helm Chart
+        run: make helm-package
 
       - name: Log in to GitHub Container Registry
-        id: ghcr-login
-        run: |
-          echo "${{ secrets.GITHUB_TOKEN }}" | helm registry login ghcr.io --username $GITHUB_ACTOR --password-stdin
+        if: env.ORAS_DRY_RUN != 'true'
+        run: echo "${{ secrets.GITHUB_TOKEN }}" | oras login ghcr.io -u $GITHUB_ACTOR --password-stdin
 
       - name: Push Helm Chart to GHCR
-        id: ghcr-publish
         run: |
-          REPO_OWNER_LC=$(echo "${{ github.repository_owner }}" | tr '[:upper:]' '[:lower:]')
-          helm push ${{ env.CHART_NAME }}-*.tgz oci://ghcr.io/$REPO_OWNER_LC
+          echo "📦 ${ORAS_DRY_RUN:-false} mode"
+          oras push "ghcr.io/${REPO_OWNER_LC}/${CHART_NAME}:${CHART_VERSION}" \
+            "${CHART_FILE}:application/vnd.cncf.helm.chart.content.v1.tar+gzip" \
+            "README.md:text/markdown" \
+            --annotation "org.opencontainers.image.description=Helm chart for ${CHART_NAME}" \
+            --annotation "org.opencontainers.image.title=${CHART_NAME}" \
+            --annotation "org.opencontainers.image.version=${CHART_VERSION}" \
+            --annotation "org.opencontainers.image.source=https://github.com/${GITHUB_REPOSITORY}" \
+            --annotation "io.artifacthub.package.readme-url=${README_URL}" \
+            $( [[ "$ORAS_DRY_RUN" == "true" ]] && echo --dry-run )

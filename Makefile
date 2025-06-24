@@ -1,27 +1,8 @@
-# Variables
-KUBERNETES_VERSION_MIN = 1.21
-PROMETHEUS_OPERATOR_VERSION_MIN = 0.71.2
-OTEL_OPERATOR_VERSION_MIN = 0.117.0
-CERT_MANAGER_VERSION_MIN = 1.10.1
-EKS_CLUSTER_NAME ?= eks
-EKS_REGION ?= us-east-1
-HELM_CHART_PATH = .
-HELM_RELEASE_NAME = mdai-hub
-HELM_NAMESPACE ?= mdai
-LATEST_TAG := $(shell git tag --sort=-v:refname | head -n1 | sed 's/^v//')
-CHART_VERSION ?= $(LATEST_TAG)
-CHART_DIR := ./
-CHART_NAME := mdai-helm-chart
-CHART_PACKAGE := mdai-hub-$(CHART_VERSION).tgz
-CHART_REPO := git@github.com:DecisiveAI/mdai-helm-charts.git
-BASE_BRANCH := gh-pages
-TARGET_BRANCH := $(CHART_NAME)-v$(CHART_VERSION)
-CLONE_DIR := $(shell mktemp -d /tmp/mdai-helm-charts.XXXXXX)
-REPO_DIR := $(shell pwd)
-
-CREATE_NAMESPACE_FLAG := $(if $(CREATE_NAMESPACE),--create-namespace,)
+CHART_VERSION ?= $(shell git describe --tags --abbrev=0 2>/dev/null | sed 's/^v//')
+REPO_NAME := $(shell basename -s .git `git config --get remote.origin.url`)
 
 # Check if Kubernetes is installed and check version
+check_kubernetes_version: KUBERNETES_VERSION_MIN := 1.24
 check_kubernetes_version:
 	@echo "🔍 Checking Kubernetes version..."
 	@K8S_VERSION=$$(kubectl version 2>/dev/null | grep Server | awk '{print $$3}' | sed 's/^v//'); \
@@ -37,6 +18,8 @@ check_kubernetes_version:
     fi
 
 # Check if EKS Cluster is running
+check_eks_cluster: EKS_CLUSTER_NAME ?= eks
+check_eks_cluster: EKS_REGION ?= us-east-1
 check_eks_cluster:
 	@echo "🔍 Checking if EKS cluster is running..."
 	@aws eks describe-cluster --name $(EKS_CLUSTER_NAME) --region $(EKS_REGION) >/dev/null 2>&1
@@ -48,6 +31,7 @@ check_eks_cluster:
 	fi
 
 # Check if Prometheus Operator is installed and check version
+check_prometheus_operator_version: PROMETHEUS_OPERATOR_VERSION_MIN := 0.71.2
 check_prometheus_operator_version:
 	@echo "🔍 Checking Prometheus Operator version..."
 	@PROMETHEUS_OPERATOR_VERSION=$$(kubectl get crd prometheuses.monitoring.coreos.com -o jsonpath='{.metadata.annotations.operator\.prometheus\.io/version}' 2>/dev/null || echo "") && \
@@ -61,6 +45,7 @@ check_prometheus_operator_version:
 	fi
 
 # Check if OTEL Operator is installed and check version
+check_otel_operator_version: OTEL_OPERATOR_VERSION_MIN := 0.117.0
 check_otel_operator_version:
 	@echo "🔍 Checking OTEL Operator version..."
 	@OTEL_OPERATOR_VERSION=$$(kubectl get deployments --all-namespaces -o jsonpath='{range .items[?(@.metadata.name=="opentelemetry-operator")]}{.spec.template.spec.containers[0].image}{"\n"}{end}' | tr -d '\n' | grep -v '^$$' | cut -d':' -f2) && \
@@ -74,6 +59,7 @@ check_otel_operator_version:
 	fi
 
 # Check if Cert Manager is installed and check version
+check_cert_manager_version: CERT_MANAGER_VERSION_MIN := 1.10.1
 check_cert_manager_version:
 	@echo "🔍 Checking Cert Manager version..."
 	@CERT_MANAGER_VERSION=$$(kubectl get crd clusterissuers.cert-manager.io -o jsonpath='{.metadata.labels.app\.kubernetes\.io/version}' 2>/dev/null | tr -d '\n' | grep -v '^$$' | sed 's/^v//'); \
@@ -106,18 +92,27 @@ preflight_check:
 
 # Install the Helm chart
 install_helm_chart: preflight_check
+install_helm_chart: HELM_CHART_PATH := .
+install_helm_chart: HELM_RELEASE_NAME := mdai-hub
+install_helm_chart: HELM_NAMESPACE ?= mdai
+install_helm_chart: CREATE_NAMESPACE_FLAG := $(if $(CREATE_NAMESPACE),--create-namespace,)
+install_helm_chart:
 	@echo "Installing Helm chart..."
 	@helm upgrade --install $(HELM_RELEASE_NAME) $(HELM_CHART_PATH) --namespace $(HELM_NAMESPACE) $(CREATE_NAMESPACE_FLAG) --values values.yaml
 
 install: install_helm_chart
 
 # Uninstall the Helm chart
+uninstall_helm_chart: HELM_RELEASE_NAME := mdai-hub
+uninstall_helm_chart: HELM_NAMESPACE ?= mdai
 uninstall_helm_chart:
 	@echo "Uninstalling Helm chart..."
 	@helm uninstall $(HELM_RELEASE_NAME) --namespace $(HELM_NAMESPACE)
 
 uninstall: uninstall_helm_chart
 
+build_receipt: HELM_RELEASE_NAME := mdai-hub
+build_receipt: HELM_NAMESPACE ?= mdai
 build_receipt:
 	@CMD=$$(command -v kubecolor >/dev/null 2>&1 && echo kubecolor || echo kubectl); \
 	$$CMD get all -n $(HELM_NAMESPACE) -l app.kubernetes.io/instance=$(HELM_RELEASE_NAME)
@@ -127,9 +122,19 @@ helm-dependency-update:
 	@helm dependency update . --repository-config /dev/null > /dev/null
 
 helm-package: helm-dependency-update
+helm-package: CHART_DIR := ./
+helm-package:
 	@echo "📦 Packaging Helm chart..."
 	@helm package -u --version $(CHART_VERSION) --app-version $(CHART_VERSION) $(CHART_DIR) > /dev/null
 
+.PHONY: helm-publish
+helm-publish: CHART_NAME := $(REPO_NAME)
+helm-publish: CHART_REPO := git@github.com:DecisiveAI/mdai-helm-charts.git
+helm-publish: CHART_PACKAGE := $(CHART_NAME)-$(CHART_VERSION).tgz
+helm-publish: BASE_BRANCH := gh-pages
+helm-publish: TARGET_BRANCH := $(CHART_NAME)-v$(CHART_VERSION)
+helm-publish: CLONE_DIR := $(shell mktemp -d /tmp/mdai-helm-charts.XXXXXX)
+helm-publish: REPO_DIR := $(shell pwd)
 helm-publish: helm-package
 	@echo "🚀 Cloning $(CHART_REPO)..."
 	@rm -rf $(CLONE_DIR)
@@ -140,7 +145,6 @@ helm-publish: helm-package
 
 	@echo "📤 Copying and indexing chart..."
 	@cd $(CLONE_DIR) && \
-		rm -rf $(REPO_DIR)/charts && \
 		helm repo index $(REPO_DIR) --merge index.yaml && \
 		mv $(REPO_DIR)/$(CHART_PACKAGE) $(CLONE_DIR)/ && \
 		mv $(REPO_DIR)/index.yaml $(CLONE_DIR)/

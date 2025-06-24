@@ -1,17 +1,3 @@
-default:
-  env:
-    otelExporterOtlpEndpoint: http://mdai-collector-service.mdai.svc.cluster.local:4318
-  envOverrides: []
-  replicas: 1
-  schedulingRules:
-    nodeSelector: {}
-    affinity: {}
-    tolerations: []
-  securityContext: {}
-
-defaultCollector:
-  enabled: false
-
 serviceAccount:
   # Specifies whether a service account should be created
   create: false
