@@ -49,7 +49,9 @@ jobs:
       - name: Push Helm Chart to GHCR
         run: |
           echo "📦 ${ORAS_DRY_RUN:-false} mode"
+          echo "{\"apiVersion\":\"v2\",\"name\":\"${CHART_NAME}\",\"version\":\"${CHART_VERSION}\"}" > config.json
           oras push "ghcr.io/${REPO_OWNER_LC}/${CHART_NAME}:${CHART_VERSION}" \
+            --config config.json:application/vnd.cncf.helm.config.v1+json \
             "${CHART_FILE}:application/vnd.cncf.helm.chart.content.v1.tar+gzip" \
             "README.md:text/markdown" \
             --annotation "org.opencontainers.image.description=Helm chart for ${CHART_NAME}" \
