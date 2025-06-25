@@ -21,3 +21,5 @@ values_fluentd.yaml
 values_minio.yaml
 without_grafana.yaml
 .idea/*
+Makefile
+.github/
