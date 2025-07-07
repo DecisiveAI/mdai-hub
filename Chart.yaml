@@ -28,7 +28,7 @@ dependencies:
     repository: oci://registry-1.docker.io/bitnamicharts
     condition: valkey.enabled
   - name: mdai-operator
-    version: 0.1.19
+    version: 0.1.22
     repository: https://decisiveai.github.io/mdai-helm-charts
     condition: mdai-operator.enabled
   - name: mdai-gateway
