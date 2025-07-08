@@ -127,7 +127,6 @@ helm-package:
 	@echo "📦 Packaging Helm chart..."
 	@helm package -u --version $(CHART_VERSION) --app-version $(CHART_VERSION) $(CHART_DIR) > /dev/null
 
-.PHONY: helm-publish
 helm-publish: CHART_NAME := $(REPO_NAME)
 helm-publish: CHART_REPO := git@github.com:DecisiveAI/mdai-helm-charts.git
 helm-publish: CHART_PACKAGE := $(CHART_NAME)-$(CHART_VERSION).tgz
@@ -145,6 +144,7 @@ helm-publish: helm-package
 
 	@echo "📤 Copying and indexing chart..."
 	@cd $(CLONE_DIR) && \
+		rm -rf $(REPO_DIR)/charts && \
 		helm repo index $(REPO_DIR) --merge index.yaml && \
 		mv $(REPO_DIR)/$(CHART_PACKAGE) $(CLONE_DIR)/ && \
 		mv $(REPO_DIR)/index.yaml $(CLONE_DIR)/
@@ -158,4 +158,4 @@ helm-publish: helm-package
 
 	@echo "✅ Chart published"
 
-.PHONY: check_kubernetes_version check_eks_cluster check_prometheus_operator_version check_otel_operator_version check_cert_manager_version preflight_check install_helm_chart uninstall_helm_chart install uninstall helm-package helm-publish
+.PHONY: check_kubernetes_version check_eks_cluster check_prometheus_operator_version check_otel_operator_version check_cert_manager_version preflight_check install_helm_chart uninstall_helm_chart install uninstall helm-dependency-update helm-package helm-publish
