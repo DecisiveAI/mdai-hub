@@ -16,15 +16,15 @@ dependencies:
   version: 2.2.4
 - name: mdai-operator
   repository: https://decisiveai.github.io/mdai-helm-charts
-  version: 0.1.19
+  version: 0.1.22
 - name: mdai-gateway
   repository: https://decisiveai.github.io/mdai-helm-charts
-  version: 0.0.14
+  version: 0.0.15
 - name: mdai-event-hub
   repository: https://decisiveai.github.io/mdai-helm-charts
-  version: 0.0.6
+  version: 0.0.9
 - name: mdai-s3-logs-reader
   repository: https://decisiveai.github.io/mdai-helm-charts
   version: 0.0.5
-digest: sha256:a643d10270c46fe3b65fd35d714e9b69933ee7e2f63eb41a819f93a42bedd7be
-generated: "2025-07-07T15:39:26.353207-04:00"
+digest: sha256:61ccd2c527f35f142f558085d8604301ec338a1708711fba7385f1640f0840e0
+generated: "2025-07-09T15:44:09.096374-04:00"

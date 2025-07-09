@@ -49,9 +49,8 @@ mdai-gateway:
 
 mdai-event-hub:
   enabled: true
-#  default is 3 replicas, can be adjusted as per your requirement to save resources, 1 - 3 replicas recommended
-#  deployment:
-#    replicas: 1
+  deployment:
+    replicas: 1 # adjust as per your requirement, 1 - 3 replicas recommended
 
 mdai-s3-logs-reader:
   enabled: true
