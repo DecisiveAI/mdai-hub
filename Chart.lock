@@ -18,7 +18,7 @@ dependencies:
   repository: https://decisiveai.github.io/mdai-helm-charts
   version: 0.1.22
 - name: mdai-gateway
-  repository: https://decisiveai.github.io/mdai-helm-charts
+  repository: oci://ghcr.io/decisiveai
   version: 0.0.15
 - name: mdai-event-hub
   repository: oci://ghcr.io/decisiveai
@@ -26,5 +26,5 @@ dependencies:
 - name: mdai-s3-logs-reader
   repository: https://decisiveai.github.io/mdai-helm-charts
   version: 0.0.5
-digest: sha256:a74b5a2ac7764123ed2ab2a8221543d2a61f314756fd7593c58e8db58eee5e6c
-generated: "2025-07-10T15:53:32.238356-05:00"
+digest: sha256:f3c013181b3435d18200461ed89bf2b844570f77cfc3c171038afe5e1788277b
+generated: "2025-07-10T17:59:28.999736-05:00"
