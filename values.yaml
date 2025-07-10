@@ -49,6 +49,8 @@ mdai-gateway:
 
 mdai-event-hub:
   enabled: true
+  deployment:
+    replicas: 1 # adjust as per your requirement, 1 - 3 replicas recommended
 
 mdai-s3-logs-reader:
   enabled: true
@@ -472,22 +474,47 @@ valkey:
       limits:
         memory: "128Mi"
         cpu: "200m"
-rabbitmq:
+
+# default NATS setup is very minimal and aim at saving resources and ensuring basic functionality.
+# adjust according to your specific needs.
+# see details at https://github.com/nats-io/k8s/tree/main/helm/charts/nats
+nats:
   enabled: true
+  promExporter:
+    enabled: true
+  config:
+    cluster:
+      enabled: true
+      replicas: 3
+    jetstream:
+      enabled: true
+      memStorage:
+        enabled: true  # Set true if you want in-memory (non-persistent) storage
+        maxSize: 1Gi # ensure that container has a sufficient memory limit greater than maxSize
+      fileStore:
+        enabled: true   # Set true if you want a persistent storage
+        dir: "/data/jetstream"
+        pvc:
+          enabled: false
+          storageClassName: ""  # Specify your storage class
+          size: 1Gi # Specify your storage size
+
+# Uncomment a section below to allocate JetStream Cluster on 3 separate hosts
+#  podTemplate:
+#    topologySpreadConstraints:
+#      kubernetes.io/hostname:
+#        maxSkew: 1
+#        whenUnsatisfiable: DoNotSchedule
   auth:
-    username: mdai
-    password: mdai
-    existingPasswordSecret: rabbitmq-secret
-    existingSecretPasswordKey: RABBITMQ_PASSWORD
-    updatePassword: true
-  service:
-    ports:
-      amqp: 5672
-      amqpTls: 5671
-      dist: 25672
-      manager: 15672
-      metrics: 9419
-      epmd: 4369
+    enabled: true
+    users:
+      - user: mdai
+        passwordFrom:
+          secretKeyRef:
+            name: nats-secret
+            key: NATS_PASSWORD
+
+
 
 crdMetadata:
   fieldValue: ""
