@@ -469,6 +469,8 @@ valkey:
 # see details at https://github.com/nats-io/k8s/tree/main/helm/charts/nats
 nats:
   enabled: true
+  promExporter:
+    enabled: true
   config:
     cluster:
       enabled: true
