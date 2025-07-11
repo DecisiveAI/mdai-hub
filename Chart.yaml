@@ -1,7 +1,6 @@
 apiVersion: v2
 type: application
 name: mdai-hub
-kubeVersion: ">=1.24.0"
 version: "0.8.5-dev"
 description: MDAI Hub helm chart
 appVersion: "0.8.5-dev"
