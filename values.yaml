@@ -257,6 +257,17 @@ kubeprometheusstack:
               separator: ;
               regex: mdai-(watcher|observer);true;8888
               action: keep
+        - job_name: hub-monitor-scrape
+          honor_labels: true
+          tls_config:
+            insecure_skip_verify: true
+          kubernetes_sd_configs:
+            - role: pod
+          relabel_configs:
+            - source_labels: [__meta_kubernetes_pod_label_app_kubernetes_io_component, __meta_kubernetes_pod_container_port_number]
+              separator: ;
+              regex: hub-monitor-mdai-collector;8899
+              action: keep
   additionalPrometheusRulesMap:
     mdai-rules:
       groups:
