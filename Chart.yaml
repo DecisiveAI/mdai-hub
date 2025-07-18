@@ -31,12 +31,12 @@ dependencies:
     repository: https://decisiveai.github.io/mdai-helm-charts
     condition: mdai-operator.enabled
   - name: mdai-gateway
-    version: 0.0.15
+    version: 0.0.18
     repository: oci://ghcr.io/decisiveai
     condition: mdai-gateway.enabled
   - name: mdai-event-hub
     repository: oci://ghcr.io/decisiveai
-    version: 0.0.9
+    version: 0.0.11
     condition: mdai-event-hub.enabled
   - name: mdai-s3-logs-reader
     version: 0.0.5
