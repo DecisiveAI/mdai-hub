@@ -7,6 +7,22 @@ serviceAccount:
   # If not set and create is true, a name is generated using the fullname template
   name: ""
 
+persistentStorage:
+  nats:
+    pv:
+      create: true
+      platform: kind # possible values: aws, kind
+      localPath: "/mnt/data" # for kind platform only
+      storageClass: mdai
+      size: 1Gi
+      volumes:
+        - id: vol-1
+          az: us-east-1a
+        - id: vol-2
+          az: us-east-1b
+        - id: vol-3
+          az: us-east-1c
+
 opentelemetry-operator:
   enabled: true
   fullnameOverride: opentelemetry-operator
