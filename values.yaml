@@ -492,12 +492,13 @@ nats:
         enabled: true  # Set true if you want in-memory (non-persistent) storage
         maxSize: 1Gi # ensure that container has a sufficient memory limit greater than maxSize
       fileStore:
-        enabled: true   # Set true if you want a persistent storage
-        dir: "/data/jetstream"
-        pvc:
-          enabled: false
-          storageClassName: ""  # Specify your storage class
-          size: 1Gi # Specify your storage size
+        enabled: false # Set true if you want a persistent storage
+        # Uncomment a section below to enable PVCs created
+        #  dir: "/data/jetstream"
+        #  pvc:
+        #    enabled: true
+        #    storageClassName: "mdai"  # Specify your storage class
+        #    size: 1Gi # Specify your storage size
 
 # Uncomment a section below to allocate JetStream Cluster on 3 separate hosts
 #  podTemplate:
