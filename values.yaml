@@ -7,6 +7,28 @@ serviceAccount:
   # If not set and create is true, a name is generated using the fullname template
   name: ""
 
+persistentStorage:
+  nats:
+    pv:
+      # Specifies whether a PersistentVolumes should be created
+      create: false
+      # Deployment platform: can be either "aws" or "kind" (for local development))
+      platform: kind
+      # directory where data will be stored if deployment platform is "kind"
+      localPath: "/Users/username/kind/data"
+      # shoudl match the storageClass of the PersistentVolumeClaims
+      storageClass: mdai
+      size: 1Gi
+      # id - is AWS id of EBS volume
+      # az - is AWS availability zone
+      volumes:
+        - id: vol-1
+          az: us-east-1a
+        - id: vol-2
+          az: us-east-1b
+        - id: vol-3
+          az: us-east-1c
+
 opentelemetry-operator:
   enabled: true
   fullnameOverride: opentelemetry-operator
@@ -492,12 +514,13 @@ nats:
         enabled: true  # Set true if you want in-memory (non-persistent) storage
         maxSize: 1Gi # ensure that container has a sufficient memory limit greater than maxSize
       fileStore:
-        enabled: true   # Set true if you want a persistent storage
-        dir: "/data/jetstream"
-        pvc:
-          enabled: false
-          storageClassName: ""  # Specify your storage class
-          size: 1Gi # Specify your storage size
+        enabled: false # Set true if you want a persistent storage
+        # Uncomment a section below to enable PVCs created
+        #  dir: "/data/jetstream"
+        #  pvc:
+        #    enabled: true
+        #    storageClassName: "mdai"  # Specify your storage class
+        #    size: 1Gi # Specify your storage size
 
 # Uncomment a section below to allocate JetStream Cluster on 3 separate hosts
 #  podTemplate:

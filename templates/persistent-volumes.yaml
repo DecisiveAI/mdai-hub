@@ -1,0 +1,33 @@
+{{- $pvCfg := .Values.persistentStorage.nats.pv }}
+{{- if $pvCfg.create }}
+{{- range $index, $vol := $pvCfg.volumes }}
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: nats-pv-{{ $index }}
+spec:
+  capacity:
+    storage: {{ $pvCfg.size }}
+  accessModes:
+    - ReadWriteOnce
+  persistentVolumeReclaimPolicy: Retain
+  storageClassName: {{ $pvCfg.storageClass }}
+  {{- if eq $pvCfg.platform "aws" }}
+  csi:
+    driver: ebs.csi.aws.com
+    volumeHandle: {{ $vol.id }}
+  nodeAffinity:
+    required:
+      nodeSelectorTerms:
+        - matchExpressions:
+            - key: topology.kubernetes.io/zone
+              operator: In
+              values:
+                - {{ $vol.az }}
+  {{- else if eq $pvCfg.platform "kind" }}
+  hostPath:
+    path: {{ $pvCfg.localPath }}
+  {{- end }}
+---
+{{- end }}
+{{- end }}
