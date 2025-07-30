@@ -10,11 +10,17 @@ serviceAccount:
 persistentStorage:
   nats:
     pv:
-      create: true
-      platform: kind # possible values: aws, kind
-      localPath: "/mnt/data" # for kind platform only
+      # Specifies whether a PersistentVolumes should be created
+      create: false
+      # Deployment platform: can be either "aws" or "kind" (for local development))
+      platform: kind
+      # directory where data will be stored if deployment platform is "kind"
+      localPath: "/Users/username/kind/data"
+      # shoudl match the storageClass of the PersistentVolumeClaims
       storageClass: mdai
       size: 1Gi
+      # id - is AWS id of EBS volume
+      # az - is AWS availability zone
       volumes:
         - id: vol-1
           az: us-east-1a

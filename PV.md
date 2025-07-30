@@ -91,21 +91,19 @@ In order to enable persistent storage for Valkey, do the following:
 
 ### Kind
 
-1. Create 3 PersistentVolume resources in your Kind cluster:
+1. Enable creation PersistentVolumes in [values.yaml](./values.yaml) with `platform` equal `kind` and provide a path to your local directory.
 ```yaml
-apiVersion: v1
-kind: PersistentVolume
-metadata:
-  name: nats-pv-0 # nats-pv-1, nats-pv-1 should be created too
-spec:
-  storageClassName: mdai # storageClassName here and in PVC should match 
-  capacity:
-    storage: 1Gi # choose a size
-  accessModes:
-    - ReadWriteOnce
-  hostPath:
-    path: /path/to/local/directory # this is where you want you volume resides
+persistentStorage:
+  nats:
+    pv:
+      # Specifies whether a PersistentVolumes should be created
+      create: true
+      # Deployment platform: can be either "aws" or "kind" (for local development))
+      platform: kind
+      # directory where data will be stored if deployment platform is "kind"
+      localPath: "/Users/username/kind/data"
 ```
+See comments in the file for more details.
 
 2. Update [values.yaml](./values.yaml) as follows (see comments within the file itself):
 ```yaml
@@ -124,34 +122,47 @@ Prerequisites:
 [AWS EBS CSI driver](https://aws.amazon.com/blogs/containers/amazon-ebs-csi-driver-is-now-generally-available-in-amazon-eks-add-ons/) must be installed on the cluster
 
 
-
 ##### Static provisioning
-1. On AWS create 3 EBS volumes of the desired size. Preferably these volumes should reside in different availability zones (but only in those, your EKS cluster run on)
-2. In your EKS cluster create 3 PersistentVolumes for the above EBS volumes:
+1. Enable creation PersistentVolumes in [values.yaml](./values.yaml) with `platform` equal `kind` and providing a path to your local directory.
 ```yaml
-apiVersion: v1
-kind: PersistentVolume
-metadata:
-  name: nats-pv-0
-spec:
-  capacity:
-    storage: 1Gi # should be equal to your volume size
-  accessModes:
-    - ReadWriteOnce
-  persistentVolumeReclaimPolicy: Retain
-  storageClassName: mdai # storageClassName here and in PVC should match 
-  csi:
-    driver: ebs.csi.aws.com
-    volumeHandle: vol-0d7cae9c14877a168 # specify EBS volume Id
-  nodeAffinity:
-    required:
-      nodeSelectorTerms:
-        - matchExpressions:
-            - key: topology.kubernetes.io/zone
-              operator: In
-              values:
-                - us-east-1a # specify EBS volune's az
- ```
+persistentStorage:
+  nats:
+    pv:
+      # Specifies whether a PersistentVolumes should be created
+      create: true
+      # Deployment platform: can be either "aws" or "kind" (for local development))
+      platform: kind
+      # directory where data will be stored if deployment platform is "kind"
+      localPath: "/Users/username/kind/data"
+```
+See comments in the file for details.
+1. On AWS create 3 EBS volumes of the desired size. Preferably these volumes should reside in different availability zones (but only in those, your EKS cluster run on)
+2. Enable creation PersistentVolumes in [values.yaml](./values.yaml) with `platform` equal `aws` and provide other volume details as per comments in the file.
+```yaml
+persistentStorage:
+  nats:
+    pv:
+      # Specifies whether a PersistentVolumes should be created
+      create: true
+      # Deployment platform: can be either "aws" or "kind" (for local development))
+      platform: aws
+      # directory where data will be stored if deployment platform is "kind"
+      localPath: "/Users/username/kind/data"
+      # shoudl match the storageClass of the PersistentVolumeClaims
+      storageClass: mdai
+      size: 1Gi
+      # id - is AWS id of EBS volume
+      # az - is AWS availability zone
+      volumes:
+        - id: vol-1
+          az: us-east-1a
+        - id: vol-2
+          az: us-east-1b
+        - id: vol-3
+          az: us-east-1c
+```          
+See comments in the file for details.
+
 3. Update [values.yaml](./values.yaml) as follows (see comments in the file itself as well):
 ```yaml
       fileStore:
