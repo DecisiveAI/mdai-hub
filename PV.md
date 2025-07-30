@@ -185,4 +185,4 @@ Update [values.yaml](./values.yaml) as follows (see comments in the file itself 
             storageClassName: "mdai"
             size: 1Gi # desired size
 ```
-PersistentVolumeClaims  will be created, and CSI driver will do the rest - provision volumes, creates PersistentVolumes resources 
+PersistentVolumeClaims will be created and CSI driver will do the rest - provision volumes, create PersistentVolume resources
