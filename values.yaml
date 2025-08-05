@@ -140,16 +140,16 @@ kubeprometheusstack:
         group_wait: 30s
         group_interval: 5m
         repeat_interval: 12h
-        receiver: 'event-handler'
+        receiver: 'mdai-gateway'
         routes:
         - matchers:
            - alertname = "Watchdog"
           receiver: 'null'
       receivers:
       - name: 'null'
-      - name: 'event-handler'
+      - name: 'mdai-gateway'
         webhook_configs:
-          - url: 'http://mdai-gateway.mdai.svc.cluster.local:8081/events'
+          - url: 'http://mdai-gateway.mdai.svc.cluster.local:8081/alerts/alertmanager'
             send_resolved: true
     serviceMonitor:
       selfMonitor: true
