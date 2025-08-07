@@ -7,63 +7,7 @@ on:
       - 'v*'
 
 jobs:
-  publish:
-    name: Build and Push Helm Chart
-    runs-on: ubuntu-latest
-    env:
-      ORAS_DRY_RUN: false
-
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-
-      - name: Install Helm
-        id: helm-install
-        uses: azure/setup-helm@v4.3.0
-
-      - name: Setup ORAS
-        uses: oras-project/setup-oras@v1
-        with:
-          version: 1.2.3
-
-      - name: Set environment variables
-        shell: bash
-        run: |
-          if [[ "${{ github.event_name }}" == "workflow_dispatch" ]]; then
-            echo "🔧 Mocking tag version for dry-run..."
-            echo "GITHUB_REF=refs/tags/v0.0.0-dryrun" >> "$GITHUB_ENV"
-            echo "ORAS_DRY_RUN=true" >> "$GITHUB_ENV"
-          fi
-          echo "CHART_NAME=${GITHUB_REPOSITORY##*/}" >> "$GITHUB_ENV"
-          echo "CHART_VERSION=${GITHUB_REF#refs/tags/v}" >> "$GITHUB_ENV"
-          echo "REPO_OWNER_LC=${GITHUB_REPOSITORY_OWNER,,}" >> "$GITHUB_ENV"
-          echo "README_URL=https://raw.githubusercontent.com/${GITHUB_REPOSITORY}/v${GITHUB_REF#refs/tags/v}/README.md" >> "$GITHUB_ENV"
-          echo "CHART_FILE=${GITHUB_REPOSITORY##*/}-${GITHUB_REF#refs/tags/v}.tgz" >> "$GITHUB_ENV"
-      - name: Package Helm Chart
-        run: make helm-package
-
-      - name: Log in to GitHub Container Registry
-        if: env.ORAS_DRY_RUN != 'true'
-        run: echo "${{ secrets.GITHUB_TOKEN }}" | oras login ghcr.io -u $GITHUB_ACTOR --password-stdin
-
-      - name: Push Helm Chart to GHCR
-        run: |
-          echo "📦 ${ORAS_DRY_RUN:-false} mode"
-          echo "{\"apiVersion\":\"v2\",\"name\":\"${CHART_NAME}\",\"version\":\"${CHART_VERSION}\"}" > config.json
-          oras push "ghcr.io/${REPO_OWNER_LC}/${CHART_NAME}:${CHART_VERSION}" \
-            --config config.json:application/vnd.cncf.helm.config.v1+json \
-            "${CHART_FILE}:application/vnd.cncf.helm.chart.content.v1.tar+gzip" \
-            "README.md:text/markdown" \
-            --annotation "org.opencontainers.image.description=Helm chart for ${CHART_NAME}" \
-            --annotation "org.opencontainers.image.title=${CHART_NAME}" \
-            --annotation "org.opencontainers.image.version=${CHART_VERSION}" \
-            --annotation "org.opencontainers.image.source=https://github.com/${GITHUB_REPOSITORY}" \
-            --annotation "io.artifacthub.package.readme-url=${README_URL}" \
-            $( [[ "$ORAS_DRY_RUN" == "true" ]] && echo --dry-run )
-
-  notify-on-failure:
-    needs: publish
-    if: failure() && (github.ref == 'refs/heads/main' || startsWith(github.ref, 'refs/tags/v'))
-    uses: DecisiveAI/ci/.github/workflows/slack-notify.yml@main
+  helm-publish:
+    uses: DecisiveAI/ci/.github/workflows/helm-publish.yml@main
     secrets:
       SLACK_NOTIFY_URL: ${{ secrets.SLACK_NOTIFY_URL }}
