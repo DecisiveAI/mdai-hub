@@ -31,6 +31,13 @@ persistentStorage:
 
 opentelemetry-operator:
   enabled: true
+  admissionWebhooks:    
+    certManager:
+      enabled: true
+    autoGenerateCert:
+      enabled: false
+      recreate: false
+      certPeriodDays: 365    
   fullnameOverride: opentelemetry-operator
   crds:
     create: false
@@ -54,15 +61,23 @@ metrics-server:
 
 mdai-operator:
   enabled: true
+  admissionWebhooks:
+    certManager:
+      enabled: true
+      issuerRef: {}
+      certificateAnnotations: {}
+      issuerAnnotations: {}
+      duration: ""
+      renewBefore: ""
+    autoGenerateCert:
+      enabled: false
+      recreate: false
+      certPeriodDays: 365        # otelSdkDisabled: "true"
   fullnameOverride: mdai-operator
   controllerManager:
     manager:
       env:
         otelExporterOtlpEndpoint: http://hub-monitor-mdai-collector-service.mdai.svc.cluster.local:4318
-        # otelSdkDisabled: "true"
-  webhooks:
-    certManager:
-      enabled: true
 
 mdai-gateway:
   enabled: true
@@ -511,10 +526,10 @@ nats:
     jetstream:
       enabled: true
       memStorage:
-        enabled: true  # Set true if you want in-memory (non-persistent) storage
+        enabled: false # KEEP MEMORY STORAGE DISABLED !
         maxSize: 1Gi # ensure that container has a sufficient memory limit greater than maxSize
       fileStore:
-        enabled: false # Set true if you want a persistent storage
+        enabled: true # Set true if you want a persistent storage
         # Uncomment a section below to enable PVCs created
         #  dir: "/data/jetstream"
         #  pvc:

@@ -1,9 +1,9 @@
 apiVersion: v2
 type: application
 name: mdai-hub
-version: "0.8.5-dev"
+version: "0.8.6"
 description: MDAI Hub helm chart
-appVersion: "0.8.5-dev"
+appVersion: "0.8.6"
 dependencies:
   - name: nats
     version: ~1.3.9
@@ -27,8 +27,8 @@ dependencies:
     repository: oci://registry-1.docker.io/bitnamicharts
     condition: valkey.enabled
   - name: mdai-operator
-    version: 0.1.22
-    repository: https://decisiveai.github.io/mdai-helm-charts
+    version: 0.1.23
+    repository: oci://ghcr.io/decisiveai
     condition: mdai-operator.enabled
   - name: mdai-gateway
     version: 0.0.19

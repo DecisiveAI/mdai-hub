@@ -9,7 +9,7 @@ _After initial checkout, switching branches or modifying `Chart.yaml`, run `helm
 ## Prerequisites
 - Kubernetes 1.24+
 - Helm 3.9+
-- [cert-manager](https://cert-manager.io/docs/)
+- [cert-manager](https://cert-manager.io/docs/) [optional](#disable-cert-manager)
 
 ## Install MDAI Hub helm chart
 ```bash
@@ -20,6 +20,38 @@ helm upgrade --install \
   --cleanup-on-fail \
   --devel \
   mdai mdai-hub
+```
+
+## Disable cert-manager 
+Amend `values.yaml` as follows.
+
+```yaml
+opentelemetry-operator:
+  enabled: true
+  admissionWebhooks:    
+    certManager:
+      enabled: false   # <= set to false
+    autoGenerateCert:
+      enabled: true    # <= set to true
+      recreate: true   # <= set to true for regenerating certs upon each deploy
+      certPeriodDays: 365   # <= cert validity period 
+```
+
+```yaml
+mdai-operator:
+  enabled: true
+  admissionWebhooks:
+    certManager:
+      enabled: false   # <= set to false
+      issuerRef: {}
+      certificateAnnotations: {}
+      issuerAnnotations: {}
+      duration: ""
+      renewBefore: ""
+    autoGenerateCert:
+      enabled: true    # <= set to true
+      recreate: true   # <= set to true for regenerating certs upon each deploy
+      certPeriodDays: 365   # <= cert validity period 
 ```
 
 ## Learn more
