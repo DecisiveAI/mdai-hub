@@ -526,7 +526,7 @@ nats:
     jetstream:
       enabled: true
       memStorage:
-        enabled: false # Set true if you want in-memory (non-persistent) storage
+        enabled: false # KEEP MEMORY STORAGE DISABLED !
         maxSize: 1Gi # ensure that container has a sufficient memory limit greater than maxSize
       fileStore:
         enabled: true # Set true if you want a persistent storage
