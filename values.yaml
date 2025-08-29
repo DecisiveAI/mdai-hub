@@ -31,13 +31,13 @@ persistentStorage:
 
 opentelemetry-operator:
   enabled: true
-  admissionWebhooks:    
+  admissionWebhooks:
     certManager:
       enabled: true
     autoGenerateCert:
       enabled: false
       recreate: false
-      certPeriodDays: 365    
+      certPeriodDays: 365
   fullnameOverride: opentelemetry-operator
   crds:
     create: false
@@ -151,7 +151,7 @@ kubeprometheusstack:
     enabled: true
     config:
       route:
-        group_by: ["alertname", "service_name"]
+        group_by: ["cluster", "alertname"]
         group_wait: 30s
         group_interval: 5m
         repeat_interval: 12h
@@ -216,6 +216,8 @@ kubeprometheusstack:
     serviceMonitor:
       selfMonitor: false
     prometheusSpec:
+      externalLabels:
+        cluster: mdai-cluster
       serviceMonitorSelectorNilUsesHelmValues: false
       ## uncomment below block to enable persistent storage
       ## BEGIN: persistent storage block

@@ -16,15 +16,15 @@ dependencies:
   version: 2.2.4
 - name: mdai-operator
   repository: oci://ghcr.io/decisiveai
-  version: 0.1.23
+  version: 0.2.0
 - name: mdai-gateway
   repository: oci://ghcr.io/decisiveai
-  version: 0.0.19
+  version: 0.1.0
 - name: mdai-event-hub
   repository: oci://ghcr.io/decisiveai
-  version: 0.0.11
+  version: 0.1.0
 - name: mdai-s3-logs-reader
   repository: https://decisiveai.github.io/mdai-helm-charts
   version: 0.0.5
-digest: sha256:fdeae990c75c1f4b16241b7860add073854ad62b78d589d045c67f8112d80432
-generated: "2025-08-28T08:25:00.929788-04:00"
+digest: sha256:330c1e36a8a9d00c91927d71520b3cece11d325e0162d80fad691a8a06fbf800
+generated: "2025-08-29T15:20:02.020506-04:00"
