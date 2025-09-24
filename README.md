@@ -14,12 +14,11 @@ _After initial checkout, switching branches or modifying `Chart.yaml`, run `helm
 ## Install MDAI Hub helm chart
 ```bash
 helm upgrade --install \
-  --repo https://charts.mydecisive.ai \
+  mdai oci://ghcr.io/decisiveai/mdai-hub \
   --namespace mdai \
   --create-namespace \
   --cleanup-on-fail \
-  --devel \
-  mdai mdai-hub
+  --devel
 ```
 
 ## Disable cert-manager 
