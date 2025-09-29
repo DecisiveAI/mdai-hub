@@ -177,6 +177,17 @@ kubeprometheusstack:
   prometheus:
     serviceMonitor:
       selfMonitor: false
+    additionalServiceMonitors:
+      - name: nats-exporter
+        selector:
+          matchLabels:
+            app.kubernetes.io/name: nats
+            app.kubernetes.io/instance: nats
+        endpoints:
+          - port: metrics
+            path: /metrics
+            interval: 30s
+            scrapeTimeout: 10s
     prometheusSpec:
       externalLabels:
         cluster: mdai-cluster
