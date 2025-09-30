@@ -22,9 +22,9 @@ dependencies:
   version: 0.1.1
 - name: mdai-event-hub
   repository: oci://ghcr.io/decisiveai
-  version: 0.1.2
+  version: 0.1.4
 - name: mdai-s3-logs-reader
   repository: oci://ghcr.io/decisiveai
   version: 0.0.6
-digest: sha256:a7a74028ac3e1526eb9b731a8842a3796bc2163fc5fd274d1f537378e77049da
-generated: "2025-09-29T15:51:08.549681-04:00"
+digest: sha256:4f1998ec78586cb7110b3fcf05cf52c6e87bd31f134dd27549e8355bc2481609
+generated: "2025-09-30T13:44:03.332735-04:00"

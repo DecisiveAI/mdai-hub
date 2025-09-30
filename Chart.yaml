@@ -36,7 +36,7 @@ dependencies:
     condition: mdai-gateway.enabled
   - name: mdai-event-hub
     repository: oci://ghcr.io/decisiveai
-    version: 0.1.2
+    version: 0.1.4
     condition: mdai-event-hub.enabled
   - name: mdai-s3-logs-reader
     version: 0.0.6
