@@ -20,6 +20,7 @@ helm upgrade --install \
   --cleanup-on-fail \
   --devel
 ```
+Use additional `grafana-values.yaml` to deploy Grafana with MDAI dashboards to your cluster.
 
 ## Disable cert-manager 
 Amend `values.yaml` as follows.
