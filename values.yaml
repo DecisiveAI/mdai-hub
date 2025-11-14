@@ -61,6 +61,8 @@ metrics-server:
 
 mdai-operator:
   enabled: true
+  crds:
+    create: true
   admissionWebhooks:
     certManager:
       enabled: true
