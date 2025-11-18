@@ -27,18 +27,18 @@ dependencies:
     repository: oci://registry-1.docker.io/bitnamicharts
     condition: valkey.enabled
   - name: mdai-operator
-    version: 0.2.3
+    version: 0.2.8
     repository: oci://ghcr.io/decisiveai
     condition: mdai-operator.enabled
   - name: mdai-gateway
-    version: 0.1.1
+    version: 0.1.3
     repository: oci://ghcr.io/decisiveai
     condition: mdai-gateway.enabled
   - name: mdai-event-hub
     repository: oci://ghcr.io/decisiveai
-    version: 0.1.5
+    version: 0.1.6
     condition: mdai-event-hub.enabled
   - name: mdai-s3-logs-reader
-    version: 0.0.6
+    version: 0.0.7
     repository: oci://ghcr.io/decisiveai
     condition: mdai-s3-logs-reader.enabled
