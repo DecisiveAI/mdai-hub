@@ -64,6 +64,9 @@ mdai-operator:
   enabled: true
   crds:
     create: true
+  serviceAccount:
+    create: true
+    name: "mdai-operator-controller-manager"
   admissionWebhooks:
     certManager:
       enabled: true
@@ -556,10 +559,6 @@ nats:
       spec:
         tolerations: []
   natsBox:
-    deployment:
-      merge:
-        spec:
-          tolerations: []
     podTemplate:
       merge:
         spec:
