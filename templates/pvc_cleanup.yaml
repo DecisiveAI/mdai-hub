@@ -61,7 +61,7 @@ spec:
           - |
             echo "Deleting PVCs for release {{ .Release.Name }}..."
             kubectl delete pvc -l "app.kubernetes.io/instance={{ .Release.Name }}" --namespace {{ .Release.Namespace }}
-      {{- with .Values.nats.merge.spec.tolerations }}
+      {{- with .Values.cleanup.tolerations }}
       tolerations:
         {{- toYaml . | nindent 8 }}
       {{- end }}
