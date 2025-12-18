@@ -18,7 +18,7 @@ jobs:
       - name: Install Git Cliff
         uses: taiki-e/install-action@v2
         with:
-          tool: git-cliff@v2.10.1
+          tool: git-cliff@2.10.1
       - name: Setup Go
         uses: actions/setup-go@v5
       - name: Install Composite Changelog Tool
