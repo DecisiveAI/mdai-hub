@@ -48,7 +48,9 @@ jobs:
         run: ./scripts/generate.sh $CURRENT
       - name: Push Changes
         if: ${{ steps.gen.outputs.GENERATED }}
+        env:
+          CURRENT: v0.9.0
         run: |
           git add .
-          git commit -m "doc: update changelog to v0.9.0" -m "By ${{ github.repository }} :: ${{ github.ref }} :: ${{ github.sha }}"
+          git commit -m "doc: update changelog to $CURRENT" -m "By ${{ github.repository }} :: ${{ github.ref }} :: ${{ github.sha }}"
           git push
