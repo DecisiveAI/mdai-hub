@@ -1,9 +1,8 @@
 name: Generate Composite Changelog
 
 on:
-  push:
-    branches:
-      - ENG-972
+  release:
+    types: [released]
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.head_ref || github.ref_name }}
@@ -33,7 +32,7 @@ jobs:
         uses: actions/checkout@v5
         with:
           repository: ${{ github.repository_owner }}/${{ env.CHANGELOG_REPO }}
-          ref: ENG-972
+          ref: main
           token: ${{ steps.app-token.outputs.token }}
       - name: Setup Git User
         run: |
@@ -42,13 +41,11 @@ jobs:
       - name: Generate
         id: gen
         env:
-          CURRENT: v0.9.0
+          CURRENT: ${{ github.event.release.tag_name }}
         run: ./scripts/generate.sh $CURRENT
       - name: Push Changes
         if: ${{ steps.gen.outputs.GENERATED }}
-        env:
-          CURRENT: v0.9.0
         run: |
           git add .
-          git commit -m "doc: update changelog to $CURRENT" -m "By ${{ github.repository }} :: ${{ github.ref }} :: ${{ github.sha }}"
+          git commit -m "doc: update changelog to ${{ github.event.release.tag_name }}" -m "By ${{ github.repository }} :: ${{ github.ref }} :: ${{ github.sha }}"
           git push
