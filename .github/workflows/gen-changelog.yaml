@@ -19,8 +19,6 @@ jobs:
         uses: taiki-e/install-action@v2
         with:
           tool: git-cliff@2.10.1
-      - name: Setup Go
-        uses: actions/setup-go@v5
       - name: Install Composite Changelog Tool
         run: go install github.com/DecisiveAI/changelogs/scripts/composite@latest
       - name: Generate Token
