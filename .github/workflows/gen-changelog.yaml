@@ -1,0 +1,51 @@
+name: Generate Composite Changelog
+
+on:
+  release:
+    types: [released]
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.head_ref || github.ref_name }}
+
+env:
+  CHANGELOG_REPO: "changelogs"
+
+jobs:
+  changelog:
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Install Git Cliff
+        uses: taiki-e/install-action@v2
+        with:
+          tool: git-cliff@2.10.1
+      - name: Install Composite Changelog Tool
+        run: go install github.com/DecisiveAI/changelogs/scripts/composite@latest
+      - name: Generate Token
+        uses: actions/create-github-app-token@v2
+        id: app-token
+        with:
+          app-id: ${{ secrets.INTERNAL_WRITE_ACCESS_GH_APP_ID }}
+          private-key: ${{ secrets.INTERNAL_WRITE_ACCESS_GH_APP_PRIVATE_KEY }}
+          owner: ${{ github.repository_owner }}
+          repositories: ${{ env.CHANGELOG_REPO }}
+      - name: Checkout Changelogs
+        uses: actions/checkout@v5
+        with:
+          repository: ${{ github.repository_owner }}/${{ env.CHANGELOG_REPO }}
+          ref: main
+          token: ${{ steps.app-token.outputs.token }}
+      - name: Setup Git User
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+      - name: Generate
+        id: gen
+        env:
+          CURRENT: ${{ github.event.release.tag_name }}
+        run: ./scripts/generate.sh $CURRENT
+      - name: Push Changes
+        if: ${{ steps.gen.outputs.GENERATED }}
+        run: |
+          git add .
+          git commit -m "doc: update changelog to ${{ github.event.release.tag_name }}" -m "By ${{ github.repository }} :: ${{ github.ref }} :: ${{ github.sha }}"
+          git push
