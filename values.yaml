@@ -530,10 +530,13 @@ nats:
         enabled: true # Set true if you want a persistent storage
         # Uncomment a section below to enable PVCs created
         #  dir: "/data/jetstream"
-        #  pvc:
-        #    enabled: true
-        #    storageClassName: "mdai"  # Specify your storage class
-        #    size: 1Gi # Specify your storage size
+        pvc:
+#          enabled: true
+#          storageClassName: "mdai"  # Specify your storage class
+#          size: 1Gi # Specify your storage size
+          merge: # Add apiVersion/kind to avoid ArgoCD drift on implicit fields
+            apiVersion: v1
+            kind: PersistentVolumeClaim
 
 # Uncomment a section below to allocate JetStream Cluster on 3 separate hosts
 #  podTemplate:
