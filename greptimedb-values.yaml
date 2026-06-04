@@ -2,10 +2,19 @@ global:
   greptime:
 #   use 'public' unless mentioned database is explicitly created in GreptimeDB
     databaseName: public
-    nameOverride: ""
-    fullnameOverride: mdai-greptimedb
+#   always use fullnameOverride
+    fullnameOverride: &greptimeName mdai-greptimedb
+    postgresPort: &postgresPort 4003
+    mysqlPort: &mysqlPort 4002
+    grpcPort: &grpcPort 4001
+    httpPort: &httpPort 4000
 
 greptimedb-standalone:
+  fullnameOverride: *greptimeName
+  postgresServicePort: *postgresPort
+  mysqlServicePort: *mysqlPort
+  grpcServicePort: *grpcPort
+  httpServicePort: *httpPort
   extraVolumeMounts:
     - mountPath: /etc/greptimedb/auth
       name: auth

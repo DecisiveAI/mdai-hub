@@ -30,10 +30,10 @@ dependencies:
   repository: oci://ghcr.io/mydecisive/charts
   version: 0.0.8
 - name: mdai-tracealyzer
-  repository: oci://ghcr.io/mydecisive/charts
-  version: 0.1.1
+  repository: file://../mdai-tracealyzer/deployment
+  version: 0.1.3
 - name: mdai-envoy-standalone
   repository: oci://ghcr.io/mydecisive/charts
   version: 0.1.0
-digest: sha256:83f28adc16a4451592f322801af32796e44a48997204fb343dc6b4b5c0267293
-generated: "2026-05-13T14:56:46.493656-04:00"
+digest: sha256:dcfc343e3a159c7c310bbbc6c2603b7383861b27e044b360a06521573f322e36
+generated: "2026-06-04T14:27:35.179919-04:00"
