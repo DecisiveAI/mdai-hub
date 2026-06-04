@@ -1,8 +1,7 @@
-### Install MDAI with Tracealyzer
+### Install MDAI with Tracealyzer 
 ```bash
 helm upgrade --install --namespace mdai --create-namespace \
   --cleanup-on-fail --devel \
-  --values greptimedb-values.yaml \
   --values tracealyzer-values.yaml \
   --set greptimedb-standalone.enabled=true \
   --set mdai-tracealyzer.enabled=true \
@@ -13,7 +12,6 @@ helm upgrade --install --namespace mdai --create-namespace \
 ```bash
 helm upgrade --install --namespace mdai --create-namespace \
 --cleanup-on-fail --devel \
---values greptimedb-values.yaml \
 --values tracealyzer-values.yaml \
 --values grafana-values.yaml \ 
 --set greptimedb-standalone.enabled=true \
