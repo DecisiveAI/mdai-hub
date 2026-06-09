@@ -39,7 +39,7 @@ dependencies:
     repository: oci://ghcr.io/mydecisive/charts
     condition: mdai-gateway.enabled
   - name: mdai-event-hub
-    version: 0.1.9
+    version: 0.1.10
     repository: oci://ghcr.io/mydecisive/charts
     condition: mdai-event-hub.enabled
   - name: mdai-s3-logs-reader
