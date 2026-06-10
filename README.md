@@ -1,4 +1,4 @@
-# MDAI Hub
+# MyDecisive SmartHub
 
 [![Artifact Hub](https://img.shields.io/endpoint?url=https://artifacthub.io/badge/repository/mdai-hub)](https://artifacthub.io/packages/search?repo=mdai-hub)
 
@@ -11,7 +11,7 @@ _After initial checkout, switching branches or modifying `Chart.yaml`, run `helm
 - Helm 3.9+
 - [cert-manager](https://cert-manager.io/docs/) [optional](#disable-cert-manager)
 
-## Install MDAI Hub helm chart
+## Install MyDecisive SmartHub helm chart
 ```bash
 helm upgrade --install \
   mdai oci://ghcr.io/mydecisive/mdai-hub \
