@@ -2,7 +2,9 @@
 
 [![Artifact Hub](https://img.shields.io/endpoint?url=https://artifacthub.io/badge/repository/mdai-hub)](https://artifacthub.io/packages/search?repo=mdai-hub)
 
-This is the official Helm chart for [MyDecisive.ai](https://www.mydecisive.ai/), an open-core solution for monitoring and managing OpenTelemetry pipelines on Kubernetes.
+This is the official Helm chart for [MyDecisive SmartHub](https://www.mydecisive.ai/), an Open Source platform as a control plane for telemetry pipelines and OTel collectors in Kubernetes environments.
+
+
 
 _After initial checkout, switching branches or modifying `Chart.yaml`, run `helm dependency update . --repository-config /dev/null`_
 
