@@ -35,11 +35,11 @@ dependencies:
     repository: oci://ghcr.io/mydecisive/charts
     condition: mdai-operator.enabled
   - name: mdai-gateway
-    version: 0.1.9
+    version: 0.1.10
     repository: oci://ghcr.io/mydecisive/charts
     condition: mdai-gateway.enabled
   - name: mdai-event-hub
-    version: 0.1.10
+    version: 0.1.11
     repository: oci://ghcr.io/mydecisive/charts
     condition: mdai-event-hub.enabled
   - name: mdai-s3-logs-reader
