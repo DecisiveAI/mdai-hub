@@ -22,10 +22,10 @@ dependencies:
   version: 0.2.20
 - name: mdai-gateway
   repository: oci://ghcr.io/mydecisive/charts
-  version: 0.1.9
+  version: 0.1.10
 - name: mdai-event-hub
   repository: oci://ghcr.io/mydecisive/charts
-  version: 0.1.10
+  version: 0.1.11
 - name: mdai-s3-logs-reader
   repository: oci://ghcr.io/mydecisive/charts
   version: 0.0.8
@@ -35,5 +35,5 @@ dependencies:
 - name: mdai-envoy-standalone
   repository: oci://ghcr.io/mydecisive/charts
   version: 0.1.0
-digest: sha256:be2fa3cb1bef4d3e5374b049fe6349a711fa8653e826a9ea462a69aeb75dd8fa
-generated: "2026-06-09T13:57:01.6357-04:00"
+digest: sha256:739a860c386277e9ff187491212694b48cf6424bbe237497da4f07abd1367dd1
+generated: "2026-06-16T10:11:11.367406-04:00"
