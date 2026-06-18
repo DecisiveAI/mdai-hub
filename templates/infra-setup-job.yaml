@@ -69,12 +69,14 @@ spec:
             GREPTIME_USER="{{ include "greptimedb.user" . }}"
             GREPTIME_MYSQL_PORT="{{ include "greptimedb.mysqlPort" . }}"
             GREPTIME_PSQL_PORT="{{ include "greptimedb.psqlPort" . }}"
+            GREPTIME_HTTP_PORT="{{ include "greptimedb.httpPort" . }}"
             kubectl create secret generic "$GREPTIME_SECRET" \
               --from-literal="GREPTIME_DATABASE=$GREPTIME_DATABASE" \
               --from-literal="GREPTIME_HOST=$GREPTIME_HOST" \
               --from-literal="GREPTIME_USER=$GREPTIME_USER" \
               --from-literal="GREPTIME_MYSQL_PORT=$GREPTIME_MYSQL_PORT" \
               --from-literal="GREPTIME_PSQL_PORT=$GREPTIME_PSQL_PORT" \
+              --from-literal="GREPTIME_HTTP_PORT=$GREPTIME_HTTP_PORT" \
               --from-literal="GREPTIME_PASSWD=$PW" \
               --from-literal="passwd=$AUTH"
 

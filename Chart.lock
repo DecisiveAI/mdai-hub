@@ -18,8 +18,8 @@ dependencies:
   repository: https://greptimeteam.github.io/helm-charts
   version: 0.4.3
 - name: mdai-operator
-  repository: oci://ghcr.io/mydecisive/charts
-  version: 0.2.20
+  repository: file://../mdai-operator/deployment
+  version: 0.2.21
 - name: mdai-gateway
   repository: oci://ghcr.io/mydecisive/charts
   version: 0.1.10
@@ -35,5 +35,5 @@ dependencies:
 - name: mdai-envoy-standalone
   repository: oci://ghcr.io/mydecisive/charts
   version: 0.1.0
-digest: sha256:739a860c386277e9ff187491212694b48cf6424bbe237497da4f07abd1367dd1
-generated: "2026-06-16T10:11:11.367406-04:00"
+digest: sha256:0634067c20dc73e63e55682101fc2cce81a84413bebba2caa917bc0133fa147e
+generated: "2026-06-18T14:33:08.089505-04:00"
