@@ -123,6 +123,15 @@ app.kubernetes.io/instance: {{ .Release.Name }}
 {{- $port -}}
 {{- end -}}
 
+{{- define "greptimedb.httpPort" -}}
+{{- $cfg := index .Values "greptimedb-standalone" -}}
+{{- $port := "4000" -}}
+{{- if and $cfg $cfg.httpServicePort -}}
+{{- $port = printf "%v" $cfg.httpServicePort -}}
+{{- end -}}
+{{- $port -}}
+{{- end -}}
+
 {{- define "greptimedb.database" -}}
 {{- $cfg := index .Values "greptimedb-standalone" -}}
 {{- $db := "public" -}}
