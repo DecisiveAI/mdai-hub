@@ -21,14 +21,14 @@
 
 ## ***AI DevOps that optimizes your system before incidents occur.***
 
-Before you begin, please read the [SmartHub Primer](docs/primer.md).
+Before you begin, read the [SmartHub Primer](docs/primer.md).
 
 ## Related Pages
 
-- [SmartHub Documentation](index.md)
-- [SmartHub Quick Start](quickstart.md)
-- [Development](development.md)
-- [SmartHub Architecture](architecture.md)
+- [SmartHub Documentation](docs/index.md)
+- [Installation](docs/quickstart.md)
+- [Development](docs/development.md)
+- [SmartHub Architecture](docs/architecture.md)
 - [Octant](https://github.com/MyDecisive/octant)
 
 ## Info and Support
