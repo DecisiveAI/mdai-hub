@@ -73,7 +73,9 @@ What this doc *won't* give you is production hardening, sizing, and day-2 detail
 
 In a ready Kubernetes environment, install a hub with `mdai-cli` (the intent is ~5 minutes):
 
-```shell
+If you haven't installed the `mdai-cli`, follow our [cli-based install guide](https://docs.mydecisive.ai/installation/#install-the-mdai-cli). Then you can install a SmartHub directly into your cluster.
+
+```bash
 mdai install
 kubectl get pods --namespace mdai     # watch the SmartHub workloads come up
 ```

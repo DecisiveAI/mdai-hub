@@ -4,7 +4,7 @@ SmartHub architecture explains what `mdai-hub` installs, which runtime component
 
 ## SmartHub C4 View
 
-![SmartHub C4 View](../diagrams/platform-c4.svg)
+![SmartHub C4 View](diagrams/platform-c4.svg)
 
 The C4 container view shows SmartHub as the platform layer that runs in Kubernetes. It separates setup entry points, SmartHub runtime components, data stores, and external dependencies.
 
