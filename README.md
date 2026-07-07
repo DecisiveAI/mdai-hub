@@ -2,10 +2,13 @@
 
 *This is the official Helm chart for [MyDecisive SmartHub](https://www.mydecisive.ai/), an Open Source platform as a control plane for telemetry pipelines and OpenTelemetry collectors in Kubernetes environments.*
 
-<table>
+
+<img src="https://cdn.mydecisive.ai/media/2026/05/22/Octopus.png" alt="MyDecisive Logo" width="220" />
+
+<!-- <table>
   <tr>
     <td width="35%" align="left">
-      <img src="https://cdn.mydecisive.ai/media/2026/05/22/Octopus.png" alt="MyDecisive Logo" width="110" />
+      <img src="https://cdn.mydecisive.ai/media/2026/05/22/Octopus.png" alt="MyDecisive Logo" width="220" />
     </td>
     <td width="65%" align="center">
       <a href="https://github.com/user-attachments/assets/YOUR_VIDEO_ID">
@@ -15,7 +18,7 @@
       <strong>Watch the demo</strong>
     </td>
   </tr>
-</table>
+</table> -->
 
 # Welcome to the SmartHub
 
