@@ -1,65 +1,38 @@
-# MyDecisive SmartHub
-
 [![Artifact Hub](https://img.shields.io/endpoint?url=https://artifacthub.io/badge/repository/mdai-hub)](https://artifacthub.io/packages/search?repo=mdai-hub)
 
-This is the official Helm chart for [MyDecisive SmartHub](https://www.mydecisive.ai/), an Open Source platform as a control plane for telemetry pipelines and OTel collectors in Kubernetes environments.
+*This is the official Helm chart for [MyDecisive SmartHub](https://www.mydecisive.ai/), an Open Source platform as a control plane for telemetry pipelines and OpenTelemetry collectors in Kubernetes environments.*
 
 
+<img src="https://cdn.mydecisive.ai/media/2026/05/22/Octopus.png" alt="MyDecisive Logo" width="220" />
 
-_After initial checkout, switching branches or modifying `Chart.yaml`, run `helm dependency update . --repository-config /dev/null`_
+<!-- <table>
+  <tr>
+    <td width="35%" align="left">
+      <img src="https://cdn.mydecisive.ai/media/2026/05/22/Octopus.png" alt="MyDecisive Logo" width="220" />
+    </td>
+    <td width="65%" align="center">
+      <a href="https://github.com/user-attachments/assets/YOUR_VIDEO_ID">
+        <img src="./assets/demo-thumbnail.png" alt="Watch the demo" width="100%" />
+      </a>
+      <br />
+      <strong>Watch the demo</strong>
+    </td>
+  </tr>
+</table> -->
 
-## Prerequisites
-- Kubernetes 1.24+
-- Helm 3.9+
-- [cert-manager](https://cert-manager.io/docs/) [optional](#disable-cert-manager)
+# Welcome to the SmartHub
 
-## Install MyDecisive SmartHub helm chart
-```bash
-helm upgrade --install \
-  mdai oci://ghcr.io/mydecisive/mdai-hub \
-  --namespace mdai \
-  --create-namespace \
-  --cleanup-on-fail \
-  --devel
-```
-Use additional `grafana-values.yaml` to deploy Grafana with MDAI dashboards to your cluster.
+## ***AI DevOps that optimizes your system before incidents occur.***
 
-## Disable cert-manager 
-Amend `values.yaml` as follows.
+Before you begin, read the [SmartHub Primer](docs/primer.md).
 
-```yaml
-opentelemetry-operator:
-  enabled: true
-  admissionWebhooks:    
-    certManager:
-      enabled: false   # <= set to false
-    autoGenerateCert:
-      enabled: true    # <= set to true
-      recreate: true   # <= set to true for regenerating certs upon each deploy
-      certPeriodDays: 365   # <= cert validity period 
-```
+## Related Pages
 
-```yaml
-mdai-operator:
-  enabled: true
-  admissionWebhooks:
-    certManager:
-      enabled: false   # <= set to false
-      issuerRef: {}
-      certificateAnnotations: {}
-      issuerAnnotations: {}
-      duration: ""
-      renewBefore: ""
-    autoGenerateCert:
-      enabled: true    # <= set to true
-      recreate: true   # <= set to true for regenerating certs upon each deploy
-      certPeriodDays: 365   # <= cert validity period 
-```
-
-## Learn more
-
-* Visit our [solutions page](https://www.mydecisive.ai/solutions) for more details MyDecisive's approach to composable observability.
-* Head to our [docs](https://docs.mydecisive.ai/) to learn more about MyDecisive's tech.
+- [SmartHub Documentation](docs/index.md)
+- [Installation](docs/quickstart.md)
+- [Development](docs/development.md)
+- [SmartHub Architecture](docs/architecture.md)
+- [Octant](https://github.com/MyDecisive/octant)
 
 ## Info and Support
 
@@ -68,4 +41,4 @@ Please contact us via our Community Slack channels
 * [#mdai-community-discussion](https://mydecisivecommunity.slack.com/archives/C08LE3DJ877) - All discussion
 * [#mdai-docs-questions](https://mydecisivecommunity.slack.com/archives/C090KU6F679) - Questions about docs
 * [#mdai-feature-requests](https://mydecisivecommunity.slack.com/archives/C090UH3JYNS) - Raising a request for new capabilities
-* [#mdai-platform-support](https://mydecisivecommunity.slack.com/archives/C090KU1MB6K) - Assistance with using MDAI
+* [#mdai-platform-support](https://mydecisivecommunity.slack.com/archives/C090KU1MB6K) - Assistance with using MyDecisive tech
